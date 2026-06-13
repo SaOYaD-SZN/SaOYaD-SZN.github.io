@@ -1,5 +1,5 @@
 // ==================== Configuration & Constants ====================
-/** @type {{ GITHUB_USERNAME: string, GITHUB_API_BASE: string, TYPEWRITER_SPEED: number, TYPEWRITER_DELETE_SPEED: number, TYPEWRITER_PAUSE: number, PARTICLE_COUNT: number, THEME_KEY: string }} */
+/** @type {{ GITHUB_USERNAME: string, GITHUB_API_BASE: string, TYPEWRITER_SPEED: number, TYPEWRITER_DELETE_SPEED: number, TYPEWRITER_PAUSE: number, PARTICLE_COUNT: number, THEME_KEY: string, IDLE_TIMEOUT: number, HERO_PARALLAX_MAX_OFFSET: number, PARTICLE_INTERACTION_DISTANCE: number, PARTICLE_INTERACTION_FORCE: number }} */
 const CONFIG = {
   GITHUB_USERNAME: 'SaOYaD-SZN',
   GITHUB_API_BASE: 'https://api.github.com',
@@ -8,6 +8,10 @@ const CONFIG = {
   TYPEWRITER_PAUSE: 2000,
   PARTICLE_COUNT: 50,
   THEME_KEY: 'saoyad-theme',
+  IDLE_TIMEOUT: 1000,
+  HERO_PARALLAX_MAX_OFFSET: 32,
+  PARTICLE_INTERACTION_DISTANCE: 120,
+  PARTICLE_INTERACTION_FORCE: 0.4,
 };
 
 /** @type {string[]} */
@@ -86,6 +90,18 @@ const sanitizeURL = (url) => {
     if (/^[a-zA-Z0-9_./\-]+$/.test(url)) return url;
   }
   return '';
+};
+
+/**
+ * Schedules non-critical work during browser idle periods with a timeout fallback.
+ * @param {() => void} callback
+ */
+const runWhenIdle = (callback) => {
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(() => callback(), { timeout: CONFIG.IDLE_TIMEOUT });
+    return;
+  }
+  setTimeout(callback, 0);
 };
 
 // ==================== Theme Manager ====================
@@ -299,7 +315,7 @@ class UIComponents {
     if (!heroContent) return;
 
     heroContent.innerHTML = `
-      <img src="${sanitizeURL(userData.avatar_url)}" alt="${sanitizeHTML(userData.name || 'SaOYaD')}" class="hero-avatar" loading="lazy">
+      <img src="${sanitizeURL(userData.avatar_url)}" alt="${sanitizeHTML(userData.name || 'SaOYaD')}" class="hero-avatar" loading="eager" decoding="async" fetchpriority="high">
       <p class="hero-greeting">Hello, I'm</p>
       <h1 class="hero-title">${sanitizeHTML(userData.name || 'SaOYaD')}</h1>
       <div class="hero-subtitle">
@@ -359,7 +375,7 @@ class UIComponents {
     aboutSection.innerHTML += `
       <div class="about-content animate-on-scroll">
         <div class="about-image">
-          <img src="${sanitizeURL(userData.avatar_url)}" alt="${sanitizeHTML(userData.name || 'SaOYaD')}" loading="lazy">
+          <img src="${sanitizeURL(userData.avatar_url)}" alt="${sanitizeHTML(userData.name || 'SaOYaD')}" loading="lazy" decoding="async">
         </div>
         <div class="about-text">
           <h3>About Me</h3>
@@ -367,19 +383,19 @@ class UIComponents {
           <p>With a strong foundation in full-stack development and a deep passion for Linux systems, I create innovative solutions that make a difference. My journey in tech is driven by curiosity and a commitment to continuous learning.</p>
           <div class="about-stats">
             <div class="stat-item">
-              <span class="stat-number">${userData.public_repos}</span>
+              <span class="stat-number" data-counter-target="${userData.public_repos}">0</span>
               <span class="stat-label">Repositories</span>
             </div>
             <div class="stat-item">
-              <span class="stat-number">${totalStars}</span>
+              <span class="stat-number" data-counter-target="${totalStars}">0</span>
               <span class="stat-label">Stars</span>
             </div>
             <div class="stat-item">
-              <span class="stat-number">${userData.followers}</span>
+              <span class="stat-number" data-counter-target="${userData.followers}">0</span>
               <span class="stat-label">Followers</span>
             </div>
             <div class="stat-item">
-              <span class="stat-number">${userData.following}</span>
+              <span class="stat-number" data-counter-target="${userData.following}">0</span>
               <span class="stat-label">Following</span>
             </div>
           </div>
@@ -466,10 +482,10 @@ class UIComponents {
 
     const featuredRepos = this.api.getFeaturedRepos(repos);
 
-    projectsGrid.innerHTML = featuredRepos.map(repo => `
-      <div class="project-card card-3d" data-name="${sanitizeHTML(repo.name)}" data-language="${sanitizeHTML(repo.language || '')}">
+    projectsGrid.innerHTML = featuredRepos.map((repo, index) => `
+      <div class="project-card card-3d animate-on-scroll" data-stagger-index="${index}" data-name="${sanitizeHTML(repo.name)}" data-language="${sanitizeHTML(repo.language || '')}">
         <div class="project-image">
-          <img src="wallpaper.jpg" alt="${sanitizeHTML(repo.name)}" loading="lazy">
+          <img src="wallpaper.jpg" alt="${sanitizeHTML(repo.name)}" loading="lazy" decoding="async">
           <div class="project-overlay">
             ${repo.html_url ? `
             <a href="${sanitizeURL(repo.html_url)}" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View on GitHub">
@@ -547,9 +563,9 @@ class UIComponents {
           const filter = e.target.getAttribute('data-filter');
           projectCards.forEach(card => {
             if (filter === 'all' || card.getAttribute('data-language') === filter) {
-              card.style.display = 'block';
+              card.classList.remove('is-filtered-out');
             } else {
-              card.style.display = 'none';
+              card.classList.add('is-filtered-out');
             }
           });
         }
@@ -563,9 +579,9 @@ class UIComponents {
           const name = card.getAttribute('data-name').toLowerCase();
           const description = card.querySelector('.project-description').textContent.toLowerCase();
           if (name.includes(searchTerm) || description.includes(searchTerm)) {
-            card.style.display = 'block';
+            card.classList.remove('is-filtered-out');
           } else {
-            card.style.display = 'none';
+            card.classList.add('is-filtered-out');
           }
         });
       }, 300));
@@ -588,7 +604,7 @@ class UIComponents {
               <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
             </svg>
           </div>
-          <div class="activity-value">${userData.public_repos}</div>
+          <div class="activity-value" data-counter-target="${userData.public_repos}">0</div>
         </div>
         <div class="activity-card">
           <div class="activity-header">
@@ -597,7 +613,7 @@ class UIComponents {
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
             </svg>
           </div>
-          <div class="activity-value">${totalStars}</div>
+          <div class="activity-value" data-counter-target="${totalStars}">0</div>
         </div>
         <div class="activity-card">
           <div class="activity-header">
@@ -609,7 +625,7 @@ class UIComponents {
               <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
           </div>
-          <div class="activity-value">${userData.followers}</div>
+          <div class="activity-value" data-counter-target="${userData.followers}">0</div>
         </div>
         <div class="activity-card" style="grid-column: span 3;">
           <div class="activity-header">
@@ -730,7 +746,7 @@ class UIComponents {
       <div class="testimonial-card animate-on-scroll">
         <p class="testimonial-text">"${sanitizeHTML(testimonial.text)}"</p>
         <div class="testimonial-author">
-          <img src="${sanitizeURL(testimonial.avatar)}" alt="${sanitizeHTML(testimonial.author)}" class="author-avatar" loading="lazy">
+          <img src="${sanitizeURL(testimonial.avatar)}" alt="${sanitizeHTML(testimonial.author)}" class="author-avatar" loading="lazy" decoding="async">
           <div class="author-info">
             <div class="author-name">${sanitizeHTML(testimonial.author)}</div>
             <div class="author-role">${sanitizeHTML(testimonial.role)}</div>
@@ -782,14 +798,33 @@ class ParticleSystem {
     this.ctx = canvas.getContext('2d');
     this.particles = [];
     this.animationId = null;
+    this.mouse = { x: null, y: null };
+    this.isPaused = false;
+    this.handleResize = debounce(() => this.resize(), 250);
+    this.handleMouseMove = throttle((e) => {
+      this.mouse.x = e.clientX;
+      this.mouse.y = e.clientY;
+    }, 16);
+    this.handleMouseLeave = () => {
+      this.mouse.x = null;
+      this.mouse.y = null;
+    };
+    this.handleVisibilityChange = () => {
+      this.isPaused = document.hidden;
+      if (!this.isPaused && !this.animationId) this.animate();
+    };
     this.init();
   }
 
   init() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     this.resize();
     this.createParticles();
     this.animate();
-    window.addEventListener('resize', debounce(() => this.resize(), 250));
+    window.addEventListener('resize', this.handleResize, { passive: true });
+    window.addEventListener('mousemove', this.handleMouseMove, { passive: true });
+    window.addEventListener('mouseleave', this.handleMouseLeave, { passive: true });
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
   }
 
   resize() {
@@ -821,10 +856,16 @@ class ParticleSystem {
   }
 
   animate() {
+    if (this.isPaused) {
+      this.animationId = null;
+      return;
+    }
+
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     const color = this.getParticleColor();
 
     this.particles.forEach(particle => {
+      this.applyMouseInteraction(particle);
       particle.x += particle.vx;
       particle.y += particle.vy;
 
@@ -838,6 +879,29 @@ class ParticleSystem {
     });
 
     this.animationId = requestAnimationFrame(() => this.animate());
+  }
+
+  applyMouseInteraction(particle) {
+    if (this.mouse.x === null || this.mouse.y === null) return;
+
+    const dx = particle.x - this.mouse.x;
+    const dy = particle.y - this.mouse.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    if (distance === 0 || distance > CONFIG.PARTICLE_INTERACTION_DISTANCE) return;
+
+    const force = ((CONFIG.PARTICLE_INTERACTION_DISTANCE - distance) / CONFIG.PARTICLE_INTERACTION_DISTANCE) * CONFIG.PARTICLE_INTERACTION_FORCE;
+    particle.vx += (dx / distance) * force;
+    particle.vy += (dy / distance) * force;
+    particle.vx *= 0.98;
+    particle.vy *= 0.98;
+  }
+
+  destroy() {
+    if (this.animationId) cancelAnimationFrame(this.animationId);
+    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('mousemove', this.handleMouseMove);
+    window.removeEventListener('mouseleave', this.handleMouseLeave);
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
   }
 }
 
@@ -1099,6 +1163,100 @@ class ThreeDEffects {
   }
 }
 
+// ==================== Hero Parallax ====================
+/** Applies smooth scroll parallax motion to hero layers. */
+class HeroParallax {
+  constructor() {
+    this.hero = document.querySelector('.hero-section');
+    this.background = document.querySelector('.fluid-background');
+    this.onScroll = throttle(() => this.update(), 16);
+    this.init();
+  }
+
+  init() {
+    if (!this.hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.update();
+  }
+
+  update() {
+    if (!this.hero || !this.background) return;
+    const heroTop = this.hero.getBoundingClientRect().top;
+    const progress = Math.max(-1, Math.min(1, heroTop / window.innerHeight));
+    const bgOffset = progress * CONFIG.HERO_PARALLAX_MAX_OFFSET;
+    this.background.style.transform = `translate3d(0, ${bgOffset}px, 0) scale(1.05)`;
+  }
+}
+
+// ==================== Counter Animator ====================
+/** Animates numeric counters as they enter viewport. */
+class CounterAnimator {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    const counters = document.querySelectorAll('[data-counter-target]');
+    if (!counters.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+
+    counters.forEach(counter => observer.observe(counter));
+  }
+
+  animateCounter(element) {
+    const target = Number.parseInt(element.getAttribute('data-counter-target') || '0', 10);
+    const duration = 1000;
+    const startTime = performance.now();
+
+    const tick = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      element.textContent = Math.round(target * eased).toString();
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+
+    requestAnimationFrame(tick);
+  }
+}
+
+// ==================== Performance Monitor ====================
+/** Lightweight web-vitals observer for diagnostics in development/console. */
+class PerformanceMonitor {
+  init() {
+    if (!('PerformanceObserver' in window)) return;
+    try {
+      const lcpObserver = new PerformanceObserver((entryList) => {
+        const entries = entryList.getEntries();
+        const lcp = entries[entries.length - 1];
+        if (lcp) console.info('[Perf] LCP(ms):', Math.round(lcp.startTime));
+      });
+      lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
+
+      let cls = 0;
+      const clsObserver = new PerformanceObserver((entryList) => {
+        entryList.getEntries().forEach((entry) => {
+          if (!entry.hadRecentInput) cls += entry.value;
+        });
+      });
+      clsObserver.observe({ type: 'layout-shift', buffered: true });
+
+      window.addEventListener('beforeunload', () => {
+        console.info('[Perf] CLS:', Number(cls.toFixed(4)));
+      }, { once: true });
+    } catch (error) {
+      console.warn('Performance monitoring unavailable:', error);
+    }
+  }
+}
+
 // ==================== Form Validation ====================
 /** Provides real-time client-side validation for the contact form. */
 class FormValidator {
@@ -1183,7 +1341,10 @@ class AnimationObserver {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          const staggerIndex = Number(entry.target.getAttribute('data-stagger-index') || '0');
+          entry.target.style.setProperty('--stagger-delay', `${staggerIndex * 60}ms`);
           entry.target.classList.add('animated');
+          observer.unobserve(entry.target);
         }
       });
     }, {
@@ -1225,26 +1386,47 @@ class PortfolioApp {
   constructor() {
     this.api = new GitHubAPI(CONFIG.GITHUB_USERNAME);
     this.ui = new UIComponents(this.api);
+    this.particleSystem = null;
   }
 
   async init() {
+    this.setupErrorBoundaries();
+    new PerformanceMonitor().init();
     new ThemeManager();
     new LoadingScreen();
     new Navigation();
     new ScrollProgress();
     new BackToTop();
-    new CustomCursor();
-    new ThreeDEffects();
-
-    const canvas = document.getElementById('particles-canvas');
-    if (canvas) new ParticleSystem(canvas);
 
     const contactForm = document.getElementById('contact-form');
     if (contactForm) new FormValidator(contactForm);
 
-    new AnimationObserver();
+    new HeroParallax();
 
     await this.loadData();
+
+    runWhenIdle(() => {
+      document.querySelectorAll('.btn').forEach((button) => button.classList.add('ripple'));
+      new CustomCursor();
+      new ThreeDEffects();
+      new AnimationObserver();
+      new CounterAnimator();
+
+      const canvas = document.getElementById('particles-canvas');
+      if (canvas) this.particleSystem = new ParticleSystem(canvas);
+    });
+  }
+
+  setupErrorBoundaries() {
+    window.addEventListener('error', (event) => {
+      console.error('Unhandled runtime error:', event.error || event.message);
+    });
+    window.addEventListener('unhandledrejection', (event) => {
+      console.error('Unhandled promise rejection:', event.reason);
+    });
+    window.addEventListener('pagehide', () => {
+      if (this.particleSystem) this.particleSystem.destroy();
+    }, { once: true });
   }
 
   async loadData() {

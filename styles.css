@@ -419,6 +419,11 @@ button {
   50% { transform: translateX(-50%) translateY(-8px); }
 }
 
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 /* ==================== Utility Classes ==================== */
 .gpu-accelerated,
 .card-3d,
@@ -1079,6 +1084,7 @@ button {
   opacity: 0.22;
   z-index: var(--z-particles);
   pointer-events: none;
+  will-change: transform;
 }
 
 .hero-content {
@@ -1087,6 +1093,7 @@ button {
   text-align: center;
   max-width: 800px;
   animation: slideInUp 0.8s ease forwards;
+  will-change: transform;
 }
 
 .hero-avatar {
@@ -1110,12 +1117,14 @@ button {
 .hero-title {
   font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 800;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-primary));
+  background-size: 220% 220%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 0.5rem;
   line-height: 1.1;
+  animation: gradientShift 8s ease infinite;
 }
 
 .hero-subtitle {
@@ -1269,6 +1278,8 @@ button {
 /* ==================== Section Base ==================== */
 .section {
   padding: 5rem 2rem;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
 }
 
 .container {
@@ -1305,6 +1316,7 @@ button {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease;
+  transition-delay: var(--stagger-delay, 0ms);
 }
 
 .animate-on-scroll.animated {
@@ -1548,13 +1560,27 @@ button {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: all var(--transition-spring);
+  transition: opacity var(--transition-smooth), transform var(--transition-spring), border-color var(--transition-smooth), box-shadow var(--transition-smooth), max-height var(--transition-smooth), margin var(--transition-smooth), padding var(--transition-smooth);
+  transform-style: preserve-3d;
+  contain: layout paint style;
+  max-height: 1000px;
 }
 
 .project-card:hover {
   border-color: var(--accent-primary);
   box-shadow: var(--shadow-glow), 0 20px 40px rgba(0, 0, 0, 0.2);
-  transform: translateY(-5px);
+  transform: translateY(-5px) rotateX(2deg) rotateY(-2deg);
+}
+
+.project-card.is-filtered-out {
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+  max-height: 0;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
 }
 
 .project-image {
@@ -1684,6 +1710,7 @@ button {
   border-radius: var(--radius-md);
   padding: 1.5rem;
   transition: var(--transition-smooth);
+  contain: layout paint style;
 }
 
 .activity-card:hover {
