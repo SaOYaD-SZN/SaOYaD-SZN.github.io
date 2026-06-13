@@ -1,5 +1,5 @@
 // Service Worker for PWA Support
-const CACHE_NAME = 'saoyad-portfolio-v2';
+const CACHE_NAME = 'saoyad-portfolio-v3';
 const urlsToCache = [
   '/',
   '/index.html',
