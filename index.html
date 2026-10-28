@@ -3,408 +3,451 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SaOYaD - Full-Stack Developer & Linux Enthusiast. Explore my premium portfolio, cutting-edge projects, and GitHub contributions. Built with modern web technologi[...]">
-  <meta name="keywords" content="SaOYaD, Developer, Portfolio, GitHub, JavaScript, Full-Stack, Web Developer, Linux, Modern Web Design, AI, Web3">
+  <title>SaOYaD | Developer Portfolio</title>
+  <meta name="description" content="SaOYaD is a developer from Bangladesh exploring Python, JavaScript, Linux, and full-stack projects through real, hands-on work.">
+  <meta name="keywords" content="SaOYaD, SaOYaD developer, SaOYaD GitHub, SaOYaD programmer, SaOYaD Bangladesh, SaOYaD portfolio, SaOYaD Python, SaOYaD JavaScript">
   <meta name="author" content="SaOYaD">
-  <meta name="theme-color" content="#1A0B2E">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="theme-color" content="#0b0d17">
+  <link rel="canonical" href="https://saoyad-szn.github.io/">
 
-  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://SaOYaD-SZN.github.io/">
-  <meta property="og:title" content="SaOYaD - Premium Portfolio 2025">
-  <meta property="og:description" content="Full-Stack Developer & Linux Enthusiast. Explore my premium portfolio and cutting-edge projects.">
-  <meta property="og:image" content="https://SaOYaD-SZN.github.io/logo.avif">
+  <meta property="og:url" content="https://saoyad-szn.github.io/">
+  <meta property="og:title" content="SaOYaD | Developer Portfolio">
+  <meta property="og:description" content="Python, JavaScript, Linux, and full-stack projects from SaOYaD.">
+  <meta property="og:image" content="https://saoyad-szn.github.io/logo.avif">
+  <meta property="og:site_name" content="SaOYaD">
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://SaOYaD-SZN.github.io/">
-  <meta property="twitter:title" content="SaOYaD - Premium Portfolio 2025">
-  <meta property="twitter:description" content="Full-Stack Developer & Linux Enthusiast. Explore my premium portfolio and cutting-edge projects.">
-  <meta property="twitter:image" content="https://SaOYaD-SZN.github.io/logo.avif">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://saoyad-szn.github.io/">
+  <meta name="twitter:title" content="SaOYaD | Developer Portfolio">
+  <meta name="twitter:description" content="Python, JavaScript, Linux, and full-stack projects from SaOYaD.">
+  <meta name="twitter:image" content="https://saoyad-szn.github.io/logo.avif">
 
-  <!-- Content Security Policy -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://[...]">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https://avatars.githubusercontent.com https://raw.githubusercontent.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';">
 
-  <!-- PWA Support -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/avif" href="logo.avif">
   <link rel="apple-touch-icon" href="logo.avif">
 
-  <!-- Preconnect for Performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.github.com">
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 
-  <title>SaOYaD - Premium Portfolio 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Critical CSS -->
   <style>
-    body { margin: 0; background: #1A0B2E; color: #E6E6FA; }
-    .loading-screen { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #1A0B2E; z-index: 9999; }
-    .hero-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-    /* Quick accessibility focus for keyboard users */
+    :root {
+      --bg: #090b12;
+      --bg-soft: #101827;
+      --bg-panel: rgba(15, 18, 32, 0.72);
+      --bg-panel-strong: rgba(18, 23, 39, 0.92);
+      --text: #edf2ff;
+      --muted: #b4bfd5;
+      --muted-strong: #dfe8ff;
+      --accent: #bca7ff;
+      --accent-strong: #8ea3ff;
+      --accent-soft: rgba(188, 167, 255, 0.18);
+      --line: rgba(167, 179, 218, 0.18);
+      --success: #9ae6b4;
+      --warning: #f6d365;
+      --shadow: 0 20px 45px rgba(9, 11, 18, 0.45);
+      --radius: 22px;
+      --max-width: 1180px;
+      --transition: 220ms ease;
+      color-scheme: dark;
+    }
+
+    [data-theme="pastel"] {
+      --bg: #f3f0ff;
+      --bg-soft: #efe7ff;
+      --bg-panel: rgba(255, 255, 255, 0.8);
+      --bg-panel-strong: rgba(255, 255, 255, 0.9);
+      --text: #1d2433;
+      --muted: #505d7a;
+      --muted-strong: #2c3446;
+      --accent: #7b61ff;
+      --accent-strong: #5d48d8;
+      --accent-soft: rgba(123, 97, 255, 0.12);
+      --line: rgba(85, 96, 136, 0.12);
+      --shadow: 0 20px 45px rgba(74, 60, 136, 0.14);
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top left, rgba(140, 132, 255, 0.18), transparent 28%), radial-gradient(circle at bottom right, rgba(107, 117, 255, 0.15), transparent 28%), var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background 220ms ease, color 220ms ease;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button, input { font: inherit; }
+
+    .skip-to-content {
+      position: fixed; left: 1rem; top: -3.5rem; padding: 0.75rem 1rem; background: var(--accent); color: #0b0d17; border-radius: 0 0 12px 12px; z-index: 2000; transition: top var(--transition); font-weight: 700;
+    }
     .skip-to-content:focus { top: 0; }
+    .container { width: min(var(--max-width), calc(100% - 2rem)); margin: 0 auto; position: relative; z-index: 1; }
+    .section { position: relative; padding: 5.5rem 0; }
+    .section-title { margin: 0 0 2rem; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.1; letter-spacing: -0.05em; }
+    .eyebrow { display: inline-block; font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 1rem; }
+    .panel { background: var(--bg-panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+
+    .navbar { position: sticky; top: 0; z-index: 1200; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(9, 11, 18, 0.52); border-bottom: 1px solid transparent; transition: background var(--transition), border var(--transition), box-shadow var(--transition); }
+    [data-theme="pastel"] .navbar { background: rgba(243, 240, 255, 0.6); }
+    .navbar.scrolled { background: rgba(9, 11, 18, 0.76); border-bottom-color: var(--line); box-shadow: 0 10px 30px rgba(0,0,0,0.18); }
+    [data-theme="pastel"] .navbar.scrolled { background: rgba(243, 240, 255, 0.82); }
+    .nav-container { width: min(var(--max-width), calc(100% - 2rem)); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; min-height: 4.6rem; }
+    .nav-logo { display: inline-flex; align-items: center; gap: 0.75rem; font-weight: 800; letter-spacing: -0.05em; font-size: 1.25rem; }
+    .nav-logo-mark { width: 2.5rem; height: 2.5rem; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, rgba(188,167,255,0.2), rgba(142,163,255,0.3)); border: 1px solid var(--line); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 700; }
+    .nav-menu { list-style: none; display: flex; align-items: center; gap: 0.3rem; padding: 0; margin: 0; }
+    .nav-link { color: var(--muted); padding: 0.7rem 0.8rem; border-radius: 999px; font-size: 0.92rem; font-weight: 600; transition: color var(--transition), background var(--transition); position: relative; }
+    .nav-link:hover, .nav-link.active { color: var(--text); background: rgba(255,255,255,0.02); }
+    .nav-link.active::after { content: ""; position: absolute; left: 0.8rem; right: 0.8rem; bottom: 0.2rem; height: 2px; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent-strong)); }
+    .nav-social { margin-left: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
+    .icon-button, .mini-button { width: 2.4rem; height: 2.4rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); background: rgba(255,255,255,0.02); color: var(--text); transition: transform var(--transition), border-color var(--transition), background var(--transition); }
+    .icon-button:hover, .icon-button:focus-visible, .mini-button:hover, .mini-button:focus-visible { transform: translateY(-2px); border-color: rgba(188,167,255,0.6); background: var(--accent-soft); outline: none; }
+    .hamburger { display: none; width: 2.8rem; height: 2.8rem; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,0.02); color: var(--text); align-items: center; justify-content: center; flex-direction: column; gap: 0.28rem; cursor: pointer; }
+    .hamburger span { width: 1.15rem; height: 2px; border-radius: 999px; background: currentColor; display: block; transition: transform var(--transition), opacity var(--transition); }
+    .hamburger.active span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .hero { position: relative; padding: 5.5rem 0 4rem; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.25fr 0.85fr; gap: 2rem; align-items: center; position: relative; z-index: 1; }
+    .hero-visual { position: relative; min-height: 28rem; display: flex; align-items: center; justify-content: center; }
+    .terminal-window { width: min(100%, 31rem); border-radius: 1.5rem; background: rgba(10, 12, 20, 0.72); border: 1px solid var(--line); box-shadow: var(--shadow); overflow: hidden; position: relative; transform: perspective(1200px) rotateX(6deg) rotateY(-8deg); }
+    .terminal-bar { display: flex; align-items: center; gap: 0.5rem; padding: 0.9rem 1rem; border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.02); }
+    .terminal-dot { width: 0.72rem; height: 0.72rem; border-radius: 50%; background: rgba(255,255,255,0.35); }
+    .terminal-dot:nth-child(1) { background: #ff5f57; }
+    .terminal-dot:nth-child(2) { background: #ffbd2e; }
+    .terminal-dot:nth-child(3) { background: #28c840; }
+    .terminal-body { padding: 1.35rem 1.2rem 1.1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; color: var(--muted-strong); background: linear-gradient(180deg, rgba(14,18,30,0.92), rgba(15,18,30,0.82)); }
+    .line { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.5rem; }
+    .line.code { color: #d8d7ff; }
+    .line.green { color: #9ae6b4; }
+    .line.purple { color: #bca7ff; }
+    .line.gray { color: #b3bdd8; }
+    .status-pill { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.8rem; border-radius: 999px; border: 1px solid rgba(154, 230, 180, 0.28); background: rgba(154, 230, 180, 0.08); color: var(--success); font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+    .status-pill::before { content: ""; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: currentColor; box-shadow: 0 0 12px currentColor; }
+
+    .hero-copy h1 { font-size: clamp(3rem, 6vw, 6rem); line-height: 0.95; letter-spacing: -0.08em; margin: 0 0 1rem; }
+    .hero-copy .highlight { background: linear-gradient(135deg, var(--accent), var(--accent-strong) 55%, #d5d9ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-subtitle { display: inline-flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; min-height: 2rem; color: var(--muted-strong); font-weight: 600; font-size: 1.1rem; }
+    .typewriter-text { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: 700; white-space: nowrap; }
+    .cursor { display: inline-block; width: 0.08em; height: 1em; background: var(--accent); vertical-align: -0.1em; animation: blink 1s steps(1) infinite; margin-left: 0.16rem; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .hero-copy p { max-width: 40rem; margin: 0 0 2rem; color: var(--muted); font-size: 1.08rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.6rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.7rem; border-radius: 999px; border: 1px solid var(--line); min-height: 3.2rem; padding: 0.8rem 1.2rem; font-weight: 700; transition: transform var(--transition), border-color var(--transition), background var(--transition), box-shadow var(--transition); cursor: pointer; }
+    .btn:hover, .btn:focus-visible { transform: translateY(-2px); outline: none; }
+    .btn-primary { background: linear-gradient(135deg, rgba(188,167,255,0.18), rgba(142,163,255,0.18)); color: var(--text); border-color: rgba(188,167,255,0.35); box-shadow: 0 12px 26px rgba(140, 132, 255, 0.16); }
+    .btn-secondary { background: rgba(255,255,255,0.02); color: var(--text); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; color: var(--muted); font-size: 0.9rem; }
+    .hero-meta span { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 999px; padding: 0.5rem 0.8rem; }
+    .hero-meta .dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px rgba(188,167,255,0.8); }
+    .chip-grid { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.4rem; }
+    .chip { padding: 0.45rem 0.75rem; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); color: var(--muted-strong); font-size: 0.8rem; font-weight: 600; }
+
+    .about-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 2rem; align-items: center; }
+    .portrait-card { position: relative; padding: 1.25rem; min-height: 24rem; overflow: hidden; }
+    .portrait-card::before { content: ""; position: absolute; inset: 1.5rem; border-radius: 1.5rem; background: linear-gradient(135deg, rgba(188,167,255,0.18), rgba(142,163,255,0.15)); border: 1px solid var(--line); z-index: 0; }
+    .portrait-img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; border-radius: 1.25rem; border: 1px solid var(--line); background: rgba(0,0,0,0.12); }
+    .about-text { color: var(--muted); font-size: 1.03rem; }
+    .about-text p { margin: 0 0 1rem; }
+    .about-points { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; margin-top: 1.5rem; }
+    .about-point { border: 1px solid var(--line); background: rgba(255,255,255,0.02); border-radius: 1rem; padding: 0.9rem 1rem; color: var(--muted-strong); font-weight: 600; }
+
+    .skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+    .skill-card { padding: 1.4rem; position: relative; overflow: hidden; }
+    .skill-card::before { content: ""; position: absolute; inset: auto 0 0 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+    .skill-card h3 { margin: 0 0 1.1rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.7rem; }
+    .skill-card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .skill-card li { padding: 0.5rem 0.72rem; border-radius: 999px; background: rgba(255,255,255,0.02); border: 1px solid var(--line); color: var(--muted-strong); font-size: 0.82rem; font-weight: 600; }
+
+    .projects-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+    .project-card { position: relative; overflow: hidden; min-height: 23rem; padding: 0; display: flex; flex-direction: column; }
+    .project-visual { position: relative; min-height: 11rem; padding: 1rem; display: flex; align-items: flex-end; justify-content: space-between; background: linear-gradient(135deg, rgba(188,167,255,0.24), rgba(142,163,255,0.16), rgba(13,18,30,0.12)); border-bottom: 1px solid var(--line); }
+    .project-badge { padding: 0.38rem 0.7rem; border-radius: 999px; background: rgba(10,12,20,0.28); border: 1px solid rgba(255,255,255,0.08); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; backdrop-filter: blur(8px); }
+    .project-letter { width: 3.5rem; height: 3.5rem; border-radius: 1rem; display: grid; place-items: center; background: rgba(9,11,18,0.3); border: 1px solid rgba(255,255,255,0.08); font-size: 1.4rem; font-weight: 800; color: var(--text); }
+    .project-meta { display: flex; flex-direction: column; gap: 0.9rem; padding: 1.2rem 1.1rem 1.25rem; flex: 1; }
+    .project-meta h3 { margin: 0; font-size: 1.32rem; line-height: 1.2; }
+    .project-meta p { margin: 0; color: var(--muted); font-size: 0.94rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { display: inline-flex; align-items: center; padding: 0.4rem 0.6rem; border-radius: 999px; background: rgba(255,255,255,0.02); border: 1px solid var(--line); color: var(--muted-strong); font-size: 0.72rem; font-weight: 600; }
+    .project-actions { display: flex; gap: 0.7rem; margin-top: auto; padding-top: 0.1rem; }
+    .mini-link { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--text); font-size: 0.9rem; font-weight: 700; padding: 0.6rem 0.8rem; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); }
+
+    .journey { display: grid; gap: 1.2rem; }
+    .timeline-item { position: relative; padding: 1.2rem 1.3rem 1.2rem 1.6rem; border-left: 2px solid rgba(188,167,255,0.38); margin-left: 0.5rem; background: rgba(255,255,255,0.01); border-radius: 0 1rem 1rem 0; }
+    .timeline-item::before { content: ""; position: absolute; left: -0.56rem; top: 1.3rem; width: 0.9rem; height: 0.9rem; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-strong)); box-shadow: 0 0 18px rgba(188,167,255,0.8); }
+    .timeline-item time { display: inline-block; margin-bottom: 0.45rem; color: var(--accent); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    .timeline-item h3 { margin: 0 0 0.4rem; font-size: 1.18rem; }
+    .timeline-item p { margin: 0; color: var(--muted); }
+
+    .activity-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+    .stat-card { padding: 1.25rem; min-height: 8rem; }
+    .stat-card .label { color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.11em; font-weight: 700; }
+    .stat-card .value { margin-top: 0.8rem; font-size: clamp(1.8rem, 2vw, 2.7rem); line-height: 1; font-weight: 800; letter-spacing: -0.06em; }
+    .language-list { display: grid; gap: 0.8rem; margin-top: 1rem; }
+    .lang-row { display: grid; grid-template-columns: 110px 1fr 52px; gap: 0.75rem; align-items: center; }
+    .lang-name { font-weight: 600; color: var(--muted-strong); }
+    .lang-bar { position: relative; height: 0.62rem; border-radius: 999px; background: rgba(255,255,255,0.04); border: 1px solid var(--line); overflow: hidden; }
+    .lang-fill { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-strong)); width: 0; transition: width 500ms ease; }
+    .lang-value { color: var(--muted); font-weight: 700; text-align: right; }
+
+    .contact-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 1.2rem; align-items: stretch; }
+    .contact-card, .contact-panel { padding: 1.5rem; }
+    .contact-card h3, .contact-panel h3 { margin-top: 0; font-size: 1.5rem; }
+    .contact-card p, .contact-panel p { color: var(--muted); margin-bottom: 1.3rem; }
+    .contact-links { display: grid; gap: 0.85rem; }
+    .contact-link { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.9rem 1rem; border: 1px solid var(--line); border-radius: 1rem; background: rgba(255,255,255,0.02); color: var(--muted-strong); font-weight: 700; transition: border-color var(--transition), transform var(--transition), background var(--transition); }
+    .contact-link:hover, .contact-link:focus-visible { border-color: rgba(188,167,255,0.45); background: var(--accent-soft); transform: translateY(-2px); outline: none; }
+    .contact-link-left { display: inline-flex; align-items: center; gap: 0.8rem; }
+    .contact-link svg { width: 1.1rem; height: 1.1rem; }
+    .contact-panel { display: flex; flex-direction: column; justify-content: center; }
+    .status-box { display: grid; gap: 0.8rem; margin-top: 1rem; }
+    .status-line { display: flex; justify-content: space-between; gap: 1rem; border: 1px solid var(--line); background: rgba(255,255,255,0.02); border-radius: 0.9rem; padding: 0.8rem 0.9rem; color: var(--muted-strong); font-weight: 600; }
+    .status-line strong { color: var(--text); }
+
+    .footer { padding: 2rem 0 2.5rem; border-top: 1px solid var(--line); background: rgba(8, 10, 17, 0.35); }
+    .footer-grid { width: min(var(--max-width), calc(100% - 2rem)); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .footer-brand { display: inline-flex; align-items: center; gap: 0.8rem; font-weight: 800; letter-spacing: -0.05em; }
+    .footer-links { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; color: var(--muted); font-weight: 600; }
+    .footer-links a:hover, .footer-links a:focus-visible { color: var(--text); outline: none; }
+    .footer-social { display: flex; gap: 0.6rem; }
+    .copy-note { width: min(var(--max-width), calc(100% - 2rem)); margin: 1.2rem auto 0; padding-top: 1rem; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; color: var(--muted); font-size: 0.88rem; }
+
+    .back-to-top { position: fixed; right: 1.5rem; bottom: 1.5rem; width: 2.8rem; height: 2.8rem; border: 1px solid rgba(188,167,255,0.4); border-radius: 50%; background: rgba(188,167,255,0.12); color: var(--text); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 14px 30px rgba(70, 80, 150, 0.28); opacity: 0; visibility: hidden; transform: translateY(18px); transition: opacity var(--transition), transform var(--transition), visibility var(--transition); z-index: 1400; }
+    .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    @media (max-width: 980px) {
+      .nav-menu { position: absolute; right: 1rem; top: calc(100% + 0.5rem); width: min(20rem, calc(100vw - 2rem)); flex-direction: column; align-items: stretch; padding: 1rem; border: 1px solid var(--line); border-radius: 1.2rem; background: rgba(10, 12, 20, 0.96); box-shadow: var(--shadow); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: opacity var(--transition), visibility var(--transition), transform var(--transition); }
+      .nav-menu.active { opacity: 1; visibility: visible; transform: translateY(0); }
+      .hamburger { display: inline-flex; }
+      .hero-grid, .about-grid, .contact-grid, .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+      .activity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .nav-container { min-height: 4.2rem; }
+      .section { padding: 4.5rem 0; }
+      .hero { padding-top: 4rem; }
+      .activity-grid { grid-template-columns: 1fr; }
+      .hero-copy h1 { font-size: 2.8rem; }
+      .about-points { grid-template-columns: 1fr; }
+      .lang-row { grid-template-columns: 1fr; }
+      .lang-value { text-align: left; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    }
   </style>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- Styles (non-blocking preload to improve first paint) -->
-  <link rel="preload" href="styles.css" as="style" onload="this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="styles.css"></noscript>
-
-  <!-- JSON-LD Schema Markup -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "SaOYaD",
-    "url": "https://SaOYaD-SZN.github.io",
-    "image": "https://SaOYaD-SZN.github.io/logo.avif",
-    "sameAs": [
-      "https://github.com/SaOYaD-SZN"
-    ],
-    "jobTitle": "Full-Stack Developer",
-    "description": "Full-Stack Developer & Linux Enthusiast",
-    "knowsAbout": ["JavaScript", "React", "Node.js", "Python", "Web Development", "Linux"]
-  }
-  </script>
 </head>
 <body>
-  <!-- Skip to Content (Accessibility) -->
   <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
-  <!-- Scroll Progress Indicator -->
-  <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress"></div>
-
-  <!-- Loading Screen -->
-  <div class="loading-screen" role="alert" aria-live="polite">
-    <div class="loader"></div>
-    <p class="loading-text">Loading Experience...</p>
-  </div>
-
-  <!-- Theme Selector -->
-  <div class="theme-selector">
-    <button class="theme-toggle" aria-label="Select theme" aria-expanded="false" aria-controls="theme-panel" title="Change Theme">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="4"/>
-        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-      </svg>
-    </button>
-    <div class="theme-panel" id="theme-panel" role="dialog" aria-label="Theme selection">
-      <p class="theme-panel-title">Choose Theme</p>
-      <div class="theme-options">
-        <button class="theme-option" data-theme="dark" aria-label="Dark theme" aria-pressed="false">
-          <span class="theme-preview" style="background: linear-gradient(135deg, #1A0B2E 50%, #FFB6C1 100%)"></span>
-          <span class="theme-label">Dark</span>
-        </button>
-        <button class="theme-option" data-theme="cyberpunk" aria-label="Cyberpunk theme" aria-pressed="false">
-          <span class="theme-preview" style="background: linear-gradient(135deg, #0D0221 50%, #00F0FF 100%)"></span>
-          <span class="theme-label">Cyberpunk</span>
-        </button>
-        <button class="theme-option" data-theme="neon" aria-label="Neon Nights theme" aria-pressed="false">
-          <span class="theme-preview" style="background: linear-gradient(135deg, #0A0E27 50%, #B537F2 100%)"></span>
-          <span class="theme-label">Neon Nights</span>
-        </button>
-        <button class="theme-option" data-theme="pastel" aria-label="Pastel Dreams theme" aria-pressed="false">
-          <span class="theme-preview" style="background: linear-gradient(135deg, #FFF5F7 50%, #FFB6C1 100%)"></span>
-          <span class="theme-label">Pastel</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Back to Top Button -->
-  <button class="back-to-top" aria-label="Scroll to top" title="Back to Top">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="12" y1="19" x2="12" y2="5"></line>
-      <polyline points="5 12 12 5 19 12"></polyline>
-    </svg>
-  </button>
-
-  <!-- Animated Background -->
-  <div class="animated-bg" aria-hidden="true"></div>
-
-  <!-- Floating Shapes Background -->
-  <div class="floating-shapes" aria-hidden="true">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
-    <div class="shape shape-4"></div>
-    <div class="shape shape-5"></div>
-  </div>
-
-  <!-- Particle Canvas -->
-  <canvas id="particles-canvas" aria-hidden="true"></canvas>
-
-  <!-- Custom Cursor -->
-  <div class="custom-cursor" aria-hidden="true">
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
-  </div>
-
-  <!-- Decorative Stars -->
-  <div class="decorative-stars" aria-hidden="true">
-    <svg class="star star-1" width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <path d="M10 0L12.2451 7.75486L20 10L12.2451 12.2451L10 20L7.75486 12.2451L0 10L7.75486 7.75486L10 0Z" fill="#FFB6C1" opacity="0.6"/>
-    </svg>
-    <svg class="star star-2" width="15" height="15" viewBox="0 0 20 20" fill="none">
-      <path d="M10 0L12.2451 7.75486L20 10L12.2451 12.2451L10 20L7.75486 12.2451L0 10L7.75486 7.75486L10 0Z" fill="#E6E6FA" opacity="0.6"/>
-    </svg>
-    <svg class="star star-3" width="18" height="18" viewBox="0 0 20 20" fill="none">
-      <path d="M10 0L12.2451 7.75486L20 10L12.2451 12.2451L10 20L7.75486 12.2451L0 10L7.75486 7.75486L10 0Z" fill="#DDA0DD" opacity="0.6"/>
-    </svg>
-    <svg class="star star-4" width="12" height="12" viewBox="0 0 20 20" fill="none">
-      <path d="M10 0L12.2451 7.75486L20 10L12.2451 12.2451L10 20L7.75486 12.2451L0 10L7.75486 7.75486L10 0Z" fill="#98FF98" opacity="0.6"/>
-    </svg>
-    <svg class="star star-5" width="16" height="16" viewBox="0 0 20 20" fill="none">
-      <path d="M10 0L12.2451 7.75486L20 10L12.2451 12.2451L10 20L7.75486 12.2451L0 10L7.75486 7.75486L10 0Z" fill="#FFDAB9" opacity="0.6"/>
-    </svg>
-  </div>
-
-  <!-- Navigation Bar -->
-  <nav class="navbar" role="navigation" aria-label="Main navigation">
-    <div class="nav-scroll-progress"></div>
+  <nav class="navbar" aria-label="Main navigation">
     <div class="nav-container">
-      <a href="#" class="nav-logo" aria-label="Home">
-        <img src="logo.avif" alt="SaOYaD Logo" width="40" height="40" loading="lazy" decoding="async" fetchpriority="low">
+      <a href="#home" class="nav-logo" aria-label="SaOYaD home">
+        <span class="nav-logo-mark">S</span>
         <span>SaOYaD</span>
       </a>
-
-      <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
       </button>
-
       <ul class="nav-menu" role="menubar">
-        <li role="none"><a href="#home" class="nav-link active" role="menuitem">Home</a></li>
-        <li role="none"><a href="#about" class="nav-link" role="menuitem">About</a></li>
-        <li role="none"><a href="#skills" class="nav-link" role="menuitem">Skills</a></li>
-        <li role="none"><a href="#projects" class="nav-link" role="menuitem">Projects</a></li>
-        <li role="none"><a href="#experience" class="nav-link" role="menuitem">Experience</a></li>
-        <li role="none"><a href="#activity" class="nav-link" role="menuitem">Activity</a></li>
-        <li role="none"><a href="#contact" class="nav-link" role="menuitem">Contact</a></li>
-        <li role="none" class="nav-divider"></li>
-        <li role="none" class="nav-social-item">
-          <a href="https://github.com/SaOYaD-SZN" target="_blank" rel="noopener noreferrer" class="nav-social-link" aria-label="GitHub Profile" title="GitHub">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.7[...]"/>
-            </svg>
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#journey" class="nav-link">Journey</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li class="nav-social" aria-label="Social links">
+          <a href="https://github.com/SaOYaD-SZN" class="icon-button" target="_blank" rel="noreferrer noopener" aria-label="GitHub profile">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.11.82-.26.82-.577v-2.17c-3.338.726-4.043-1.415-4.043-1.415-.546-1.386-1.333-1.756-1.333-1.756-1.09-.744.082-.729.082-.729 1.204.085 1.838 1.237 1.838 1.237 1.07 1.835 2.808 1.305 3.492.998.108-.776.418-1.305.762-1.605-2.665-.302-5.467-1.334-5.467-5.93 0-1.31.468-2.384 1.236-3.22-.124-.303-.536-1.522.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 0 1 6.006 0c2.29-1.552 3.297-1.23 3.297-1.23.654 1.654.242 2.873.118 3.176.77.836 1.234 1.91 1.234 3.22 0 4.61-2.807 5.624-5.478 5.92.43.372.814 1.103.814 2.223v3.293c0 .318.217.694.825.576C20.565 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
           </a>
         </li>
       </ul>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section id="home" class="hero-section" role="banner">
-    <div class="fluid-background" aria-hidden="true"></div>
-    <div class="hero-content">
-      <!-- Content will be dynamically loaded -->
-    </div>
-    <div class="scroll-indicator" aria-hidden="true">
-      <div class="scroll-mouse">
-        <div class="scroll-wheel"></div>
-      </div>
-      <p>Scroll Down</p>
-    </div>
-  </section>
-
-  <!-- Main Content -->
   <main id="main-content">
-    <!-- About Section -->
-    <section id="about" class="section about-section">
-      <div class="container">
-        <h2 class="section-title">About Me</h2>
-        <!-- Content will be dynamically loaded -->
-      </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="section skills-section">
-      <div class="container">
-        <h2 class="section-title">Skills &amp; Expertise</h2>
-        <!-- Content will be dynamically loaded -->
-      </div>
-    </section>
-
-    <!-- Experience Section (NEW) -->
-    <section id="experience" class="section experience-section">
-      <div class="container">
-        <h2 class="section-title">Experience &amp; Timeline</h2>
-        <div class="experience-timeline">
-          <!-- Content will be dynamically loaded -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="section projects-section">
-      <div class="container">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="projects-controls">
-          <div class="search-box">
-            <input type="search" id="project-search" placeholder="Search projects..." aria-label="Search projects">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.35-4.35"></path>
-            </svg>
+    <section id="home" class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="status-pill">Available for thoughtful projects</div>
+          <h1 id="hero-title">Building <span class="highlight">ideas</span> into something real.</h1>
+          <div class="hero-subtitle">
+            <span>I'm SaOYaD, a developer from Bangladesh exploring</span>
+            <span class="typewriter-text" aria-live="polite">Python</span>
+            <span class="cursor" aria-hidden="true"></span>
           </div>
-          <div class="filter-buttons" role="group" aria-label="Project filters">
-            <!-- Filters will be dynamically generated -->
+          <p>I'm a developer working across Python, JavaScript, Linux, and full-stack experimentation—building practical, useful tools and polished digital experiences with a hands-on approach.</p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">Explore My Projects</a>
+            <a href="https://github.com/SaOYaD-SZN" class="btn btn-secondary" target="_blank" rel="noreferrer noopener">Visit My GitHub</a>
+          </div>
+
+          <div class="hero-meta" aria-label="Key focus areas">
+            <span><i class="dot" aria-hidden="true"></i> Python</span>
+            <span><i class="dot" aria-hidden="true"></i> JavaScript</span>
+            <span><i class="dot" aria-hidden="true"></i> Linux</span>
+          </div>
+          <div class="chip-grid" aria-label="Technical interests">
+            <span class="chip">Git &amp; GitHub</span>
+            <span class="chip">Frontend</span>
+            <span class="chip">Backend</span>
+            <span class="chip">Dotfiles</span>
           </div>
         </div>
-        <div class="projects-grid" id="projects-grid">
-          <!-- Content will be dynamically loaded -->
-        </div>
-      </div>
-    </section>
 
-    <!-- GitHub Activity Dashboard -->
-    <section id="activity" class="section activity-section">
-      <div class="container">
-        <h2 class="section-title">GitHub Activity</h2>
-        <!-- Content will be dynamically loaded -->
-      </div>
-    </section>
-
-    <!-- Blog/Articles Section (NEW) -->
-    <section id="blog" class="section blog-section">
-      <div class="container">
-        <h2 class="section-title">Latest Insights</h2>
-        <div class="blog-grid">
-          <!-- Content will be dynamically loaded -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Achievements Section -->
-    <section id="achievements" class="section achievements-section">
-      <div class="container">
-        <h2 class="section-title">Achievements &amp; Certifications</h2>
-        <div class="achievements-grid">
-          <!-- Content will be dynamically loaded -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="section testimonials-section">
-      <div class="container">
-        <h2 class="section-title">What People Say</h2>
-        <div class="testimonials-carousel">
-          <!-- Content will be dynamically loaded -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Newsletter Section (NEW) -->
-    <section id="newsletter" class="section newsletter-section">
-      <div class="container">
-        <div class="newsletter-content">
-          <h2>Stay Updated</h2>
-          <p>Get notified about new projects, articles, and opportunities</p>
-          <form class="newsletter-form" id="newsletter-form" novalidate>
-            <input type="email" placeholder="Enter your email" required aria-required="true">
-            <button type="submit" class="btn btn-primary">Subscribe</button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section contact-section">
-      <div class="container">
-        <h2 class="section-title">Get In Touch</h2>
-        <div class="contact-content">
-          <div class="contact-info">
-            <h3>Let's Connect</h3>
-            <p>Feel free to reach out for collaborations or just a friendly chat!</p>
-            <div class="contact-links">
-              <!-- Links will be dynamically loaded -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="terminal-window panel">
+            <div class="terminal-bar">
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+            </div>
+            <div class="terminal-body">
+              <span class="line code">$ whoami</span>
+              <span class="line green">saoyad</span>
+              <span class="line code">$ stack</span>
+              <span class="line purple">python · javascript · linux · git</span>
+              <span class="line code">$ focus</span>
+              <span class="line gray">full-stack tooling, automation, interface design</span>
+              <span class="line green">[build] shipping real things</span>
             </div>
           </div>
-          <form class="contact-form" id="contact-form" novalidate>
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" required aria-required="true" placeholder="Your name">
-              <span class="form-error" role="alert"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container">
+        <span class="eyebrow">About</span>
+        <h2 class="section-title">A hands-on developer building in public.</h2>
+        <div class="about-grid">
+          <div class="portrait-card panel">
+            <img src="logo.avif" alt="SaOYaD avatar" class="portrait-img" loading="eager" decoding="async">
+          </div>
+          <div class="about-text">
+            <p>I'm SaOYaD, a developer from Bangladesh working across practical coding projects, Linux setup experiments, and browser-based tools. My interests sit at the intersection of Python, JavaScript, shell environments, and full-stack development.</p>
+            <p>Right now, I'm learning by shipping real projects: dotfiles, tooling, automation, and personal portfolio work that reflects both technical curiosity and a focus on clean, usable experiences.</p>
+            <p>I enjoy projects that blend code, systems, and design, and you can explore the work through my public repositories on GitHub.</p>
+            <div class="about-points">
+              <div class="about-point">Python + automation</div>
+              <div class="about-point">JavaScript + UI work</div>
+              <div class="about-point">Linux + custom setups</div>
+              <div class="about-point">GitHub-powered build flow</div>
             </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required aria-required="true" placeholder="your@email.com">
-              <span class="form-error" role="alert"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="container">
+        <span class="eyebrow">Skills</span>
+        <h2 class="section-title">Tools, languages, and systems I work with.</h2>
+        <div class="skills-grid" id="skills-grid"></div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="container">
+        <span class="eyebrow">Projects</span>
+        <h2 class="section-title">Selected work from GitHub.</h2>
+        <div class="projects-grid" id="projects-grid"></div>
+      </div>
+    </section>
+
+    <section id="journey" class="section">
+      <div class="container">
+        <span class="eyebrow">Journey</span>
+        <h2 class="section-title">A timeline of technical exploration.</h2>
+        <div class="journey" id="journey-timeline"></div>
+      </div>
+    </section>
+
+    <section id="activity" class="section">
+      <div class="container">
+        <span class="eyebrow">GitHub</span>
+        <h2 class="section-title">Activity overview.</h2>
+        <div class="activity-grid" id="activity-grid"></div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <span class="eyebrow">Contact</span>
+        <h2 class="section-title">Connect with SaOYaD.</h2>
+        <div class="contact-grid">
+          <div class="contact-card panel">
+            <h3>Let’s build something useful.</h3>
+            <p>For questions, collaboration, or a quick hello, the most direct path is through the GitHub profile and portfolio links below.</p>
+            <div class="contact-links" id="contact-links" aria-label="Contact links"></div>
+          </div>
+
+          <div class="contact-panel panel">
+            <h3>Current focus</h3>
+            <p>Building practical projects around Python, JavaScript, Linux customization, and polished developer-facing tooling.</p>
+            <div class="status-box">
+              <div class="status-line"><span>Primary interests</span> <strong>Python / JavaScript / Linux</strong></div>
+              <div class="status-line"><span>Projects</span> <strong>Public GitHub repos</strong></div>
+              <div class="status-line"><span>Deployment</span> <strong>GitHub Pages</strong></div>
             </div>
-            <div class="form-group">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" rows="5" required aria-required="true" placeholder="Your message..."></textarea>
-              <span class="form-error" role="alert"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">
-              <span>Send Message</span>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-              </svg>
-            </button>
-            <div class="form-status" role="status" aria-live="polite"></div>
-          </form>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer" role="contentinfo">
-    <div class="footer-content">
-      <div class="footer-grid">
-        <div class="footer-section">
-          <h3>SaOYaD</h3>
-          <p>Building the future, one line of code at a time.</p>
-        </div>
-        <div class="footer-section">
-          <h4>Quick Links</h4>
-          <ul class="footer-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h4>Connect</h4>
-          <div class="footer-social">
-            <!-- Social links will be dynamically loaded -->
-          </div>
-        </div>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand" aria-label="SaOYaD brand">
+        <span class="nav-logo-mark">S</span>
+        <span>SaOYaD</span>
       </div>
-      <div class="footer-bottom">
-        <p class="footer-message">Thanks For Visiting 💖</p>
-        <p class="footer-copyright">
-          &copy; 2025 SaOYaD. Built with passion and cutting-edge web technologies.
-        </p>
-      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#journey">Journey</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="footer-social" id="footer-social" aria-label="Footer social links"></div>
+    </div>
+    <div class="copy-note">
+      <span>© <span id="year"></span> SaOYaD</span>
+      <span>Built with GitHub Pages, HTML, CSS, and JavaScript.</span>
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="script.js" defer></script>
+  <button class="back-to-top" type="button" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 15l7-7 7 7"></path>
+    </svg>
+  </button>
 
-  <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        try {
-          navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.info('Service Worker registered'))
-            .catch(err => console.warn('Service Worker registration failed:', err));
-        } catch (e) {
-          console.warn('Service Worker registration error:', e);
-        }
-      });
-    }
-  </script>
+  <script src="script.js" defer></script>
 </body>
 </html>
