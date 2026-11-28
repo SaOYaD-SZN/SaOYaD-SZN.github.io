@@ -37,6 +37,7 @@ The R151 release validation notes report **277 passing offline tests**. Live Dis
 ## Website features
 
 - Responsive project hub and flagship project case study
+- Original locally hosted SVG artwork for the hero and project covers, with no remote screenshot dependency
 - Browser-only toolbox: JSON formatter/minifier, text cleaner/counter, focus timer, and WCAG contrast checker
 - Project search, category filters and copy-clone controls
 - Interactive local portfolio terminal (does not execute operating-system commands)
