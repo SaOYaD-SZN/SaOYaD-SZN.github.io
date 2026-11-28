@@ -1,21 +1,397 @@
 (() => {
-"use strict";
-const C={user:"SaOYaD-SZN",api:"https://api.github.com",theme:"saoyad-theme",cache:"saoyad-github-data"};
-const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
-const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const url=v=>{try{const u=new URL(v);return["https:","http:"].includes(u.protocol)?u.href:null}catch{return null}};
-const compact=v=>new Intl.NumberFormat("en",{notation:"compact",maximumFractionDigits:1}).format(Number(v)||0);
-const setTheme=t=>{const value=t==="light"?"light":"dark";document.documentElement.dataset.theme=value;const themeMeta=$('meta[name="theme-color"]');if(themeMeta)themeMeta.content=value==="dark"?"#0b0912":"#f7f4fb";const b=$("#theme-toggle");if(b){const label=value==="dark"?"Switch to light theme":"Switch to dark theme";b.setAttribute("aria-label",label);b.title=label}try{localStorage.setItem(C.theme,value)}catch{}};
-const initTheme=()=>{let saved=null;try{saved=localStorage.getItem(C.theme)}catch{}setTheme(saved||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"));$("#theme-toggle")?.addEventListener("click",()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"))};
-const initNav=()=>{const b=$("#menu-toggle"),p=$("#primary-navigation");const close=()=>{p?.classList.remove("open");b?.setAttribute("aria-expanded","false");b?.setAttribute("aria-label","Open navigation")};b?.addEventListener("click",()=>{const open=!p.classList.contains("open");p.classList.toggle("open",open);b.setAttribute("aria-expanded",String(open));b.setAttribute("aria-label",open?"Close navigation":"Open navigation")});$(".nav-link").forEach(a=>a.addEventListener("click",close));if("IntersectionObserver"in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){$(".nav-link").forEach(link=>{const active=link.getAttribute("href")==="#"+entry.target.id;link.classList.toggle("active",active)})}}),{rootMargin:"-28% 0px -62% 0px"});$("main section[id]").forEach(section=>observer.observe(section))}document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});document.addEventListener("click",e=>{if(p?.classList.contains("open")&&!p.contains(e.target)&&!b?.contains(e.target))close()})};
-const initScroll=()=>{const h=$(".site-header"),top=$("#back-to-top"),bar=$("#reading-progress");let busy=false;const update=()=>{const y=scrollY;h?.classList.toggle("scrolled",y>12);top?.classList.toggle("visible",y>450);const max=document.documentElement.scrollHeight-innerHeight;if(bar)bar.style.width=(max>0?Math.min(100,y/max*100):0)+"%";busy=false};addEventListener("scroll",()=>{if(!busy){requestAnimationFrame(update);busy=true}},{passive:true});update();top?.addEventListener("click",()=>scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}))};
-let reposAll=[],filter="all";
-const applyFilters=()=>{const grid=$("#projects-grid");if(!grid)return;const q=($("#project-search")?.value||"").trim().toLowerCase();const found=reposAll.filter(r=>(filter==="all"||(r.language||"Other")===filter)&&[r.name,r.description,r.language,...(r.topics||[])].join(" ").toLowerCase().includes(q)).slice(0,9);if(!found.length){grid.innerHTML='<div class="project-empty">No projects match that search. Try another keyword or filter.</div>';return}grid.innerHTML=found.map(r=>{const language=r.language||"Project",description=r.description||"A public repository exploring a technical idea.",repoUrl=url(r.html_url),home=url(r.homepage),letter=(r.name||"R").replace(/[^a-z0-9]/gi,"").charAt(0).toUpperCase()||"R";let out='<article class="project-card panel"><div class="project-card-top"><span class="project-symbol">'+esc(letter)+'<span>.</span></span><span class="project-language">'+esc(language)+'</span></div><div class="project-card-body"><p class="project-overline">PUBLIC REPOSITORY</p><h3>'+esc(r.name)+'</h3><p>'+esc(description)+'</p><div class="project-tags">'+[language,...(Array.isArray(r.topics)?r.topics.slice(0,3):[])].slice(0,4).map(t=>"<span>"+esc(t)+"</span>").join("")+'</div><a class="project-link" href="'+repoUrl+'" target="_blank" rel="noopener noreferrer">View repository <span aria-hidden="true">↗</span></a>';if(home)out+='<a class="project-link" href="'+home+'" target="_blank" rel="noopener noreferrer">Open live project <span aria-hidden="true">↗</span></a>';return out+"</div></article>"}).join("")};
-const renderProjects=items=>{const grid=$("#projects-grid"),status=$("#projects-status");if(!grid)return;reposAll=items.filter(r=>!r.fork&&!r.archived&&url(r.html_url)).sort((a,b)=>new Date(b.pushed_at||b.updated_at||0)-new Date(a.pushed_at||a.updated_at||0));const langs=Array.from(new Set(reposAll.map(r=>r.language).filter(Boolean))).sort((a,b)=>a.localeCompare(b));const f=$("#project-filters");if(f){f.innerHTML='<button class="filter-button active" type="button" data-filter="all" aria-pressed="true">All work</button>'+langs.slice(0,5).map(l=>'<button class="filter-button" type="button" data-filter="'+esc(l)+'" aria-pressed="false">'+esc(l)+"</button>").join("");f.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.filter;f.querySelectorAll("button").forEach(x=>{const active=x===b;x.classList.toggle("active",active);x.setAttribute("aria-pressed",String(active))});applyFilters()}))}if(status)status.textContent=reposAll.length?"Showing "+Math.min(reposAll.length,9)+" of "+reposAll.length+" public projects · sorted by recent activity":"No public projects are available to display right now.";applyFilters()};
-const renderStats=(user,items,source)=>{const put=(key,val)=>{const n=$('[data-stat="'+key+'"]');if(n)n.textContent=compact(val)};put("repos",user.public_repos);put("followers",user.followers);put("following",user.following);const counts=new Map();items.forEach(r=>{if(r.language)counts.set(r.language,(counts.get(r.language)||0)+1)});const sorted=Array.from(counts.entries()).sort((a,b)=>b[1]-a[1]);put("languages",sorted.length);const list=$("#language-list"),count=$("#language-count");if(count)count.textContent=sorted.length+" LANGUAGES";if(list){if(!sorted.length)list.innerHTML='<p class="muted-copy">No language breakdown is available yet.</p>';else{const total=sorted.reduce((s,x)=>s+x[1],0);list.innerHTML=sorted.slice(0,6).map(x=>{const pct=Math.round(x[1]/total*100);return'<div class="language-row"><span class="language-name">'+esc(x[0])+'</span><span class="language-track"><span class="language-fill" style="width:'+pct+'%"></span></span><span class="language-value">'+pct+'%</span></div>'}).join("")}}const status=$("#github-status");if(status)status.textContent=source==="live"?"Updated from the public GitHub API.":"Showing the last successfully saved public profile snapshot."};
-const getJSON=async endpoint=>{const res=await fetch(endpoint,{headers:{Accept:"application/vnd.github+json"},signal:AbortSignal.timeout(9000)});if(!res.ok)throw Error("GitHub returned "+res.status);return res.json()};
-const loadGitHub=async()=>{const status=$("#github-status");try{const result=await Promise.all([getJSON(C.api+"/users/"+C.user),getJSON(C.api+"/users/"+C.user+"/repos?per_page=100&sort=updated")]);const user=result[0],items=result[1];if(!user||!Array.isArray(items))throw Error("Unexpected GitHub response");try{localStorage.setItem(C.cache,JSON.stringify({savedAt:Date.now(),user:user,repos:items}))}catch{}renderProjects(items);renderStats(user,items,"live")}catch(error){console.warn("GitHub data could not be refreshed:",error);let cached=null;try{cached=JSON.parse(localStorage.getItem(C.cache)||"null")}catch{}if(cached?.user&&Array.isArray(cached.repos)){renderProjects(cached.repos);renderStats(cached.user,cached.repos,"cache")}else{if(status)status.textContent="GitHub data is temporarily unavailable. Browse all repositories directly on GitHub.";const grid=$("#projects-grid");if(grid)grid.innerHTML='<div class="project-empty">Live projects could not be loaded. <a class="text-link" href="https://github.com/'+C.user+'?tab=repositories" target="_blank" rel="noopener noreferrer">Browse repositories ↗</a></div>';const search=$("#project-search");if(search)search.disabled=true;const filters=$("#project-filters");if(filters)filters.hidden=true}}};
-const initInstall=()=>{let prompt=null;const b=$("#install-button");addEventListener("beforeinstallprompt",e=>{e.preventDefault();prompt=e;if(b)b.hidden=false});b?.addEventListener("click",async()=>{if(!prompt)return;prompt.prompt();await prompt.userChoice;prompt=null;b.hidden=true})};
-const initWorker=()=>{if("serviceWorker"in navigator&&location.protocol==="https:")addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(e=>console.warn("Offline support unavailable:",e)))};
-document.addEventListener("DOMContentLoaded",()=>{const year=$("#year");if(year)year.textContent=String(new Date().getFullYear());initTheme();initNav();initScroll();$("#project-search")?.addEventListener("input",applyFilters);initInstall();initWorker();loadGitHub()});
+  "use strict";
+
+  const CONFIG = {
+    user: "SaOYaD-SZN",
+    api: "https://api.github.com",
+    themeKey: "saoyad-theme",
+    cacheKey: "saoyad-public-profile-v2"
+  };
+  const $ = selector => document.querySelector(selector);
+  const $$ = selector => Array.from(document.querySelectorAll(selector));
+  const repoUrls = {
+    hyprland: "https://github.com/SaOYaD-SZN/Hyprland-Dots",
+    neovim: "https://github.com/SaOYaD-SZN/Neovim-Dots",
+    wallpapers: "https://github.com/SaOYaD-SZN/Aesthetic-Wallpapers",
+    hoshiko: "https://github.com/SaOYaD-SZN/Hoshiko-bot"
+  };
+
+  const showToast = message => {
+    const toast = $("#toast");
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add("visible");
+    window.clearTimeout(showToast.timer);
+    showToast.timer = window.setTimeout(() => toast.classList.remove("visible"), 2200);
+  };
+
+  const setTheme = theme => {
+    const value = theme === "light" ? "light" : "dark";
+    document.documentElement.dataset.theme = value;
+    const meta = $('meta[name="theme-color"]');
+    if (meta) meta.content = value === "dark" ? "#0a0811" : "#f8f5fc";
+    const button = $("#theme-toggle");
+    if (button) {
+      button.setAttribute("aria-label", value === "dark" ? "Switch to light theme" : "Switch to dark theme");
+      button.title = value === "dark" ? "Switch to light theme" : "Switch to dark theme";
+    }
+    try { localStorage.setItem(CONFIG.themeKey, value); } catch {}
+  };
+
+  const initTheme = () => {
+    let saved = null;
+    try { saved = localStorage.getItem(CONFIG.themeKey); } catch {}
+    setTheme(saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+    $("#theme-toggle")?.addEventListener("click", () => {
+      setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+    });
+  };
+
+  const initNavigation = () => {
+    const toggle = $("#menu-toggle");
+    const panel = $("#nav-panel");
+    const close = () => {
+      panel?.classList.remove("open");
+      toggle?.setAttribute("aria-expanded", "false");
+      toggle?.setAttribute("aria-label", "Open menu");
+    };
+    toggle?.addEventListener("click", () => {
+      const open = !panel.classList.contains("open");
+      panel.classList.toggle("open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    });
+    $$(".nav-links a").forEach(link => link.addEventListener("click", close));
+    document.addEventListener("keydown", event => { if (event.key === "Escape") close(); });
+    document.addEventListener("click", event => {
+      if (panel?.classList.contains("open") && !panel.contains(event.target) && !toggle?.contains(event.target)) close();
+    });
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        $$(".nav-links a").forEach(link => {
+          const active = link.getAttribute("href") === "#" + entry.target.id;
+          link.classList.toggle("active", active);
+        });
+      }), { rootMargin: "-25% 0px -65% 0px" });
+      $$("main section[id]").forEach(section => observer.observe(section));
+    }
+  };
+
+  const initScroll = () => {
+    const header = $("#top");
+    const progress = $("#scroll-progress");
+    const back = $("#back-top");
+    let queued = false;
+    const update = () => {
+      const y = window.scrollY;
+      header?.classList.toggle("scrolled", y > 12);
+      back?.classList.toggle("visible", y > 420);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (progress) progress.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + "%";
+      queued = false;
+    };
+    window.addEventListener("scroll", () => {
+      if (!queued) { window.requestAnimationFrame(update); queued = true; }
+    }, { passive: true });
+    update();
+    back?.addEventListener("click", () => window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+    }));
+  };
+
+  const initProjectFilters = () => {
+    const cards = $$(".project-card");
+    const buttons = $$("#project-filters .filter");
+    const input = $("#project-search");
+    const empty = $("#no-results");
+    const status = $("#project-status");
+    let selected = "all";
+
+    const filter = () => {
+      const query = (input?.value || "").trim().toLowerCase();
+      let shown = 0;
+      cards.forEach(card => {
+        const categories = (card.dataset.categories || "").split(/\s+/);
+        const matchesCategory = selected === "all" || categories.includes(selected);
+        const haystack = (card.dataset.search + " " + card.dataset.name + " " + card.textContent).toLowerCase();
+        const visible = matchesCategory && haystack.includes(query);
+        card.hidden = !visible;
+        if (visible) shown++;
+      });
+      if (empty) empty.hidden = shown !== 0;
+      if (status) status.textContent = "Showing " + shown + " of " + cards.length + " featured projects.";
+    };
+
+    buttons.forEach(button => button.addEventListener("click", () => {
+      selected = button.dataset.filter;
+      buttons.forEach(item => {
+        const active = item === button;
+        item.classList.toggle("active", active);
+        item.setAttribute("aria-pressed", String(active));
+      });
+      filter();
+    }));
+    input?.addEventListener("input", filter);
+    document.addEventListener("keydown", event => {
+      if (event.key === "/" && !["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName)) {
+        event.preventDefault();
+        input?.focus();
+      }
+    });
+    filter();
+  };
+
+  const initCopyButtons = () => {
+    $$(".copy-command").forEach(button => button.addEventListener("click", async () => {
+      const command = "git clone " + button.dataset.clone;
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
+        await navigator.clipboard.writeText(command);
+        showToast("Clone command copied.");
+      } catch {
+        showToast("Clipboard unavailable in this browser.");
+      }
+    }));
+  };
+
+  const terminal = (() => {
+    const output = $("#terminal-output");
+    const form = $("#terminal-form");
+    const input = $("#terminal-input");
+    const commandLinks = {
+      hyprland: repoUrls.hyprland,
+      neovim: repoUrls.neovim,
+      wallpapers: repoUrls.wallpapers,
+      hoshiko: repoUrls.hoshiko
+    };
+    const addLine = (text, className = "") => {
+      if (!output) return;
+      const p = document.createElement("p");
+      if (className) p.className = className;
+      p.textContent = text;
+      output.appendChild(p);
+      output.scrollTop = output.scrollHeight;
+    };
+    const commands = {
+      help: () => {
+        addLine("Available commands:", "terminal-good");
+        addLine("  about       Who is SaOYaD?");
+        addLine("  focus       Current learning focus");
+        addLine("  setup       Show the workstation");
+        addLine("  projects    List featured repositories");
+        addLine("  open <name> Open a project: hyprland, neovim, wallpapers, hoshiko");
+        addLine("  github      Open the GitHub profile");
+        addLine("  contact     Show social links");
+        addLine("  theme       Switch dark / light mode");
+        addLine("  clear       Clear this terminal");
+      },
+      about: () => {
+        addLine("SaOYaD — student, builder, Linux enthusiast.");
+        addLine("Interested in clean, useful code and thoughtful digital spaces.");
+      },
+      focus: () => {
+        addLine("Learning JavaScript and full-stack development.");
+        addLine("Building with Python; exploring Linux, developer tools, and UI craft.");
+      },
+      setup: () => {
+        addLine("ARCH LINUX  /  HYPRLAND  /  NEOVIM");
+        addLine("ZSH + POWERLEVEL10K  /  VS CODE  /  GIT + GITHUB", "terminal-good");
+      },
+      projects: () => {
+        addLine("Featured work:");
+        addLine("  Hyprland-Dots · Neovim-Dots · Aesthetic-Wallpapers · Hoshiko-bot");
+        addLine("Use: open <name> to visit a repository.", "terminal-muted");
+      },
+      github: () => {
+        addLine("Opening github.com/SaOYaD-SZN …", "terminal-good");
+        window.open("https://github.com/SaOYaD-SZN", "_blank", "noopener,noreferrer");
+      },
+      contact: () => {
+        addLine("GitHub · Discord · YouTube · X · Reddit");
+        addLine("Scroll to the Connect section for the links.", "terminal-muted");
+        document.querySelector("#connect")?.scrollIntoView({ behavior: "smooth" });
+      },
+      theme: () => {
+        setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+        addLine("Theme switched.", "terminal-good");
+      },
+      clear: () => { if (output) output.replaceChildren(); }
+    };
+
+    const run = raw => {
+      const value = raw.trim();
+      if (!value) return;
+      addLine("$ " + value, "terminal-accent");
+      const parts = value.toLowerCase().split(/\s+/);
+      const name = parts[0];
+      if (name === "open") {
+        const key = parts.slice(1).join("-");
+        const known = Object.keys(commandLinks).find(k => k === key || (k === "hyprland" && key === "hyprland-dots") || (k === "neovim" && key === "neovim-dots") || (k === "wallpapers" && key === "aesthetic-wallpapers") || (k === "hoshiko" && key === "hoshiko-bot"));
+        if (!known) { addLine("Unknown project. Try: open hyprland | neovim | wallpapers | hoshiko", "terminal-error"); return; }
+        addLine("Opening " + known + " repository…", "terminal-good");
+        window.open(commandLinks[known], "_blank", "noopener,noreferrer");
+        return;
+      }
+      if (commands[name]) { commands[name](); return; }
+      addLine("Command not found: " + name + ". Type help to see available commands.", "terminal-error");
+    };
+
+    form?.addEventListener("submit", event => {
+      event.preventDefault();
+      run(input?.value || "");
+      if (input) input.value = "";
+    });
+    $$(".command-suggestions button").forEach(button => button.addEventListener("click", () => {
+      run(button.dataset.command || "");
+      input?.focus();
+    }));
+    $("#terminal-clear")?.addEventListener("click", () => { if (output) output.replaceChildren(); });
+    return { run };
+  })();
+
+  const formatRelative = dateString => {
+    const time = new Date(dateString).getTime();
+    if (!Number.isFinite(time)) return "";
+    const seconds = Math.max(0, Math.floor((Date.now() - time) / 1000));
+    if (seconds < 60) return "just now";
+    if (seconds < 3600) return Math.floor(seconds / 60) + "m ago";
+    if (seconds < 86400) return Math.floor(seconds / 3600) + "h ago";
+    if (seconds < 604800) return Math.floor(seconds / 86400) + "d ago";
+    return Math.floor(seconds / 604800) + "w ago";
+  };
+
+  const renderEvents = events => {
+    const list = $("#activity-list");
+    if (!list) return;
+    const relevant = events.filter(event => ["PushEvent", "CreateEvent", "WatchEvent", "ForkEvent", "IssuesEvent", "PullRequestEvent", "ReleaseEvent"].includes(event.type)).slice(0, 5);
+    if (!relevant.length) {
+      list.innerHTML = '<p class="activity-placeholder">No recent public events are available. Visit GitHub to explore the full activity history.</p>';
+      return;
+    }
+    const labels = {
+      PushEvent: ["P", "Pushed code"],
+      CreateEvent: ["+", "Created"],
+      WatchEvent: ["★", "Starred"],
+      ForkEvent: ["F", "Forked"],
+      IssuesEvent: ["!", "Issue activity"],
+      PullRequestEvent: ["↗", "Pull request"],
+      ReleaseEvent: ["R", "Published a release"]
+    };
+    list.replaceChildren();
+    relevant.forEach(event => {
+      const config = labels[event.type];
+      const row = document.createElement("div");
+      row.className = "activity-item";
+      const icon = document.createElement("span");
+      icon.className = "activity-icon";
+      icon.textContent = config[0];
+      const copy = document.createElement("div");
+      copy.className = "activity-copy";
+      const title = document.createElement("strong");
+      title.textContent = config[1] + " · " + (event.repo?.name || "GitHub");
+      const description = document.createElement("span");
+      const payload = event.payload || {};
+      if (event.type === "PushEvent") {
+        const commit = payload.commits?.[0];
+        description.textContent = commit?.message ? commit.message.split("\n")[0].slice(0, 100) : "Updated a repository";
+      } else if (event.type === "CreateEvent") {
+        description.textContent = "Created " + (payload.ref_type || "a resource") + (payload.ref ? " · " + payload.ref : "");
+      } else if (event.type === "IssuesEvent") {
+        description.textContent = payload.action + " an issue";
+      } else if (event.type === "PullRequestEvent") {
+        description.textContent = payload.action + " a pull request";
+      } else if (event.type === "ReleaseEvent") {
+        description.textContent = "Released " + (payload.release?.name || payload.action || "a version");
+      } else {
+        description.textContent = "Public activity on " + (event.repo?.name || "GitHub");
+      }
+      const date = document.createElement("time");
+      date.className = "activity-date";
+      date.dateTime = event.created_at || "";
+      date.textContent = formatRelative(event.created_at);
+      copy.append(title, description);
+      row.append(icon, copy, date);
+      list.appendChild(row);
+    });
+  };
+
+  const fetchJSON = async url => {
+    const response = await fetch(url, {
+      headers: { Accept: "application/vnd.github+json" },
+      signal: AbortSignal.timeout(9000)
+    });
+    if (!response.ok) throw new Error("GitHub API returned " + response.status);
+    return response.json();
+  };
+
+  const renderGithub = (user, repos, events) => {
+    const set = (id, value) => { const node = $("#" + id); if (node) node.textContent = value; };
+    set("stat-repos", new Intl.NumberFormat("en").format(user.public_repos || 0));
+    set("stat-followers", new Intl.NumberFormat("en").format(user.followers || 0));
+    set("stat-following", new Intl.NumberFormat("en").format(user.following || 0));
+    const stars = repos.reduce((sum, repo) => sum + (Number(repo.stargazers_count) || 0), 0);
+    set("stat-stars", new Intl.NumberFormat("en").format(stars));
+
+    repos.forEach(repo => {
+      const language = $('[data-repo-language="' + repo.name + '"]');
+      const star = $('[data-repo-stars="' + repo.name + '"]');
+      if (language && repo.language) language.textContent = repo.language;
+      if (star) star.textContent = "★ " + (repo.stargazers_count || 0) + " · " + (repo.forks_count || 0) + " forks";
+    });
+    renderEvents(events);
+    const status = $("#api-status");
+    if (status) status.innerHTML = "<i></i> LIVE PUBLIC DATA";
+  };
+
+  const initGithub = async () => {
+    const status = $("#api-status");
+    try {
+      const result = await Promise.all([
+        fetchJSON(CONFIG.api + "/users/" + CONFIG.user),
+        fetchJSON(CONFIG.api + "/users/" + CONFIG.user + "/repos?per_page=100&sort=updated")
+      ]);
+      if (!Array.isArray(result[1])) throw new Error("Unexpected GitHub repository response");
+      let events = [];
+      try {
+        const recent = await fetchJSON(CONFIG.api + "/users/" + CONFIG.user + "/events/public?per_page=30");
+        if (Array.isArray(recent)) events = recent;
+      } catch (eventError) {
+        console.info("Recent public events are temporarily unavailable:", eventError);
+      }
+      renderGithub(result[0], result[1], events);
+      try { localStorage.setItem(CONFIG.cacheKey, JSON.stringify({ user: result[0], repos: result[1], events: events, savedAt: Date.now() })); } catch {}
+    } catch (error) {
+      console.warn("GitHub data unavailable:", error);
+      let cache = null;
+      try { cache = JSON.parse(localStorage.getItem(CONFIG.cacheKey) || "null"); } catch {}
+      if (cache?.user && Array.isArray(cache.repos) && Array.isArray(cache.events)) {
+        renderGithub(cache.user, cache.repos, cache.events);
+        if (status) status.innerHTML = "<i></i> SAVED PROFILE SNAPSHOT";
+      } else {
+        if (status) { status.classList.add("offline"); status.textContent = "GITHUB UNAVAILABLE"; }
+        const list = $("#activity-list");
+        if (list) list.innerHTML = '<p class="activity-placeholder">The live feed could not load right now. The repositories and profile are still available on GitHub.</p>';
+      }
+    }
+  };
+
+  const initServiceWorker = () => {
+    if ("serviceWorker" in navigator && location.protocol === "https:") {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(error => console.warn("Service worker unavailable:", error)));
+    }
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const year = $("#year");
+    if (year) year.textContent = String(new Date().getFullYear());
+    initTheme();
+    initNavigation();
+    initScroll();
+    initProjectFilters();
+    initCopyButtons();
+    initServiceWorker();
+    initGithub();
+  });
 })();

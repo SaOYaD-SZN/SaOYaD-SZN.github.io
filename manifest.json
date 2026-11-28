@@ -1,13 +1,13 @@
 {
-  "name": "SaOYaD — Developer Portfolio",
+  "name": "SaOYaD — Personal Workbench",
   "short_name": "SaOYaD",
-  "description": "A personal space for learning, building, and sharing projects.",
+  "description": "Projects, Linux setups, developer tools, and things learned by building.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0b0912",
-  "theme_color": "#0b0912",
-  "orientation": "portrait-primary",
+  "background_color": "#0a0811",
+  "theme_color": "#0a0811",
+  "orientation": "any",
   "icons": [
     {
       "src": "./logo.avif",
