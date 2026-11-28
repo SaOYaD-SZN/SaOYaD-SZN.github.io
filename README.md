@@ -1,35 +1,29 @@
-# SaOYaD — Personal Portfolio
+# SaOYaD — Personal Workbench
 
-A personal portfolio built with semantic HTML, modern CSS, and vanilla JavaScript. Published with GitHub Pages.
+A project-led personal portfolio built with semantic HTML, custom CSS, and vanilla JavaScript. Published with GitHub Pages.
 
 **Live site:** https://saoyad-szn.github.io/  
-**GitHub:** https://github.com/SaOYaD-SZN
+**Profile:** https://github.com/SaOYaD-SZN
 
-## Design
+## What’s here
 
-The site uses a restrained midnight-violet visual identity: editorial typography, soft atmospheric gradients, subtle glass surfaces, and small decorative details. The layout is responsive and supports both dark and light themes.
+- A typography-led introduction built around the profile motto and dark-violet identity
+- Project case studies using screenshots from the actual Hyprland-Dots and Neovim-Dots repositories
+- Searchable project cards and category filters
+- Copyable `git clone` commands for featured repositories
+- A mini portfolio terminal with commands for navigating the site and opening projects
+- A workstation section reflecting the public profile’s Arch Linux, Hyprland, Neovim, ZSH, and VS Code interests
+- Live public GitHub profile stats, featured-repository metadata, and recent public events
+- Dark/light theme preference, responsive navigation, keyboard shortcuts, reduced-motion support, and skip navigation
+- PWA manifest and a service worker with safe offline navigation fallback
 
-## Features
+## Tech
 
-- Responsive navigation with keyboard and mobile support
-- Persistent dark/light theme preference
-- Live public GitHub profile statistics and repository showcase
-- Searchable projects with language filters
-- Graceful GitHub API fallback to the last locally cached snapshot
-- PWA manifest and service-worker app-shell caching
-- Offline page navigation after the first successful cache
-- SEO metadata, Open Graph previews, sitemap, and robots.txt
-- Reduced-motion support, semantic sections, visible focus styles, and skip link
+- HTML5, CSS custom properties / Grid / Flexbox, vanilla JavaScript
+- GitHub REST API public endpoints
+- GitHub Pages, Web App Manifest, Service Worker
 
-## Tech stack
-
-- HTML5
-- CSS (custom properties, grid, flexbox, responsive media queries)
-- Vanilla JavaScript (Fetch API, IntersectionObserver, Service Worker)
-- GitHub REST API (public endpoints only)
-- GitHub Pages
-
-## Run locally
+## Local preview
 
     git clone https://github.com/SaOYaD-SZN/SaOYaD-SZN.github.io.git
     cd SaOYaD-SZN.github.io
@@ -37,11 +31,9 @@ The site uses a restrained midnight-violet visual identity: editorial typography
 
 Open http://localhost:8000.
 
-## Notes
+## Data and privacy
 
-- GitHub profile and repository data is fetched from public GitHub API endpoints. If the API is unavailable and no saved browser snapshot exists, the site links visitors directly to the repository profile instead of displaying invented statistics.
-- The site has no build step or package dependencies.
-- Service-worker caching applies only to same-origin GET requests. Failed asset requests remain failed requests rather than receiving the HTML homepage as a misleading fallback.
+GitHub statistics and recent activity come from public GitHub API endpoints. If the API is unavailable, the page uses the last snapshot saved in that browser; it does not invent replacement numbers. The terminal is a local portfolio navigation demo and never executes operating-system commands. No tokens or private credentials are used.
 
 ## License
 
