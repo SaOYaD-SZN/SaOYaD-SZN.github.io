@@ -420,7 +420,7 @@
     renderEvents(events);
     const status = $("#api-status");
     if (status) {
-      status.classList.toggle("offline", source === "SAVED SNAPSHOT");
+      status.classList.toggle("offline", source.startsWith("SAVED SNAPSHOT"));
       const indicator = status.querySelector("i") || document.createElement("i");
       indicator.setAttribute("aria-hidden", "true");
       status.replaceChildren(indicator, document.createTextNode(" " + source));
@@ -490,7 +490,9 @@
       } else {
         if (status) {
           status.classList.add("offline");
-          status.textContent = "TEMPORARILY UNAVAILABLE";
+          const indicator = status.querySelector("i") || document.createElement("i");
+          indicator.setAttribute("aria-hidden", "true");
+          status.replaceChildren(indicator, document.createTextNode(" TEMPORARILY UNAVAILABLE"));
         }
         if (note) note.textContent = "GitHub's public API is unavailable right now. The project links still work normally.";
         const list = $("#activity-list");
@@ -589,6 +591,7 @@
     const pauseTimer=()=>{
       if(!running)return;
       remainingMs=Math.max(0,deadline-Date.now());
+      if(remainingMs===0){finishTimer();return;}
       if(timerId!==null)window.clearInterval(timerId);
       timerId=null;running=false;renderTimer();
     };
@@ -608,7 +611,8 @@
       if(remainingMs<=0)remainingMs=selectedMinutes*60*1000;
       deadline=Date.now()+remainingMs;running=true;
       if(status)status.textContent="Session in progress. Stay with one thing.";
-      updateTimer();timerId=window.setInterval(updateTimer,250);
+      updateTimer();
+      if(running)timerId=window.setInterval(updateTimer,250);
     });
     $("#timer-reset")?.addEventListener("click",()=>{
       pauseTimer();remainingMs=selectedMinutes*60*1000;
