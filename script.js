@@ -5,7 +5,7 @@
     user: "SaOYaD-SZN",
     api: "https://api.github.com",
     themeKey: "saoyad-studio-theme",
-    cacheKey: "saoyad-studio-public-profile-v1"
+    cacheKey: "saoyad-studio-public-profile-v2"
   };
   const $ = selector => document.querySelector(selector);
   const $$ = selector => Array.from(document.querySelectorAll(selector));
@@ -26,6 +26,25 @@
     toast.classList.add("visible");
     window.clearTimeout(showToast.timer);
     showToast.timer = window.setTimeout(() => toast.classList.remove("visible"), 2300);
+  };
+
+  const copyText = async value => {
+    const text = String(value ?? "");
+    if (navigator.clipboard?.writeText && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const field = document.createElement("textarea");
+    field.value = text;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.opacity = "0";
+    field.style.pointerEvents = "none";
+    document.body.appendChild(field);
+    field.select();
+    const copied = document.execCommand("copy");
+    field.remove();
+    if (!copied) throw new Error("Clipboard unavailable");
   };
 
   const setTheme = theme => {
@@ -74,8 +93,11 @@
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver(entries => entries.forEach(entry => {
         if (!entry.isIntersecting) return;
-        $$(".nav-links a").forEach(link => {
-          link.classList.toggle("active", link.getAttribute("href") === "#" + entry.target.id);
+        $(".nav-links a").forEach(link => {
+          const active = link.getAttribute("href") === "#" + entry.target.id;
+          link.classList.toggle("active", active);
+          if (active) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
         });
       }), { rootMargin: "-25% 0px -65% 0px" });
       $$("main section[id]").forEach(section => observer.observe(section));
@@ -165,8 +187,7 @@
     $$(".copy-command").forEach(button => button.addEventListener("click", async () => {
       const command = "git clone " + button.dataset.clone;
       try {
-        if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
-        await navigator.clipboard.writeText(command);
+        await copyText(command);
         showToast("Clone command copied ✿");
       } catch {
         showToast("Clipboard is unavailable in this browser.");
@@ -178,6 +199,8 @@
     const output = $("#terminal-output");
     const form = $("#terminal-form");
     const input = $("#terminal-input");
+    const history = [];
+    let historyIndex = 0;
     const addLine = (value, className) => {
       if (!output) return;
       const p = document.createElement("p");
@@ -262,8 +285,27 @@
     };
     form?.addEventListener("submit", event => {
       event.preventDefault();
-      run(input?.value || "");
+      const value = input?.value || "";
+      if (value.trim()) {
+        history.push(value.trim());
+        historyIndex = history.length;
+      }
+      run(value);
       if (input) input.value = "";
+    });
+    input?.addEventListener("keydown", event => {
+      if (event.key === "ArrowUp" && history.length) {
+        event.preventDefault();
+        historyIndex = Math.max(0, historyIndex - 1);
+        input.value = history[historyIndex] || "";
+      } else if (event.key === "ArrowDown" && history.length) {
+        event.preventDefault();
+        historyIndex = Math.min(history.length, historyIndex + 1);
+        input.value = history[historyIndex] || "";
+      } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "l") {
+        event.preventDefault();
+        output?.replaceChildren();
+      }
     });
     $$(".command-chips button").forEach(button => button.addEventListener("click", () => {
       run(button.dataset.command || "");
@@ -341,15 +383,21 @@
   };
 
   const fetchJSON = async url => {
-    const response = await fetch(url, {
-      headers: { Accept: "application/vnd.github+json" },
-      signal: AbortSignal.timeout(9000)
-    });
-    if (!response.ok) throw new Error("GitHub API returned " + response.status);
-    return response.json();
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 9000);
+    try {
+      const response = await fetch(url, {
+        headers: { Accept: "application/vnd.github+json" },
+        signal: controller.signal
+      });
+      if (!response.ok) throw new Error("GitHub API returned " + response.status);
+      return await response.json();
+    } finally {
+      window.clearTimeout(timeout);
+    }
   };
 
-  const renderGithub = (user, repos, events) => {
+  const renderGithub = (user, repos, events, source = "LIVE PUBLIC DATA") => {
     const set = (id, value) => {
       const node = $("#" + id);
       if (node) node.textContent = value;
@@ -368,48 +416,76 @@
     renderEvents(events);
     const status = $("#api-status");
     if (status) {
-      status.classList.remove("offline");
-      status.innerHTML = "<i></i> LIVE PUBLIC DATA";
+      status.classList.toggle("offline", source === "SAVED SNAPSHOT");
+      status.textContent = source;
     }
   };
 
   const initGithub = async () => {
     const status = $("#api-status");
+    const note = $("#data-note");
+    let cached = null;
+    try { cached = JSON.parse(localStorage.getItem(CONFIG.cacheKey) || "null"); } catch {}
+    const hasSnapshot = Boolean(
+      cached?.user &&
+      Array.isArray(cached.repos) &&
+      Array.isArray(cached.events)
+    );
+
+    if (hasSnapshot) {
+      renderGithub(cached.user, cached.repos, cached.events, "SAVED SNAPSHOT · UPDATING");
+      if (note) note.textContent = "Showing your saved public profile while checking for fresh GitHub data.";
+    }
+
     try {
-      const results = await Promise.all([
+      const [user, repos] = await Promise.all([
         fetchJSON(CONFIG.api + "/users/" + CONFIG.user),
         fetchJSON(CONFIG.api + "/users/" + CONFIG.user + "/repos?per_page=100&sort=updated")
       ]);
-      if (!Array.isArray(results[1])) throw new Error("Unexpected repository response");
+      if (!Array.isArray(repos)) throw new Error("Unexpected repository response");
+
       let events = [];
+      let eventSource = "LIVE";
       try {
         const recent = await fetchJSON(CONFIG.api + "/users/" + CONFIG.user + "/events/public?per_page=30");
         if (Array.isArray(recent)) events = recent;
       } catch (error) {
-        console.info("Public events are temporarily unavailable:", error);
+        eventSource = "SAVED";
+        events = hasSnapshot ? cached.events : [];
+        console.info("Public events are temporarily unavailable; using the saved activity snapshot.", error);
       }
-      renderGithub(results[0], results[1], events);
+
+      renderGithub(user, repos, events, eventSource === "LIVE" ? "LIVE PUBLIC DATA" : "LIVE PROFILE · SAVED ACTIVITY");
+      if (note) {
+        note.textContent = eventSource === "LIVE"
+          ? "Live public profile and activity from GitHub. Private activity is not shown."
+          : "Profile details are live. Recent activity is from the last saved public snapshot.";
+      }
       try {
-        localStorage.setItem(CONFIG.cacheKey, JSON.stringify({ user: results[0], repos: results[1], events: events, savedAt: Date.now() }));
+        localStorage.setItem(CONFIG.cacheKey, JSON.stringify({
+          user,
+          repos,
+          events,
+          savedAt: Date.now()
+        }));
       } catch {}
     } catch (error) {
       console.warn("GitHub profile data is unavailable:", error);
-      let cache = null;
-      try { cache = JSON.parse(localStorage.getItem(CONFIG.cacheKey) || "null"); } catch {}
-      if (cache?.user && Array.isArray(cache.repos) && Array.isArray(cache.events)) {
-        renderGithub(cache.user, cache.repos, cache.events);
-        if (status) status.innerHTML = "<i></i> SAVED SNAPSHOT";
+      if (hasSnapshot) {
+        renderGithub(cached.user, cached.repos, cached.events, "SAVED SNAPSHOT");
+        if (note) note.textContent = "GitHub could not be reached. Showing the last saved public profile and activity.";
       } else {
         if (status) {
           status.classList.add("offline");
-          status.textContent = "GITHUB UNAVAILABLE";
+          status.textContent = "TEMPORARILY UNAVAILABLE";
         }
+        if (note) note.textContent = "GitHub's public API is unavailable right now. The project links still work normally.";
         const list = $("#activity-list");
         if (list) {
           list.replaceChildren();
           const p = document.createElement("p");
           p.className = "activity-placeholder";
-          p.textContent = "The live feed could not load. The project links still work normally.";
+          p.textContent = "The live feed could not load. Visit GitHub to explore the full activity history.";
           list.appendChild(p);
         }
       }
@@ -449,7 +525,7 @@
     });
     $("#json-copy")?.addEventListener("click",async()=>{
       if(!lastJsonOutput){setJsonStatus("Format valid JSON first","error");return;}
-      try{await navigator.clipboard.writeText(lastJsonOutput);showToast("JSON copied ✿");}
+      try{await copyText(lastJsonOutput);showToast("JSON copied ✿");}
       catch{setJsonStatus("Clipboard unavailable in this browser","error");}
     });
 
@@ -471,23 +547,40 @@
       if(action==="clean")textInput.value=value.replace(/\r\n?/g,"\n").split("\n").map(line=>line.replace(/[^\S\n]+/g," ").trim()).filter((line,index,array)=>line!==""||(index>0&&array[index-1]!=="")).join("\n").trim();
       updateMetrics();
       if(action==="copy"){
-        try{await navigator.clipboard.writeText(value);showToast("Text copied ✿");}
+        try{await copyText(value);showToast("Text copied ✿");}
         catch{if(textStatus)textStatus.textContent="Clipboard unavailable in this browser.";}
       }else if(textStatus)textStatus.textContent="Text updated locally.";
     }));
 
-    let selectedMinutes=25, remaining=1500, timerId=null, running=false;
+    let selectedMinutes=25, remainingMs=25*60*1000, timerId=null, deadline=0, running=false;
     const display=$("#timer-display"), label=$("#timer-label"), subtitle=$("#timer-subtitle"), start=$("#timer-start"), status=$("#timer-status"), presets=$(".timer-preset");
     const renderTimer=()=>{
-      if(display)display.textContent=String(Math.floor(remaining/60)).padStart(2,"0")+":"+String(remaining%60).padStart(2,"0");
+      const totalSeconds=Math.ceil(remainingMs/1000);
+      if(display)display.textContent=String(Math.floor(totalSeconds/60)).padStart(2,"0")+":"+String(totalSeconds%60).padStart(2,"0");
       if(start)start.textContent=running?"Pause":"Start";
+      if(display)display.setAttribute("aria-label",Math.floor(totalSeconds/60)+" minutes "+(totalSeconds%60)+" seconds remaining");
     };
-    const stop=()=>{
+    const finishTimer=()=>{
+      if(timerId!==null)window.clearInterval(timerId);
+      timerId=null;running=false;remainingMs=0;renderTimer();
+      if(status)status.textContent="Session complete. Take a moment to reset.";
+      if(subtitle)subtitle.textContent="You showed up. That matters.";
+      showToast("Focus session complete ✿");
+    };
+    const updateTimer=()=>{
+      if(!running)return;
+      remainingMs=Math.max(0,deadline-Date.now());
+      if(remainingMs===0){finishTimer();return;}
+      renderTimer();
+    };
+    const pauseTimer=()=>{
+      if(!running)return;
+      remainingMs=Math.max(0,deadline-Date.now());
       if(timerId!==null)window.clearInterval(timerId);
       timerId=null;running=false;renderTimer();
     };
     const selectPreset=button=>{
-      stop();selectedMinutes=Number(button.dataset.timerMinutes)||25;remaining=selectedMinutes*60;
+      pauseTimer();selectedMinutes=Number(button.dataset.timerMinutes)||25;remainingMs=selectedMinutes*60*1000;
       if(label)label.textContent=button.dataset.timerLabel||"FOCUS SESSION";
       if(subtitle)subtitle.textContent=selectedMinutes===5?"A short reset counts too.":"One task. One window. You’ve got this.";
       presets.forEach(item=>{
@@ -498,20 +591,19 @@
     };
     presets.forEach(button=>button.addEventListener("click",()=>selectPreset(button)));
     start?.addEventListener("click",()=>{
-      if(running){stop();if(status)status.textContent="Paused. Pick it up when you’re ready.";return;}
-      if(remaining<=0)remaining=selectedMinutes*60;
-      running=true;renderTimer();if(status)status.textContent="Session in progress. Stay with one thing.";
-      timerId=window.setInterval(()=>{
-        remaining=Math.max(0,remaining-1);renderTimer();
-        if(remaining===0){stop();if(status)status.textContent="Session complete. Take a moment to reset.";if(subtitle)subtitle.textContent="You showed up. That matters.";showToast("Focus session complete ✿");}
-      },1000);
+      if(running){pauseTimer();if(status)status.textContent="Paused. Pick it up when you’re ready.";return;}
+      if(remainingMs<=0)remainingMs=selectedMinutes*60*1000;
+      deadline=Date.now()+remainingMs;running=true;
+      if(status)status.textContent="Session in progress. Stay with one thing.";
+      updateTimer();timerId=window.setInterval(updateTimer,250);
     });
     $("#timer-reset")?.addEventListener("click",()=>{
-      stop();remaining=selectedMinutes*60;
+      pauseTimer();remainingMs=selectedMinutes*60*1000;
       if(status)status.textContent="Timer reset.";
       if(subtitle)subtitle.textContent=selectedMinutes===5?"A short reset counts too.":"One task. One window. You’ve got this.";
       renderTimer();
     });
+    document.addEventListener("visibilitychange",updateTimer);
     renderTimer();
 
     const fg=$("#contrast-fg"), bg=$("#contrast-bg"), preview=$("#contrast-preview");
@@ -537,6 +629,16 @@
     fg?.addEventListener("input",updateContrast);bg?.addEventListener("input",updateContrast);updateContrast();
   };
 
+  const initImageFallbacks = () => {
+    $("img").forEach(image => {
+      image.addEventListener("error", () => {
+        const frame = image.closest(".desktop-image, .project-visual, .workbench-shot");
+        if (frame) frame.classList.add("has-image-fallback");
+        image.dataset.failed = "true";
+      }, { once: true });
+    });
+  };
+
   const initServiceWorker = () => {
     if ("serviceWorker" in navigator && location.protocol === "https:") {
       window.addEventListener("load", () => {
@@ -548,8 +650,11 @@
   document.addEventListener("DOMContentLoaded", () => {
     const year = $("#year");
     if (year) year.textContent = String(new Date().getFullYear());
+    const edition = $("#edition-year");
+    if (edition) edition.textContent = String(new Date().getFullYear());
     initTheme();
     initToolbox();
+    initImageFallbacks();
     initNavigation();
     initScroll();
     initReveal();
