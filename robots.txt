@@ -1,8 +1,4 @@
-# robots.txt for SaOYaD Portfolio
 User-agent: *
 Allow: /
-Disallow: /sw.js
-Disallow: /*.json$
 
-# Sitemap
-Sitemap: https://SaOYaD-SZN.github.io/sitemap.xml
+Sitemap: https://saoyad-szn.github.io/sitemap.xml
