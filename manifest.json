@@ -1,7 +1,7 @@
 {
-  "name": "SaOYaD — Personal Workbench",
+  "name": "SaOYaD — Developer Workbench",
   "short_name": "SaOYaD",
-  "description": "Projects, Linux setups, developer tools, and things learned by building.",
+  "description": "Computer engineering learning journey, Discord systems, Linux and developer projects.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

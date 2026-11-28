@@ -164,7 +164,8 @@
       hyprland: repoUrls.hyprland,
       neovim: repoUrls.neovim,
       wallpapers: repoUrls.wallpapers,
-      hoshiko: repoUrls.hoshiko
+      hoshiko: repoUrls.hoshiko,
+      academy: "https://discord.gg/2aRd2B52qZ"
     };
     const addLine = (text, className = "") => {
       if (!output) return;
@@ -181,32 +182,45 @@
         addLine("  focus       Current learning focus");
         addLine("  setup       Show the workstation");
         addLine("  projects    List featured repositories");
-        addLine("  open <name> Open a project: hyprland, neovim, wallpapers, hoshiko");
+        addLine("  open <name> Open: academy, hyprland, neovim, wallpapers, hoshiko");
+        addLine("  education   Show the schools behind the journey");
+        addLine("  stack       Show tools used across projects");
         addLine("  github      Open the GitHub profile");
         addLine("  contact     Show social links");
         addLine("  theme       Switch dark / light mode");
         addLine("  clear       Clear this terminal");
       },
       about: () => {
-        addLine("SaOYaD — student, builder, Linux enthusiast.");
-        addLine("Interested in clean, useful code and thoughtful digital spaces.");
+        addLine("SaOYaD — beginner in computer engineering and a Discord systems builder.");
+        addLine("Main project: STEAMer ACADEMY INFINITY.");
       },
       focus: () => {
-        addLine("Learning JavaScript and full-stack development.");
-        addLine("Building with Python; exploring Linux, developer tools, and UI craft.");
+        addLine("Building STEAMer ACADEMY INFINITY with Python and discord.py.");
+        addLine("Learning JavaScript / discord.js and exploring Linux and operating systems.");
       },
       setup: () => {
         addLine("ARCH LINUX  /  HYPRLAND  /  NEOVIM");
+        addLine("PYTHON + DISCORD.PY  /  NODE.JS + DISCORD.JS");
         addLine("ZSH + POWERLEVEL10K  /  VS CODE  /  GIT + GITHUB", "terminal-good");
       },
       projects: () => {
-        addLine("Featured work:");
-        addLine("  Hyprland-Dots · Neovim-Dots · Aesthetic-Wallpapers · Hoshiko-bot");
-        addLine("Use: open <name> to visit a repository.", "terminal-muted");
+        addLine("Flagship: STEAMer ACADEMY INFINITY");
+        addLine("Other projects: Hyprland-Dots · Neovim-Dots · Aesthetic-Wallpapers · Hoshiko-bot");
+        addLine("Use: open <name> to visit a project or the Academy community.", "terminal-muted");
       },
       github: () => {
         addLine("Opening github.com/SaOYaD-SZN …", "terminal-good");
         window.open("https://github.com/SaOYaD-SZN", "_blank", "noopener,noreferrer");
+      },
+      education: () => {
+        addLine("Currently studying: Government Hazi Muhammad Mohsin College (GHMMC).");
+        addLine("Previously studied: Chattogram Collegiate School (CCS).", "terminal-good");
+        document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
+      },
+      stack: () => {
+        addLine("Python · discord.py · SQLite · JSON · Pillow");
+        addLine("JavaScript · Node.js · discord.js · HTML · CSS");
+        addLine("Arch Linux · Hyprland · Neovim · Git + GitHub", "terminal-good");
       },
       contact: () => {
         addLine("GitHub · Discord · YouTube · X · Reddit");
@@ -228,8 +242,8 @@
       const name = parts[0];
       if (name === "open") {
         const key = parts.slice(1).join("-");
-        const known = Object.keys(commandLinks).find(k => k === key || (k === "hyprland" && key === "hyprland-dots") || (k === "neovim" && key === "neovim-dots") || (k === "wallpapers" && key === "aesthetic-wallpapers") || (k === "hoshiko" && key === "hoshiko-bot"));
-        if (!known) { addLine("Unknown project. Try: open hyprland | neovim | wallpapers | hoshiko", "terminal-error"); return; }
+        const known = Object.keys(commandLinks).find(k => k === key || (k === "academy" && key === "steamer-academy") || (k === "hyprland" && key === "hyprland-dots") || (k === "neovim" && key === "neovim-dots") || (k === "wallpapers" && key === "aesthetic-wallpapers") || (k === "hoshiko" && key === "hoshiko-bot"));
+        if (!known) { addLine("Unknown project. Try: open academy | hyprland | neovim | wallpapers | hoshiko", "terminal-error"); return; }
         addLine("Opening " + known + " repository…", "terminal-good");
         window.open(commandLinks[known], "_blank", "noopener,noreferrer");
         return;
