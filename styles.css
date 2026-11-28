@@ -1,4 +1,4 @@
-/* SaOYaD — 2027 studio edition / soft sakura + midnight plum */
+/* SaOYaD — personal workbench / soft sakura + midnight plum */
 :root{
   color-scheme:dark;
   --bg:#100b19;--bg-soft:#171020;--surface:#1c1527;--surface-2:#241b31;
@@ -10,7 +10,7 @@ html[data-theme="light"]{
   color-scheme:light;
   --bg:#f8f5fb;--bg-soft:#f1ebf7;--surface:#fff;--surface-2:#f7f1fb;
   --text:#2a2035;--muted:#6e627b;--dim:#786c84;--line:rgba(67,47,87,.12);--line-strong:rgba(67,47,87,.23);
-  --violet:#755f9b;--violet-deep:#866caf;--pink:#bb7eaa;--mint:#528d7b;--gold:#a58c52;
+  --violet:#755f9b;--violet-deep:#866caf;--pink:#9b547d;--mint:#3e7767;--gold:#826a3d;
   --shadow:0 24px 70px rgba(70,47,94,.09);
 }
 *{box-sizing:border-box}
