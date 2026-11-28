@@ -1,4 +1,4 @@
-const CACHE_NAME = "saoyad-studio-v9";
+const CACHE_NAME = "saoyad-studio-v10";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -6,7 +6,11 @@ const APP_SHELL = [
   "./script.js",
   "./manifest.json",
   "./logo.avif",
-  "./wallpaper.jpg"
+  "./wallpaper.jpg",
+  "./assets/saoyad-workspace.svg",
+  "./assets/cover-hyprland.svg",
+  "./assets/cover-neovim.svg",
+  "./assets/cover-wallpapers.svg"
 ];
 
 const cacheResponse = async (request, response) => {
