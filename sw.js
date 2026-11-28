@@ -1,4 +1,4 @@
-const CACHE_NAME = "saoyad-studio-v7";
+const CACHE_NAME = "saoyad-studio-v8";
 const APP_SHELL = [
   "./",
   "./index.html",

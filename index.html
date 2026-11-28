@@ -45,6 +45,7 @@
       </button>
       <div class="nav-panel" id="nav-panel">
         <div class="nav-links">
+          <a href="#toolbox">Toolbox</a>
           <a href="#academy">The big build</a>
           <a href="#work">Projects</a>
           <a href="#workbench">Workbench</a>
@@ -110,6 +111,83 @@
       <div class="hero-bottom">
         <span class="hero-motto">NOT HERE TO KNOW EVERYTHING. HERE TO KEEP LEARNING.</span>
         <a href="#academy" class="scroll-cue">SCROLL TO EXPLORE <span>↓</span></a>
+      </div>
+    </section>
+
+    <section class="section toolbox-section" id="toolbox" aria-labelledby="toolbox-title">
+      <div class="shell">
+        <div class="section-heading toolbox-heading">
+          <div>
+            <p class="eyebrow"><span>01</span> THE USEFUL CORNER</p>
+            <h2 id="toolbox-title">A few tools.<br><em>Actually useful.</em></h2>
+            <p class="section-lead">Small utilities for everyday coding and focused work. No sign-in, no uploads — everything below runs in your browser.</p>
+          </div>
+          <span class="toolbox-stamp">MADE TO<br>BE USED <b>✿</b></span>
+        </div>
+        <div class="utility-grid">
+          <article class="utility-card">
+            <div class="utility-topline"><span class="utility-icon">{ }</span><span>01 / JSON WORKBENCH</span><span class="utility-local">LOCAL</span></div>
+            <h3>Format. Validate. Minify.</h3>
+            <p>Make JSON readable, compress it, or catch syntax errors.</p>
+            <label class="field-label" for="json-input">YOUR JSON</label>
+            <textarea id="json-input" class="utility-textarea" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder='{"project":"STEAMer ACADEMY","status":"building"}'></textarea>
+            <div class="utility-actions">
+              <button type="button" class="utility-button utility-button-primary" id="json-format">Format</button>
+              <button type="button" class="utility-button" id="json-minify">Minify</button>
+              <button type="button" class="utility-button" id="json-clear">Clear</button>
+            </div>
+            <div class="utility-result-head"><span>OUTPUT</span><span id="json-status" class="utility-status" role="status" aria-live="polite">Waiting for JSON</span></div>
+            <pre class="utility-output" id="json-output">Your result will appear here.</pre>
+            <button type="button" class="utility-copy" id="json-copy">Copy output ↗</button>
+          </article>
+          <article class="utility-card">
+            <div class="utility-topline"><span class="utility-icon">Aa</span><span>02 / TEXT STUDIO</span><span class="utility-local">LOCAL</span></div>
+            <h3>Clean up messy text.</h3>
+            <p>Count words and characters, change case, and tidy spacing or blank lines.</p>
+            <label class="field-label" for="text-input">YOUR TEXT</label>
+            <textarea id="text-input" class="utility-textarea text-input" spellcheck="true" placeholder="Paste notes, a paragraph, or a draft..."></textarea>
+            <div class="text-metrics" aria-live="polite"><span><b id="text-words">0</b> words</span><span><b id="text-chars">0</b> characters</span><span><b id="text-lines">0</b> lines</span></div>
+            <div class="utility-actions utility-actions-wrap">
+              <button type="button" class="utility-button" data-text-action="uppercase">UPPERCASE</button>
+              <button type="button" class="utility-button" data-text-action="lowercase">lowercase</button>
+              <button type="button" class="utility-button" data-text-action="title">Title Case</button>
+              <button type="button" class="utility-button utility-button-primary" data-text-action="clean">Clean spacing</button>
+              <button type="button" class="utility-button" data-text-action="copy">Copy text</button>
+            </div>
+            <p class="utility-hint" id="text-status" role="status" aria-live="polite">Your text stays in this tab.</p>
+          </article>
+          <article class="utility-card">
+            <div class="utility-topline"><span class="utility-icon">◷</span><span>03 / FOCUS TIMER</span><span class="utility-local">NO ACCOUNT</span></div>
+            <h3>Give one thing your attention.</h3>
+            <p>A simple timer for study sessions, coding, or a proper break.</p>
+            <div class="timer-face">
+              <span class="timer-label" id="timer-label">FOCUS SESSION</span>
+              <strong id="timer-display">25:00</strong>
+              <span class="timer-subtitle" id="timer-subtitle">One task. One window. You’ve got this.</span>
+            </div>
+            <div class="timer-presets" aria-label="Timer presets">
+              <button type="button" class="timer-preset active" data-timer-minutes="25" data-timer-label="FOCUS SESSION" aria-pressed="true">25 min focus</button>
+              <button type="button" class="timer-preset" data-timer-minutes="50" data-timer-label="DEEP FOCUS" aria-pressed="false">50 min deep work</button>
+              <button type="button" class="timer-preset" data-timer-minutes="5" data-timer-label="SHORT BREAK" aria-pressed="false">5 min break</button>
+            </div>
+            <div class="timer-actions"><button type="button" class="utility-button utility-button-primary" id="timer-start">Start</button><button type="button" class="utility-button" id="timer-reset">Reset</button></div>
+            <p class="utility-hint" id="timer-status" role="status" aria-live="polite">Ready when you are.</p>
+          </article>
+          <article class="utility-card">
+            <div class="utility-topline"><span class="utility-icon">◐</span><span>04 / CONTRAST CHECKER</span><span class="utility-local">WCAG</span></div>
+            <h3>Make colours readable.</h3>
+            <p>Check text/background pairs against WCAG contrast guidance.</p>
+            <div class="contrast-pickers">
+              <label class="color-control"><span>TEXT COLOUR</span><input id="contrast-fg" type="color" value="#f8f2ff"><code id="contrast-fg-value">#F8F2FF</code></label>
+              <label class="color-control"><span>BACKGROUND</span><input id="contrast-bg" type="color" value="#100b19"><code id="contrast-bg-value">#100B19</code></label>
+            </div>
+            <div class="contrast-preview" id="contrast-preview"><span>LIVE PREVIEW</span><strong>Readable is beautiful.</strong><small>Check your colour pair before you ship it.</small></div>
+            <div class="contrast-result"><strong id="contrast-ratio">— : 1</strong><span id="contrast-grade">Calculating contrast</span></div>
+            <div class="contrast-badges"><span id="contrast-aa">AA normal · —</span><span id="contrast-large">AA large · —</span><span id="contrast-aaa">AAA · —</span></div>
+            <p class="utility-hint">WCAG contrast: 4.5:1 normal text, 3:1 large text, 7:1 enhanced.</p>
+          </article>
+        </div>
+        <p class="toolbox-footnote"><span>✿</span> Private by design: your input is processed locally and is not uploaded. Refreshing clears the fields.</p>
       </div>
     </section>
 

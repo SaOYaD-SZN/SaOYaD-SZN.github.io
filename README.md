@@ -36,7 +36,8 @@ The R151 release validation notes report **277 passing offline tests**. Live Dis
 
 ## Website features
 
-- Responsive project-first portfolio and flagship project case study
+- Responsive project hub and flagship project case study
+- Browser-only toolbox: JSON formatter/minifier, text cleaner/counter, focus timer, and WCAG contrast checker
 - Project search, category filters and copy-clone controls
 - Interactive local portfolio terminal (does not execute operating-system commands)
 - GitHub public profile statistics and recent public activity, with a saved snapshot fallback
@@ -46,6 +47,7 @@ The R151 release validation notes report **277 passing offline tests**. Live Dis
 ## Tech
 
 - HTML5, CSS Grid / Flexbox / custom properties, vanilla JavaScript
+- Local-only JavaScript utilities (tool input is not uploaded)
 - GitHub public REST API
 - GitHub Pages, Web App Manifest and Service Worker
 

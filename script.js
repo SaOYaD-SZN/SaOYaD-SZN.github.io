@@ -416,6 +416,127 @@
     }
   };
 
+
+  const initToolbox = () => {
+    const jsonInput=$("#json-input"), jsonOutput=$("#json-output"), jsonStatus=$("#json-status");
+    let lastJsonOutput="";
+    const setJsonStatus=(message,kind)=>{
+      if(!jsonStatus)return;
+      jsonStatus.textContent=message;
+      jsonStatus.classList.toggle("is-error",kind==="error");
+      jsonStatus.classList.toggle("is-good",kind==="good");
+    };
+    const runJson=compact=>{
+      if(!jsonInput||!jsonOutput)return;
+      const raw=jsonInput.value.trim();
+      if(!raw){jsonOutput.textContent="Add some JSON to get started.";lastJsonOutput="";setJsonStatus("Nothing to format","error");return;}
+      try{
+        lastJsonOutput=JSON.stringify(JSON.parse(raw),null,compact?0:2);
+        jsonOutput.textContent=lastJsonOutput;
+        setJsonStatus(compact?"Valid JSON · minified":"Valid JSON · formatted","good");
+      }catch(error){
+        lastJsonOutput="";
+        jsonOutput.textContent=error instanceof Error?error.message:"Invalid JSON.";
+        setJsonStatus("Invalid JSON","error");
+      }
+    };
+    $("#json-format")?.addEventListener("click",()=>runJson(false));
+    $("#json-minify")?.addEventListener("click",()=>runJson(true));
+    $("#json-clear")?.addEventListener("click",()=>{
+      if(jsonInput)jsonInput.value="";
+      if(jsonOutput)jsonOutput.textContent="Your result will appear here.";
+      lastJsonOutput="";setJsonStatus("Waiting for JSON");jsonInput?.focus();
+    });
+    $("#json-copy")?.addEventListener("click",async()=>{
+      if(!lastJsonOutput){setJsonStatus("Format valid JSON first","error");return;}
+      try{await navigator.clipboard.writeText(lastJsonOutput);showToast("JSON copied ✿");}
+      catch{setJsonStatus("Clipboard unavailable in this browser","error");}
+    });
+
+    const textInput=$("#text-input"), words=$("#text-words"), chars=$("#text-chars"), lines=$("#text-lines"), textStatus=$("#text-status");
+    const updateMetrics=()=>{
+      const value=textInput?.value||"";
+      if(words)words.textContent=String(value.trim()?value.trim().split(/\s+/u).length:0);
+      if(chars)chars.textContent=String(value.length);
+      if(lines)lines.textContent=String(value?value.split(/\r\n|\r|\n/).length:0);
+    };
+    textInput?.addEventListener("input",updateMetrics);
+    $("[data-text-action]").forEach(button=>button.addEventListener("click",async()=>{
+      if(!textInput)return;
+      const action=button.dataset.textAction, value=textInput.value;
+      if(!value&&action!=="copy"){if(textStatus)textStatus.textContent="Add some text first.";return;}
+      if(action==="uppercase")textInput.value=value.toLocaleUpperCase();
+      if(action==="lowercase")textInput.value=value.toLocaleLowerCase();
+      if(action==="title")textInput.value=value.toLocaleLowerCase().replace(/(^|[\s([{])(\p{L})/gu,(m,b,l)=>b+l.toLocaleUpperCase());
+      if(action==="clean")textInput.value=value.replace(/\r\n?/g,"\n").split("\n").map(line=>line.replace(/[^\S\n]+/g," ").trim()).filter((line,index,array)=>line!==""||(index>0&&array[index-1]!=="")).join("\n").trim();
+      updateMetrics();
+      if(action==="copy"){
+        try{await navigator.clipboard.writeText(value);showToast("Text copied ✿");}
+        catch{if(textStatus)textStatus.textContent="Clipboard unavailable in this browser.";}
+      }else if(textStatus)textStatus.textContent="Text updated locally.";
+    }));
+
+    let selectedMinutes=25, remaining=1500, timerId=null, running=false;
+    const display=$("#timer-display"), label=$("#timer-label"), subtitle=$("#timer-subtitle"), start=$("#timer-start"), status=$("#timer-status"), presets=$(".timer-preset");
+    const renderTimer=()=>{
+      if(display)display.textContent=String(Math.floor(remaining/60)).padStart(2,"0")+":"+String(remaining%60).padStart(2,"0");
+      if(start)start.textContent=running?"Pause":"Start";
+    };
+    const stop=()=>{
+      if(timerId!==null)window.clearInterval(timerId);
+      timerId=null;running=false;renderTimer();
+    };
+    const selectPreset=button=>{
+      stop();selectedMinutes=Number(button.dataset.timerMinutes)||25;remaining=selectedMinutes*60;
+      if(label)label.textContent=button.dataset.timerLabel||"FOCUS SESSION";
+      if(subtitle)subtitle.textContent=selectedMinutes===5?"A short reset counts too.":"One task. One window. You’ve got this.";
+      presets.forEach(item=>{
+        const active=item===button;item.classList.toggle("active",active);item.setAttribute("aria-pressed",String(active));
+      });
+      if(status)status.textContent="Ready when you are.";
+      renderTimer();
+    };
+    presets.forEach(button=>button.addEventListener("click",()=>selectPreset(button)));
+    start?.addEventListener("click",()=>{
+      if(running){stop();if(status)status.textContent="Paused. Pick it up when you’re ready.";return;}
+      if(remaining<=0)remaining=selectedMinutes*60;
+      running=true;renderTimer();if(status)status.textContent="Session in progress. Stay with one thing.";
+      timerId=window.setInterval(()=>{
+        remaining=Math.max(0,remaining-1);renderTimer();
+        if(remaining===0){stop();if(status)status.textContent="Session complete. Take a moment to reset.";if(subtitle)subtitle.textContent="You showed up. That matters.";showToast("Focus session complete ✿");}
+      },1000);
+    });
+    $("#timer-reset")?.addEventListener("click",()=>{
+      stop();remaining=selectedMinutes*60;
+      if(status)status.textContent="Timer reset.";
+      if(subtitle)subtitle.textContent=selectedMinutes===5?"A short reset counts too.":"One task. One window. You’ve got this.";
+      renderTimer();
+    });
+    renderTimer();
+
+    const fg=$("#contrast-fg"), bg=$("#contrast-bg"), preview=$("#contrast-preview");
+    const linear=value=>{const c=parseInt(value,16)/255;return c<=.04045?c/12.92:Math.pow((c+.055)/1.055,2.4);};
+    const lum=hex=>{const v=hex.replace("#","");return .2126*linear(v.slice(0,2))+.7152*linear(v.slice(2,4))+.0722*linear(v.slice(4,6));};
+    const nodes={aa:$("#contrast-aa"),large:$("#contrast-large"),aaa:$("#contrast-aaa")};
+    const updateContrast=()=>{
+      if(!fg||!bg)return;
+      const f=fg.value.toUpperCase(), b=bg.value.toUpperCase();
+      $("#contrast-fg-value").textContent=f;$("#contrast-bg-value").textContent=b;
+      if(preview){preview.style.color=f;preview.style.backgroundColor=b;}
+      const vals=[lum(f),lum(b)].sort((a,z)=>z-a), ratio=(vals[0]+.05)/(vals[1]+.05);
+      $("#contrast-ratio").textContent=ratio.toFixed(2)+" : 1";
+      const pass={aa:ratio>=4.5,large:ratio>=3,aaa:ratio>=7};
+      $("#contrast-grade").textContent=pass.aaa?"AAA enhanced pass":pass.aa?"AA normal pass":pass.large?"Large text only":"Needs more contrast";
+      const labels={aa:"AA normal · ",large:"AA large · ",aaa:"AAA · "};
+      Object.keys(nodes).forEach(key=>{
+        const node=nodes[key];if(!node)return;
+        node.textContent=labels[key]+(pass[key]?"PASS":"FAIL");
+        node.classList.toggle("pass",pass[key]);node.classList.toggle("fail",!pass[key]);
+      });
+    };
+    fg?.addEventListener("input",updateContrast);bg?.addEventListener("input",updateContrast);updateContrast();
+  };
+
   const initServiceWorker = () => {
     if ("serviceWorker" in navigator && location.protocol === "https:") {
       window.addEventListener("load", () => {
@@ -428,6 +549,7 @@
     const year = $("#year");
     if (year) year.textContent = String(new Date().getFullYear());
     initTheme();
+    initToolbox();
     initNavigation();
     initScroll();
     initReveal();
