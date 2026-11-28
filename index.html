@@ -4,32 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#0b0912">
-  <title>SaOYaD — Learning by building</title>
-  <meta name="description" content="The personal portfolio of SaOYaD — a student learning through Python, JavaScript, Linux, and hands-on projects.">
-  <meta name="keywords" content="SaOYaD, developer portfolio, Python, JavaScript, Linux, GitHub, web development">
+  <meta name="theme-color" content="#0a0811">
+  <title>SaOYaD — Code in silence.</title>
+  <meta name="description" content="SaOYaD's corner of the internet: projects, Linux setups, developer tools, and things learned by building.">
   <meta name="author" content="SaOYaD">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://saoyad-szn.github.io/">
-
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://saoyad-szn.github.io/">
-  <meta property="og:title" content="SaOYaD — Learning by building">
-  <meta property="og:description" content="Curiosity, code, Linux, and projects made one experiment at a time.">
+  <meta property="og:title" content="SaOYaD — Code in silence.">
+  <meta property="og:description" content="A personal space for code, Linux, creative setups, and projects made with curiosity.">
   <meta property="og:image" content="https://saoyad-szn.github.io/logo.avif">
   <meta property="og:site_name" content="SaOYaD">
-
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="SaOYaD — Learning by building">
-  <meta name="twitter:description" content="Curiosity, code, Linux, and projects made one experiment at a time.">
+  <meta name="twitter:title" content="SaOYaD — Code in silence.">
+  <meta name="twitter:description" content="Projects, Linux setups, developer tools, and things learned by building.">
   <meta name="twitter:image" content="https://saoyad-szn.github.io/logo.avif">
-
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://avatars.githubusercontent.com; connect-src 'self' https://api.github.com; manifest-src 'self'; upgrade-insecure-requests;">
-
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://raw.githubusercontent.com https://avatars.githubusercontent.com; connect-src 'self' https://api.github.com; manifest-src 'self'; upgrade-insecure-requests;">
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" type="image/avif" href="./logo.avif">
   <link rel="apple-touch-icon" href="./logo.avif">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -37,324 +31,306 @@
   <script src="./script.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
-  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
-  <header class="site-header">
-    <nav class="navbar container" aria-label="Main navigation">
-      <a class="brand" href="#home" aria-label="SaOYaD home">
-        <span class="brand-mark" aria-hidden="true">s<span>.</span></span>
-        <span class="brand-name">SaOYaD<span class="brand-period">.</span></span>
+  <header class="header" id="top">
+    <nav class="nav shell" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="SaOYaD home">
+        <span class="brand-symbol">s<span>·</span></span><span>SaOYaD</span>
       </a>
-
-      <button class="menu-toggle icon-button" id="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-navigation">
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-panel">
         <span></span><span></span>
       </button>
-
-      <div class="nav-panel" id="primary-navigation">
-        <ul class="nav-links">
-          <li><a class="nav-link active" href="#home">Home</a></li>
-          <li><a class="nav-link" href="#about">About</a></li>
-          <li><a class="nav-link" href="#skills">Toolkit</a></li>
-          <li><a class="nav-link" href="#projects">Projects</a></li>
-          <li><a class="nav-link" href="#journey">Approach</a></li>
-          <li><a class="nav-link" href="#contact">Contact</a></li>
-        </ul>
+      <div class="nav-panel" id="nav-panel">
+        <div class="nav-links">
+          <a href="#about">About</a><a href="#work">Work</a><a href="#setup">Setup</a><a href="#terminal">Terminal</a><a href="#activity">Activity</a>
+        </div>
         <div class="nav-actions">
-          <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme" title="Switch to light theme">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.7"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme" title="Switch theme">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.7"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.5 1.5m11.2 11.2 1.5 1.5M2 12h2m16 0h2M4.9 19.1l1.5-1.5M17.6 6.4l1.5-1.5"></path></svg>
           </button>
-          <button class="install-button" id="install-button" type="button" hidden>Install app <span aria-hidden="true">↗</span></button>
-          <a class="nav-github" href="https://github.com/SaOYaD-SZN" target="_blank" rel="noopener noreferrer">
-            GitHub <span aria-hidden="true">↗</span>
-          </a>
+          <a class="nav-cta" href="https://github.com/SaOYaD-SZN" target="_blank" rel="noopener noreferrer">GitHub <span>↗</span></a>
         </div>
       </div>
     </nav>
   </header>
 
-  <main id="main-content">
-    <section class="hero" id="home" aria-labelledby="hero-title">
-      <div class="hero-glow hero-glow-one" aria-hidden="true"></div>
-      <div class="hero-glow hero-glow-two" aria-hidden="true"></div>
-      <div class="container hero-layout">
-        <div class="hero-copy">
-          <p class="eyebrow hero-eyebrow"><span class="eyebrow-spark" aria-hidden="true">✳</span> INDEPENDENTLY CURIOUS · BANGLADESH</p>
-          <p class="hero-intro">HELLO, I'M <span>SaOYaD</span></p>
-          <h1 class="hero-title" id="hero-title">
-            I learn by
-            <span class="hero-title-accent">building<span class="title-period">.</span></span>
-          </h1>
-          <p class="hero-description">A student, a curious mind, and a developer in progress. I’m learning Python, diving into JavaScript, and exploring Linux and full-stack development by making real things.</p>
-
-          <div class="hero-actions">
-            <a class="button button-primary" href="#projects">Explore my work <span aria-hidden="true">↗</span></a>
-            <a class="button button-secondary" href="https://github.com/SaOYaD-SZN" target="_blank" rel="noopener noreferrer">Visit GitHub <span aria-hidden="true">↗</span></a>
-          </div>
-
-          <div class="hero-traits" aria-label="Current interests">
-            <span><i class="trait-dot" aria-hidden="true"></i> Python</span>
-            <span><i class="trait-dot" aria-hidden="true"></i> JavaScript</span>
-            <span><i class="trait-dot" aria-hidden="true"></i> Linux</span>
-            <span><i class="trait-dot" aria-hidden="true"></i> Open source</span>
-          </div>
+  <main id="main">
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-mark">✳</span> PERSONAL SPACE / BANGLADESH</p>
+        <p class="intro-line">HEY, I'M <strong>SaOYaD</strong></p>
+        <h1 id="hero-title">Code in<br><span>silence<span class="accent-dot">.</span></span></h1>
+        <p class="hero-lead">I like clean code, dark interfaces, Linux rabbit holes, and turning “what if?” into something that actually works.</p>
+        <p class="hero-subline">Learning JavaScript &amp; full-stack development. Building with Python. Making Linux feel like home.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#work">Explore my work <span>↘</span></a>
+          <a class="button secondary" href="#terminal"><span class="terminal-prompt">$</span> Open the terminal</a>
         </div>
-
-        <div class="hero-art" aria-label="SaOYaD monogram illustration">
-          <div class="orbit orbit-outer" aria-hidden="true"></div>
-          <div class="orbit orbit-middle" aria-hidden="true"></div>
-          <div class="orbit orbit-inner" aria-hidden="true"></div>
-          <span class="orbit-star orbit-star-a" aria-hidden="true">✳</span>
-          <span class="orbit-star orbit-star-b" aria-hidden="true">✦</span>
-          <div class="hero-monogram">
-            <img src="./logo.avif" alt="SaOYaD's brand mark" width="168" height="168" fetchpriority="high">
-          </div>
-          <div class="hero-note hero-note-top">
-            <span class="note-index">01 / NOW</span>
-            <span>Learning in public</span>
-          </div>
-          <div class="hero-note hero-note-bottom">
-            <span class="note-pulse" aria-hidden="true"></span>
-            <span>Curiosity → code → repeat</span>
-          </div>
-          <span class="hero-side-caption" aria-hidden="true">A WORK IN PROGRESS, BY DESIGN</span>
-        </div>
+        <div class="hero-signature"><span class="availability-dot"></span> Always learning, always evolving <span class="signature-divider">/</span> <span class="mono">EST. IN CURIOSITY</span></div>
       </div>
 
-      <div class="container hero-bottom">
-        <span class="hero-motto">“Code in silence. Let the work make the noise.”</span>
-        <a class="scroll-cue" href="#about"><span>SCROLL TO EXPLORE</span><i aria-hidden="true">↓</i></a>
+      <div class="hero-visual">
+        <div class="visual-topline"><span>01 — THE WORKSPACE</span><span class="live-indicator"><i></i> PERSONAL SETUP</span></div>
+        <a class="desktop-shot" href="https://github.com/SaOYaD-SZN/Hyprland-Dots" target="_blank" rel="noopener noreferrer" aria-label="Open Hyprland-Dots repository">
+          <img src="https://raw.githubusercontent.com/SaOYaD-SZN/Hyprland-Dots/main/review/0.png" alt="Screenshot of SaOYaD's custom Hyprland Linux desktop" fetchpriority="high">
+          <span class="shot-overlay"></span>
+          <span class="shot-caption"><span>ARCH LINUX / HYPRLAND</span><b>My desktop, my rules ↗</b></span>
+        </a>
+        <div class="visual-foot">
+          <span class="visual-chip">⌘ <b>Linux enthusiast</b></span>
+          <span class="visual-chip">◈ <b>Violet after dark</b></span>
+        </div>
+        <span class="visual-asterisk" aria-hidden="true">✳</span>
+      </div>
+
+      <div class="hero-bottom">
+        <span>“Let your work make the noise.”</span>
+        <a href="#about">SCROLL TO EXPLORE <span>↓</span></a>
       </div>
     </section>
 
-    <section class="section section-about" id="about" aria-labelledby="about-title">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">01 / A LITTLE ABOUT ME</p>
-          <h2 class="section-title" id="about-title">Curiosity is the <span>starting point.</span></h2>
-          <p class="section-lead">I like understanding how things work — then making something useful with what I learn.</p>
+    <section class="section shell" id="about">
+      <div class="section-intro">
+        <p class="eyebrow">01 / A LITTLE ABOUT ME</p>
+        <h2>Not here to look busy.<br><span>Here to build things.</span></h2>
+      </div>
+      <div class="about-layout">
+        <div class="about-main">
+          <p class="about-lead">I'm a student and developer in progress who enjoys the intersection of software, systems, and design.</p>
+          <p>I started with Python, found myself drawn into Linux customization, and am now spending more time with JavaScript and the web. I learn best by making things, finding the rough edges, and improving them.</p>
+          <p>This portfolio isn't a list of inflated titles. It's a living workbench: the projects I'm shaping, the tools I enjoy, and the ideas I'm exploring next.</p>
+          <a class="inline-link" href="https://github.com/SaOYaD-SZN" target="_blank" rel="noopener noreferrer">A little more on GitHub <span>↗</span></a>
         </div>
-
-        <div class="about-grid">
-          <div class="about-card panel">
-            <div class="about-card-top">
-              <span class="card-kicker">THE PERSON BEHIND THE CODE</span>
-              <span class="card-spark" aria-hidden="true">✳</span>
-            </div>
-            <div class="about-logo-wrap">
-              <img src="./logo.avif" alt="SaOYaD brand mark" width="112" height="112" loading="lazy">
-            </div>
-            <p class="about-card-name">SaOYaD<span>.</span></p>
-            <p class="about-card-caption">Student · Developer in progress</p>
-            <div class="about-card-footer"><span>BD</span><span>BUILDING ONE IDEA AT A TIME</span></div>
-          </div>
-
-          <div class="about-copy">
-            <p>Hey, I’m SaOYaD. I started with Python and got interested in the many ways code can solve everyday problems — from small scripts and automation to tools that feel good to use.</p>
-            <p>These days, I’m diving deeper into JavaScript and web development while spending plenty of time around Linux, desktop customization, and developer tooling.</p>
-            <p>This site is a snapshot of that process: projects I’ve made, things I’m learning, and experiments I want to keep improving. Not everything is finished. That’s part of the fun.</p>
-
-            <div class="about-focus-grid">
-              <div class="focus-item"><span class="focus-number">01</span><span>Python &amp; automation</span></div>
-              <div class="focus-item"><span class="focus-number">02</span><span>JavaScript &amp; the web</span></div>
-              <div class="focus-item"><span class="focus-number">03</span><span>Linux &amp; customization</span></div>
-              <div class="focus-item"><span class="focus-number">04</span><span>Thoughtful interfaces</span></div>
-            </div>
-          </div>
-        </div>
+        <aside class="identity-card">
+          <div class="identity-top"><span class="mono">WHOAMI.TXT</span><span class="identity-star">✳</span></div>
+          <div class="identity-avatar"><img src="./logo.avif" alt="SaOYaD logo" width="86" height="86"></div>
+          <h3>SaOYaD<span>.</span></h3>
+          <p>Student · Developer in progress</p>
+          <div class="identity-rule"></div>
+          <div class="identity-data"><span>Mindset</span><b>Calm mind, sharp execution</b></div>
+          <div class="identity-data"><span>Focus</span><b>Clean, useful code</b></div>
+          <div class="identity-data"><span>Style</span><b>Dark · Violet · Minimal</b></div>
+          <div class="identity-data"><span>Timezone</span><b>Bangladesh · UTC+6</b></div>
+        </aside>
       </div>
     </section>
 
-    <section class="section" id="skills" aria-labelledby="skills-title">
-      <div class="container">
-        <div class="section-heading section-heading-row">
-          <div>
-            <p class="eyebrow">02 / THE TOOLKIT</p>
-            <h2 class="section-title" id="skills-title">Tools I’m <span>learning with.</span></h2>
+    <section class="section work-section" id="work">
+      <div class="shell">
+        <div class="section-heading-row">
+          <div class="section-intro">
+            <p class="eyebrow">02 / SELECTED WORK</p>
+            <h2>Made with curiosity.<br><span>Improved with intention.</span></h2>
           </div>
-          <p class="section-lead">A growing toolkit, not a list of claims. I learn by trying, breaking, fixing, and refining.</p>
+          <a class="inline-link" href="https://github.com/SaOYaD-SZN?tab=repositories" target="_blank" rel="noopener noreferrer">All repositories <span>↗</span></a>
         </div>
 
-        <div class="skills-grid">
-          <article class="skill-card panel">
-            <div class="skill-card-heading"><span class="skill-icon">⌘</span><span class="card-kicker">01 — CODE</span></div>
-            <h3>Programming</h3>
-            <p>Languages and building blocks I use while learning to make things work.</p>
-            <div class="tag-list"><span>Python</span><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Bash</span></div>
-          </article>
-          <article class="skill-card panel">
-            <div class="skill-card-heading"><span class="skill-icon">⌁</span><span class="card-kicker">02 — WEB</span></div>
-            <h3>Web &amp; workflow</h3>
-            <p>Small details that help turn an idea into a clear, usable experience.</p>
-            <div class="tag-list"><span>Responsive UI</span><span>Git</span><span>GitHub</span><span>GitHub Pages</span><span>Accessibility basics</span></div>
-          </article>
-          <article class="skill-card panel">
-            <div class="skill-card-heading"><span class="skill-icon">◈</span><span class="card-kicker">03 — SYSTEMS</span></div>
-            <h3>Linux &amp; tooling</h3>
-            <p>Customizing the workspace and learning more about the systems underneath.</p>
-            <div class="tag-list"><span>Linux</span><span>Dotfiles</span><span>Neovim</span><span>Terminal</span><span>Automation</span></div>
-          </article>
-        </div>
-        <p class="skills-note"><span aria-hidden="true">✳</span> Currently exploring: JavaScript, full-stack development, and better ways to build for the web.</p>
-      </div>
-    </section>
-
-    <section class="section section-projects" id="projects" aria-labelledby="projects-title">
-      <div class="container">
-        <div class="section-heading section-heading-row">
-          <div>
-            <p class="eyebrow">03 / SELECTED WORK</p>
-            <h2 class="section-title" id="projects-title">A few things I’ve <span>put together.</span></h2>
-          </div>
-          <a class="text-link" href="https://github.com/SaOYaD-SZN?tab=repositories" target="_blank" rel="noopener noreferrer">All repositories <span aria-hidden="true">↗</span></a>
-        </div>
-
-        <div class="project-toolbar">
-          <label class="search-field">
+        <div class="work-controls">
+          <label class="work-search">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
-            <input id="project-search" type="search" placeholder="Find a project..." autocomplete="off" aria-label="Search projects">
+            <input id="project-search" type="search" placeholder="Search projects..." aria-label="Search projects">
+            <kbd>/</kbd>
           </label>
-          <div class="project-filters" id="project-filters" aria-label="Filter projects">
-            <button class="filter-button active" type="button" data-filter="all" aria-pressed="true">All work</button>
+          <div class="filter-list" id="project-filters" aria-label="Filter by project type">
+            <button class="filter active" data-filter="all" aria-pressed="true" type="button">All</button>
+            <button class="filter" data-filter="linux" aria-pressed="false" type="button">Linux</button>
+            <button class="filter" data-filter="editor" aria-pressed="false" type="button">Editor</button>
+            <button class="filter" data-filter="design" aria-pressed="false" type="button">Design</button>
+            <button class="filter" data-filter="web" aria-pressed="false" type="button">Web &amp; bots</button>
           </div>
         </div>
 
-        <p class="project-status" id="projects-status" role="status">A selection from my public repositories.</p>
-        <div class="projects-grid" id="projects-grid" aria-live="polite">
-          <article class="project-card panel" data-language="css" data-search="hyprland dots linux desktop configuration dotfiles">
-            <div class="project-card-top"><span class="project-symbol">H<span>.</span></span><span class="project-language">CSS</span></div>
-            <div class="project-card-body">
-              <p class="project-overline">DESKTOP / LINUX</p>
-              <h3>Hyprland-Dots</h3>
-              <p>Personal Linux desktop configuration and visual customization experiments.</p>
-              <div class="project-tags"><span>Linux</span><span>Dotfiles</span><span>Desktop</span></div>
-              <a class="project-link" href="https://github.com/SaOYaD-SZN/Hyprland-Dots" target="_blank" rel="noopener noreferrer">View repository <span aria-hidden="true">↗</span></a>
+        <p class="work-status" id="project-status" role="status">A few repositories worth opening.</p>
+
+        <div class="project-grid" id="project-grid">
+          <article class="project-card" data-categories="linux" data-name="Hyprland-Dots" data-search="hyprland arch linux wayland dotfiles desktop setup zsh powerlevel10k wallpapers">
+            <a class="project-image" href="https://github.com/SaOYaD-SZN/Hyprland-Dots" target="_blank" rel="noopener noreferrer">
+              <img src="https://raw.githubusercontent.com/SaOYaD-SZN/Hyprland-Dots/main/review/0.png" alt="Hyprland-Dots desktop screenshot" loading="lazy">
+              <span class="image-label">01 / DESKTOP ENVIRONMENT</span>
+            </a>
+            <div class="project-body">
+              <div class="project-title-row"><h3>Hyprland-Dots</h3><span class="project-kind">LINUX</span></div>
+              <p>A carefully shaped Arch + Hyprland environment: cohesive themes, wallpapers, terminal setup, keybindings, and small workflow utilities.</p>
+              <div class="project-tags"><span>Arch Linux</span><span>Hyprland</span><span>Dotfiles</span><span>ZSH</span></div>
+              <div class="project-meta"><span class="repo-language" data-repo-language="Hyprland-Dots">CSS</span><span class="repo-stars" data-repo-stars="Hyprland-Dots">GitHub repository</span></div>
+              <div class="project-actions"><a class="project-link" href="https://github.com/SaOYaD-SZN/Hyprland-Dots" target="_blank" rel="noopener noreferrer">Explore project <span>↗</span></a><button class="copy-command" type="button" data-clone="https://github.com/SaOYaD-SZN/Hyprland-Dots.git" aria-label="Copy git clone command for Hyprland-Dots">Copy clone</button></div>
             </div>
           </article>
-          <article class="project-card panel" data-language="python" data-search="aesthetic wallpapers python images collection">
-            <div class="project-card-top"><span class="project-symbol">A<span>.</span></span><span class="project-language">Python</span></div>
-            <div class="project-card-body">
-              <p class="project-overline">PYTHON / VISUALS</p>
-              <h3>Aesthetic-Wallpapers</h3>
-              <p>A project for exploring and working with curated wallpaper collections.</p>
-              <div class="project-tags"><span>Python</span><span>Wallpapers</span></div>
-              <a class="project-link" href="https://github.com/SaOYaD-SZN/Aesthetic-Wallpapers" target="_blank" rel="noopener noreferrer">View repository <span aria-hidden="true">↗</span></a>
+
+          <article class="project-card" data-categories="editor" data-name="Neovim-Dots" data-search="neovim lua editor configuration plugins lazy telescope lsp treesitter">
+            <a class="project-image project-image-editor" href="https://github.com/SaOYaD-SZN/Neovim-Dots" target="_blank" rel="noopener noreferrer">
+              <img src="https://raw.githubusercontent.com/SaOYaD-SZN/Neovim-Dots/main/images/Dashboard.png" alt="Neovim-Dots dashboard screenshot" loading="lazy">
+              <span class="image-label">02 / EDITOR WORKFLOW</span>
+            </a>
+            <div class="project-body">
+              <div class="project-title-row"><h3>Neovim-Dots</h3><span class="project-kind">TOOLING</span></div>
+              <p>A modular Neovim setup with plugin-driven workflows, LSP, Telescope, Treesitter, debugging, Git tools, and a custom dashboard.</p>
+              <div class="project-tags"><span>Neovim</span><span>Lua</span><span>Lazy.nvim</span><span>LSP</span></div>
+              <div class="project-meta"><span class="repo-language" data-repo-language="Neovim-Dots">Lua</span><span class="repo-stars" data-repo-stars="Neovim-Dots">GitHub repository</span></div>
+              <div class="project-actions"><a class="project-link" href="https://github.com/SaOYaD-SZN/Neovim-Dots" target="_blank" rel="noopener noreferrer">Explore project <span>↗</span></a><button class="copy-command" type="button" data-clone="https://github.com/SaOYaD-SZN/Neovim-Dots.git" aria-label="Copy git clone command for Neovim-Dots">Copy clone</button></div>
             </div>
           </article>
-          <article class="project-card panel" data-language="lua" data-search="neovim dots lua editor configuration">
-            <div class="project-card-top"><span class="project-symbol">N<span>.</span></span><span class="project-language">Lua</span></div>
-            <div class="project-card-body">
-              <p class="project-overline">EDITOR / TOOLING</p>
-              <h3>Neovim-Dots</h3>
-              <p>Personal Neovim configuration and editor-workflow experiments.</p>
-              <div class="project-tags"><span>Neovim</span><span>Lua</span><span>Tooling</span></div>
-              <a class="project-link" href="https://github.com/SaOYaD-SZN/Neovim-Dots" target="_blank" rel="noopener noreferrer">View repository <span aria-hidden="true">↗</span></a>
+
+          <article class="project-card" data-categories="design" data-name="Aesthetic-Wallpapers" data-search="wallpapers aesthetic minimal abstract nature space retro vibrant image collection">
+            <a class="project-image project-image-wallpaper" href="https://github.com/SaOYaD-SZN/Aesthetic-Wallpapers" target="_blank" rel="noopener noreferrer">
+              <img src="./wallpaper.jpg" alt="Aesthetic wallpaper from the portfolio's visual collection" loading="lazy">
+              <span class="image-label">03 / VISUAL COLLECTION</span>
+            </a>
+            <div class="project-body">
+              <div class="project-title-row"><h3>Aesthetic-Wallpapers</h3><span class="project-kind">CURATION</span></div>
+              <p>A collection organized around visual moods: abstract, minimal, nature, space, retro, and vibrant. Built for people who care about their screen space.</p>
+              <div class="project-tags"><span>Wallpapers</span><span>Minimal</span><span>Nature</span><span>Space</span></div>
+              <div class="project-meta"><span class="repo-language" data-repo-language="Aesthetic-Wallpapers">Collection</span><span class="repo-stars" data-repo-stars="Aesthetic-Wallpapers">GitHub repository</span></div>
+              <div class="project-actions"><a class="project-link" href="https://github.com/SaOYaD-SZN/Aesthetic-Wallpapers" target="_blank" rel="noopener noreferrer">Explore collection <span>↗</span></a><button class="copy-command" type="button" data-clone="https://github.com/SaOYaD-SZN/Aesthetic-Wallpapers.git" aria-label="Copy git clone command for Aesthetic-Wallpapers">Copy clone</button></div>
+            </div>
+          </article>
+
+          <article class="project-card" data-categories="web" data-name="Hoshiko-bot" data-search="discord bot moderation utility music economy leveling dashboard node javascript discordjs">
+            <div class="project-image project-image-bot">
+              <div class="bot-art"><span class="bot-orbit">✳</span><span class="bot-face">H<span>.</span></span><span class="bot-caption">HOSHIKO / DISCORD BOT</span></div>
+              <span class="image-label">04 / BOT PROJECT</span>
+            </div>
+            <div class="project-body">
+              <div class="project-title-row"><h3>Hoshiko-bot</h3><span class="project-kind">DISCORD</span></div>
+              <p>An all-in-one Discord bot project covering moderation, utilities, music, economy, leveling, and an optional dashboard.</p>
+              <div class="project-tags"><span>Node.js</span><span>discord.js</span><span>Automation</span><span>Dashboard</span></div>
+              <div class="project-meta"><span class="repo-language" data-repo-language="Hoshiko-bot">JavaScript</span><span class="repo-stars" data-repo-stars="Hoshiko-bot">GitHub repository</span></div>
+              <div class="project-actions"><a class="project-link" href="https://github.com/SaOYaD-SZN/Hoshiko-bot" target="_blank" rel="noopener noreferrer">Explore project <span>↗</span></a><button class="copy-command" type="button" data-clone="https://github.com/SaOYaD-SZN/Hoshiko-bot.git" aria-label="Copy git clone command for Hoshiko-bot">Copy clone</button></div>
             </div>
           </article>
         </div>
-        <div class="project-bottom-note"><span class="note-rule"></span><span>More experiments live on GitHub.</span><span class="note-rule"></span></div>
+        <p class="no-results" id="no-results" hidden>No project matches that search. Try a different term.</p>
       </div>
     </section>
 
-    <section class="section" id="journey" aria-labelledby="journey-title">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">04 / THE APPROACH</p>
-          <h2 class="section-title" id="journey-title">Progress over <span>perfection.</span></h2>
-          <p class="section-lead">The process behind each project matters as much as the finished result.</p>
+    <section class="section setup-section" id="setup">
+      <div class="shell">
+        <div class="section-intro">
+          <p class="eyebrow">03 / THE DIGITAL DESK</p>
+          <h2>My kind of <span>environment.</span></h2>
+          <p class="section-description">A few tools and systems that shape how I work, learn, and customize my space.</p>
         </div>
-
-        <div class="journey-grid">
-          <article class="journey-card panel">
-            <span class="journey-index">01</span>
-            <span class="journey-mark" aria-hidden="true">⌕</span>
-            <h3>Stay curious</h3>
-            <p>Start with a question, explore how something works, and learn enough to try it myself.</p>
+        <div class="setup-grid">
+          <article class="setup-card setup-feature">
+            <span class="setup-number">01</span><span class="setup-symbol">⌁</span>
+            <p class="setup-label">OPERATING SYSTEM</p><h3>Arch Linux</h3>
+            <p>A hands-on Linux environment where I can understand the pieces and shape the workflow.</p>
+            <span class="setup-foot">I USE IT / I TUNE IT</span>
           </article>
-          <article class="journey-card panel">
-            <span class="journey-index">02</span>
-            <span class="journey-mark" aria-hidden="true">⌘</span>
-            <h3>Build something</h3>
-            <p>Turn the idea into a small working project. Prefer real experiments over endless planning.</p>
+          <article class="setup-card">
+            <span class="setup-number">02</span><span class="setup-symbol">▱</span>
+            <p class="setup-label">WINDOW MANAGER</p><h3>Hyprland</h3>
+            <p>Wayland, workspaces, keybindings, and a desktop that feels like mine.</p>
           </article>
-          <article class="journey-card panel">
-            <span class="journey-index">03</span>
-            <span class="journey-mark" aria-hidden="true">↗</span>
-            <h3>Refine &amp; share</h3>
-            <p>Improve the details, keep the code understandable, and share the work so it can grow.</p>
+          <article class="setup-card">
+            <span class="setup-number">03</span><span class="setup-symbol">⌘</span>
+            <p class="setup-label">CODE EDITOR</p><h3>Neovim</h3>
+            <p>A configurable editor with Lua, plugins, LSP, and a workflow I keep refining.</p>
+          </article>
+          <article class="setup-card">
+            <span class="setup-number">04</span><span class="setup-symbol">$_</span>
+            <p class="setup-label">SHELL &amp; TERMINAL</p><h3>ZSH + Powerlevel10k</h3>
+            <p>A personalized command-line setup for everyday navigation and development.</p>
+          </article>
+          <article class="setup-card">
+            <span class="setup-number">05</span><span class="setup-symbol">⌗</span>
+            <p class="setup-label">ALSO IN THE TOOLBOX</p><h3>VS Code · Git · GitHub</h3>
+            <p>Different tools for different jobs, with version control at the center.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section section-github" id="activity" aria-labelledby="activity-title">
-      <div class="container">
-        <div class="section-heading section-heading-row">
-          <div>
-            <p class="eyebrow">05 / GITHUB SNAPSHOT</p>
-            <h2 class="section-title" id="activity-title">A live look at <span>the workshop.</span></h2>
+    <section class="section terminal-section" id="terminal">
+      <div class="shell terminal-layout">
+        <div class="terminal-intro">
+          <p class="eyebrow">04 / INTERACTIVE CORNER</p>
+          <h2>Want to explore<br><span>from the terminal?</span></h2>
+          <p class="section-description">A tiny portfolio CLI. Type a command, press Enter, and take a look around.</p>
+          <div class="command-suggestions">
+            <button type="button" data-command="help">help</button>
+            <button type="button" data-command="about">about</button>
+            <button type="button" data-command="projects">projects</button>
+            <button type="button" data-command="setup">setup</button>
+            <button type="button" data-command="contact">contact</button>
           </div>
-          <span class="github-live-label"><i aria-hidden="true"></i> PUBLIC PROFILE DATA</span>
         </div>
 
+        <div class="terminal-window" role="region" aria-label="Interactive portfolio terminal">
+          <div class="terminal-bar">
+            <span class="terminal-dots"><i></i><i></i><i></i></span>
+            <span>saoyad@portfolio <b>~</b></span>
+            <button id="terminal-clear" type="button" aria-label="Clear terminal">CLEAR</button>
+          </div>
+          <div class="terminal-output" id="terminal-output" aria-live="polite">
+            <p class="terminal-muted">SaOYaD shell · a small interactive portfolio guide</p>
+            <p>Type <span class="terminal-accent">help</span> to see what you can do.</p>
+            <p class="terminal-muted">This is a local demo — it does not run commands on a real machine.</p>
+          </div>
+          <form class="terminal-form" id="terminal-form" autocomplete="off">
+            <label for="terminal-input"><span class="terminal-sign">$</span></label>
+            <input id="terminal-input" name="command" type="text" spellcheck="false" placeholder="type a command..." aria-label="Enter a portfolio command">
+            <button type="submit" aria-label="Run command">↵</button>
+          </form>
+          <div class="terminal-hint"><span>TRY</span> help · open hyprland · github · theme</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section activity-section" id="activity">
+      <div class="shell">
+        <div class="section-heading-row">
+          <div class="section-intro">
+            <p class="eyebrow">05 / GITHUB PULSE</p>
+            <h2>What’s happening <span>in the workshop.</span></h2>
+          </div>
+          <span class="api-status" id="api-status"><i></i> Connecting to GitHub</span>
+        </div>
         <div class="github-layout">
-          <div class="stats-grid" id="github-stats" aria-label="GitHub profile statistics">
-            <div class="stat-card panel"><span class="stat-label">Public repositories</span><strong class="stat-value" data-stat="repos">—</strong></div>
-            <div class="stat-card panel"><span class="stat-label">Followers</span><strong class="stat-value" data-stat="followers">—</strong></div>
-            <div class="stat-card panel"><span class="stat-label">Following</span><strong class="stat-value" data-stat="following">—</strong></div>
-            <div class="stat-card panel"><span class="stat-label">Languages</span><strong class="stat-value" data-stat="languages">—</strong></div>
+          <div class="github-stats">
+            <article class="stat-card"><span>PUBLIC REPOSITORIES</span><strong id="stat-repos">—</strong></article>
+            <article class="stat-card"><span>FOLLOWERS</span><strong id="stat-followers">—</strong></article>
+            <article class="stat-card"><span>FOLLOWING</span><strong id="stat-following">—</strong></article>
+            <article class="stat-card"><span>PUBLIC STARS</span><strong id="stat-stars">—</strong></article>
           </div>
-
-          <div class="language-card panel">
-            <div class="language-card-heading">
-              <div><span class="card-kicker">REPOSITORY MIX</span><h3>Languages in my repos</h3></div>
-              <span class="language-count" id="language-count">—</span>
-            </div>
-            <div class="language-list" id="language-list"><p class="muted-copy">Language details will appear when GitHub data loads.</p></div>
-            <p class="data-note" id="github-status" role="status">Connecting to GitHub…</p>
+          <div class="activity-card">
+            <div class="activity-card-heading"><div><span class="mono">PUBLIC EVENT STREAM</span><h3>Recent activity</h3></div><a href="https://github.com/SaOYaD-SZN?tab=activity" target="_blank" rel="noopener noreferrer">Full activity ↗</a></div>
+            <div class="activity-list" id="activity-list"><p class="activity-placeholder">Checking for recent public activity…</p></div>
           </div>
         </div>
-
-        <div class="github-footer-link"><span>Want to see the code behind it all?</span><a class="text-link" href="https://github.com/SaOYaD-SZN" target="_blank" rel="noopener noreferrer">Explore my GitHub profile <span aria-hidden="true">↗</span></a></div>
+        <p class="data-disclaimer" id="data-disclaimer">Profile information is retrieved from GitHub’s public API. No private activity is displayed.</p>
       </div>
     </section>
 
-    <section class="section section-contact" id="contact" aria-labelledby="contact-title">
-      <div class="container contact-panel panel">
-        <div class="contact-copy">
-          <p class="eyebrow">06 / SAY HELLO</p>
-          <h2 class="section-title" id="contact-title">Good ideas start with <span>a conversation.</span></h2>
-          <p class="section-lead">Have a question about a project, a suggestion, or just want to connect? Find me on GitHub.</p>
-          <a class="button button-primary" href="https://github.com/SaOYaD-SZN" target="_blank" rel="noopener noreferrer">Connect on GitHub <span aria-hidden="true">↗</span></a>
+    <section class="section connect-section" id="connect">
+      <div class="shell connect-panel">
+        <div>
+          <p class="eyebrow">06 / FIND ME AROUND</p>
+          <h2>Stay curious.<br><span>Let’s connect.</span></h2>
+          <p class="section-description">Projects, conversations, videos, and everything in between.</p>
         </div>
-        <div class="contact-aside">
-          <span class="contact-orbit" aria-hidden="true">✳</span>
-          <span class="contact-aside-label">OPEN SOURCE · LEARNING · BUILDING</span>
-          <span class="contact-aside-motto">Stay curious.<br><em>Keep creating.</em></span>
-          <a class="contact-profile-link" href="https://github.com/SaOYaD-SZN?tab=repositories" target="_blank" rel="noopener noreferrer">@SaOYaD-SZN <span aria-hidden="true">↗</span></a>
+        <div class="social-grid">
+          <a href="https://github.com/SaOYaD-SZN" target="_blank" rel="noopener noreferrer"><span class="social-icon">GH</span><span><b>GitHub</b><small>Projects &amp; code</small></span><i>↗</i></a>
+          <a href="https://discord.gg/2aRd2B52qZ" target="_blank" rel="noopener noreferrer"><span class="social-icon">DC</span><span><b>Discord</b><small>Community</small></span><i>↗</i></a>
+          <a href="https://www.youtube.com/@Silver_Lining_Skies" target="_blank" rel="noopener noreferrer"><span class="social-icon">YT</span><span><b>YouTube</b><small>Videos &amp; ideas</small></span><i>↗</i></a>
+          <a href="https://x.com/SaOYaD123" target="_blank" rel="noopener noreferrer"><span class="social-icon">X</span><span><b>X / Twitter</b><small>Thoughts &amp; updates</small></span><i>↗</i></a>
+          <a href="https://www.reddit.com/user/SaOYaD/" target="_blank" rel="noopener noreferrer"><span class="social-icon">RD</span><span><b>Reddit</b><small>Discussions</small></span><i>↗</i></a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-main">
-      <a class="brand footer-brand" href="#home"><span class="brand-mark">s<span>.</span></span><span class="brand-name">SaOYaD<span class="brand-period">.</span></span></a>
-      <p>Code in silence. Let the work make the noise.</p>
-      <div class="footer-links">
-        <a href="https://github.com/SaOYaD-SZN" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-        <a href="#home">Back to top ↑</a>
-      </div>
+  <footer class="footer">
+    <div class="shell footer-main">
+      <a class="brand" href="#top"><span class="brand-symbol">s<span>·</span></span><span>SaOYaD</span></a>
+      <p>Code in silence. Let your work make the noise.</p>
+      <a href="#top">Back to the top ↑</a>
     </div>
-    <div class="container footer-bottom">
-      <span>© <span id="year"></span> SaOYaD</span>
-      <span>Made with curiosity, HTML, CSS &amp; JavaScript.</span>
-      <span>Bangladesh <span class="footer-star" aria-hidden="true">✳</span></span>
-    </div>
+    <div class="shell footer-bottom"><span>© <span id="year"></span> SaOYaD</span><span>Built with HTML, CSS &amp; JavaScript.</span><span>Bangladesh · UTC+6</span></div>
   </footer>
-
-  <button class="back-to-top icon-button" id="back-to-top" type="button" aria-label="Back to top" title="Back to top">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6"></path></svg>
-  </button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <button class="back-top" id="back-top" type="button" aria-label="Back to top">↑</button>
 </body>
 </html>
