@@ -163,7 +163,7 @@
             <p>A simple timer for study sessions, coding, or a proper break.</p>
             <div class="timer-face">
               <span class="timer-label" id="timer-label">FOCUS SESSION</span>
-              <strong id="timer-display">25:00</strong>
+              <strong id="timer-display" role="timer" aria-live="off" aria-label="25 minutes remaining">25:00</strong>
               <span class="timer-subtitle" id="timer-subtitle">One task. One window. You’ve got this.</span>
             </div>
             <div class="timer-presets" aria-label="Timer presets">
@@ -484,7 +484,7 @@
       <div class="shell">
         <div class="section-heading pulse-heading">
           <div><p class="eyebrow"><span>07</span> THE GITHUB PULSE</p><h2 id="pulse-title">A peek inside<br><em>the workshop.</em></h2></div>
-          <span class="api-status" id="api-status"><i></i> CONNECTING</span>
+          <span class="api-status" id="api-status" role="status" aria-live="polite"><i></i> CONNECTING</span>
         </div>
         <div class="pulse-layout">
           <div class="github-stats">
@@ -495,7 +495,7 @@
           </div>
           <div class="activity-card">
             <div class="activity-heading"><div><span>PUBLIC EVENT STREAM</span><h3>Recent activity</h3></div><a href="https://github.com/SaOYaD-SZN?tab=activity" target="_blank" rel="noopener noreferrer">Full activity ↗</a></div>
-            <div class="activity-list" id="activity-list"><p class="activity-placeholder">Checking for recent public activity…</p></div>
+            <div class="activity-list" id="activity-list" aria-live="polite" aria-relevant="additions text"><p class="activity-placeholder">Checking for recent public activity…</p></div>
           </div>
         </div>
         <p class="data-note" id="data-note">Live public profile data from GitHub. Private activity is not shown.</p>
