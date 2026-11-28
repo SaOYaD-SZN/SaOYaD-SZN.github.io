@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">Neovim editor cover</title><desc id="desc">An original dark editor illustration with a project tree, syntax-highlighted code lines and a soft violet glow.</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#1a142a"/><stop offset="1" stop-color="#090d18"/></linearGradient><linearGradient id="panel" x2="0" y2="1"><stop stop-color="#201a36"/><stop offset="1" stop-color="#111626"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="42"/></filter></defs>
+<rect width="1200" height="675" fill="url(#bg)"/><circle cx="980" cy="85" r="240" fill="#a77fe1" opacity=".16" filter="url(#glow)"/>
+<rect x="34" y="34" width="1132" height="607" rx="22" fill="#0c0d18" stroke="#8d78aa" stroke-opacity=".5" stroke-width="3"/>
+<rect x="54" y="54" width="1092" height="48" rx="13" fill="#251d39"/>
+<circle cx="80" cy="78" r="6" fill="#e6a6c9"/><circle cx="102" cy="78" r="6" fill="#e7ce9b"/><circle cx="124" cy="78" r="6" fill="#a5d7c8"/>
+<text x="600" y="84" text-anchor="middle" fill="#e1d2f1" font-family="monospace" font-size="14" letter-spacing="4">NEOVIM / EDITOR WORKFLOW</text>
+<rect x="56" y="116" width="248" height="500" rx="10" fill="#17152a"/>
+<text x="80" y="153" fill="#cbb6e7" font-family="monospace" font-size="13" letter-spacing="2">PROJECT TREE</text>
+<g font-family="monospace" font-size="14" fill="#b7aacd">
+<text x="80" y="199">▾  lua</text><text x="108" y="232">▾  config</text><text x="132" y="265" fill="#d8b7ef">✦  options.lua</text><text x="132" y="297">✦  keymaps.lua</text><text x="132" y="329">✦  plugins.lua</text><text x="80" y="374">▾  plugin</text><text x="108" y="407">✦  telescope.lua</text><text x="108" y="439">✦  treesitter.lua</text><text x="108" y="471">✦  lsp.lua</text><text x="80" y="522">▸  snippets</text><text x="80" y="555">▸  after</text>
+</g>
+<rect x="321" y="116" width="825" height="500" rx="10" fill="url(#panel)"/>
+<rect x="321" y="116" width="825" height="43" rx="10" fill="#29213e"/>
+<text x="346" y="143" fill="#e6d7f4" font-family="monospace" font-size="13">options.lua</text><text x="1084" y="143" fill="#a88acb" font-family="monospace" font-size="11">NORMAL</text>
+<g font-family="monospace" font-size="15">
+<g fill="#75658d" text-anchor="end"><text x="365" y="203">01</text><text x="365" y="239">02</text><text x="365" y="275">03</text><text x="365" y="311">04</text><text x="365" y="347">05</text><text x="365" y="383">06</text><text x="365" y="419">07</text><text x="365" y="455">08</text><text x="365" y="491">09</text><text x="365" y="527">10</text><text x="365" y="563">11</text></g>
+<g fill="#d0b4ec"><text x="398" y="203">local</text><text x="398" y="239">vim.opt.number</text><text x="398" y="275">vim.opt.relativenumber</text><text x="398" y="311">vim.opt.expandtab</text><text x="398" y="347">vim.opt.shiftwidth</text><text x="398" y="383">vim.opt.tabstop</text><text x="398" y="419">vim.opt.termguicolors</text><text x="398" y="455">vim.opt.signcolumn</text><text x="398" y="491">vim.opt.cursorline</text><text x="398" y="527">vim.opt.wrap</text><text x="398" y="563">vim.opt.undofile</text></g>
+<g fill="#91d9d9"><text x="445" y="203">config = {</text><text x="607" y="239">true</text><text x="720" y="275">true</text><text x="672" y="311">true</text><text x="700" y="347">2</text><text x="660" y="383">2</text><text x="750" y="419">true</text><text x="670" y="455">'yes:2'</text><text x="685" y="491">true</text><text x="621" y="527">false</text><text x="679" y="563">true</text></g>
+</g>
+<path d="M388 595H1119" stroke="#a48ac6" opacity=".22" stroke-width="2"/>
+<rect x="343" y="582" width="6" height="20" rx="3" fill="#d8b2ed"/>
+<text x="377" y="598" fill="#9f8bb9" font-family="monospace" font-size="11" letter-spacing="2">CONFIGURE · EXPLORE · REFACTOR</text>
+</svg>
