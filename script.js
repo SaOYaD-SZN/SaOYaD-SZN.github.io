@@ -350,12 +350,18 @@
     try {
       const result = await Promise.all([
         fetchJSON(CONFIG.api + "/users/" + CONFIG.user),
-        fetchJSON(CONFIG.api + "/users/" + CONFIG.user + "/repos?per_page=100&sort=updated"),
-        fetchJSON(CONFIG.api + "/users/" + CONFIG.user + "/events/public?per_page=30")
+        fetchJSON(CONFIG.api + "/users/" + CONFIG.user + "/repos?per_page=100&sort=updated")
       ]);
-      if (!Array.isArray(result[1]) || !Array.isArray(result[2])) throw new Error("Unexpected GitHub response");
-      renderGithub(result[0], result[1], result[2]);
-      try { localStorage.setItem(CONFIG.cacheKey, JSON.stringify({ user: result[0], repos: result[1], events: result[2], savedAt: Date.now() })); } catch {}
+      if (!Array.isArray(result[1])) throw new Error("Unexpected GitHub repository response");
+      let events = [];
+      try {
+        const recent = await fetchJSON(CONFIG.api + "/users/" + CONFIG.user + "/events/public?per_page=30");
+        if (Array.isArray(recent)) events = recent;
+      } catch (eventError) {
+        console.info("Recent public events are temporarily unavailable:", eventError);
+      }
+      renderGithub(result[0], result[1], events);
+      try { localStorage.setItem(CONFIG.cacheKey, JSON.stringify({ user: result[0], repos: result[1], events: events, savedAt: Date.now() })); } catch {}
     } catch (error) {
       console.warn("GitHub data unavailable:", error);
       let cache = null;
