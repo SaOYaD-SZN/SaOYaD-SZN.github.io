@@ -356,3 +356,5 @@ a{color:inherit;text-decoration:none}button,input{font:inherit}button{color:inhe
   .system-map-foot{align-items:flex-start;flex-direction:column}
   .education-strip{grid-template-columns:1fr}
 }
+
+@media(max-width:520px){.academy-release-note a{white-space:normal;overflow-wrap:anywhere}}
