@@ -1,59 +1,32 @@
 {
-  "name": "SaOYaD - Premium Portfolio 2050",
+  "name": "SaOYaD — Developer Portfolio",
   "short_name": "SaOYaD",
-  "description": "Full-Stack Developer & Linux Enthusiast - Premium Portfolio Website",
-  "start_url": "/",
+  "description": "A personal space for learning, building, and sharing projects.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#1A0B2E",
-  "theme_color": "#1A0B2E",
+  "background_color": "#0b0912",
+  "theme_color": "#0b0912",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "logo.avif",
-      "sizes": "48x48",
-      "type": "image/avif"
-    },
-    {
-      "src": "logo.avif",
-      "sizes": "72x72",
-      "type": "image/avif"
-    },
-    {
-      "src": "logo.avif",
-      "sizes": "96x96",
-      "type": "image/avif"
-    },
-    {
-      "src": "logo.avif",
-      "sizes": "128x128",
-      "type": "image/avif"
-    },
-    {
-      "src": "logo.avif",
-      "sizes": "192x192",
+      "src": "./logo.avif",
+      "sizes": "any",
       "type": "image/avif",
       "purpose": "any"
     },
     {
-      "src": "logo.avif",
-      "sizes": "256x256",
-      "type": "image/avif"
-    },
-    {
-      "src": "logo.avif",
-      "sizes": "384x384",
-      "type": "image/avif"
-    },
-    {
-      "src": "logo.avif",
-      "sizes": "512x512",
+      "src": "./logo.avif",
+      "sizes": "any",
       "type": "image/avif",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ],
-  "categories": ["portfolio", "developer", "technology"],
-  "lang": "en-US",
-  "dir": "ltr",
-  "scope": "/",
-  "prefer_related_applications": false
+  "categories": [
+    "portfolio",
+    "education",
+    "technology"
+  ],
+  "lang": "en",
+  "dir": "ltr"
 }
