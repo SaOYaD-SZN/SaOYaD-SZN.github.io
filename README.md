@@ -1,48 +1,45 @@
-# SaOYaD — Developer Workbench
+# SaOYaD — Personal Workbench
 
-A project-led personal portfolio for a beginner in computer engineering who learns by building Discord systems, experimenting with Linux, and refining developer tools.
+A project-led personal portfolio for a computer-engineering learner who learns by building Discord systems, experimenting with Linux, and refining developer tools.
 
 **Live site:** https://saoyad-szn.github.io/  
 **GitHub:** https://github.com/SaOYaD-SZN
 
+## Portfolio direction
+
+The site uses a soft-lavender / midnight-plum visual system, responsive layouts, accessible interactions, and a project-first structure. It is intentionally written as a learning journey rather than presenting the owner as an experienced professional.
+
 ## Flagship project: STEAMer ACADEMY INFINITY
 
-STEAMer ACADEMY INFINITY is a feature-rich Python / discord.py bot and learning-community platform. The site describes the R151 release supplied with the portfolio update.
+STEAMer ACADEMY INFINITY is the main Python / discord.py bot and learning-community platform. The portfolio describes the R151 release snapshot.
 
 R151's release documentation records **21 command groups**, **110 slash-command actions**, and compatibility with both s? and s! prefix routes.
 
-Its feature areas include:
-- Learning: quizzes, flashcards, focus sessions, study tasks, exam countdowns, daily challenges, a private Academy Today dashboard, and weekly study quests.
+Feature areas include:
+- Learning: quizzes, flashcards, focus sessions, study tasks, exam countdowns, daily challenges, a private study dashboard, and weekly study quests.
 - Community: subject-help threads, suggestion lifecycle controls, polls, announcements, support tickets, reaction roles, and welcome tools.
-- Progress: Community XP, levels, achievements, voice-study tracking, helpful recognition, invite statistics, and period-based leaderboards.
-- Moderation: AutoMod action bundles, anti-spam and invite protection, verification, moderation logs, and audit verbosity controls.
+- Progress: community XP, levels, achievements, voice-study tracking, helpful recognition, invite statistics, and period-based leaderboards.
+- Moderation: AutoMod action bundles, anti-spam and invite protection, verification, moderation logs, and audit verbosity.
 - Member experience: AFK tracking, private missed-mentions inbox, profiles, music, and mini-games.
-- UI: custom embeds, generated rank/profile cards, curated emoji assets, animated mascot artwork, and the Midnight Sakura visual system.
+- UI: custom embeds, generated rank/profile cards, curated emoji assets, mascot artwork, and the Midnight Sakura visual system.
 
-The R151 release validation document reports **277 passing offline tests**. Live Discord registration, permissions, component interactions and voice playback still require checks on the production host.
+The R151 release validation notes report **277 passing offline tests**. Live Discord registration, permissions, component interactions and voice playback still require checks on the production host. The feature-map panel is an authored overview, not a screenshot of the live Discord interface.
 
 ## Other projects
 
 - **Hyprland-Dots** — Arch Linux / Hyprland desktop configuration and workflow.
 - **Neovim-Dots** — customizable Neovim configuration and editor tooling.
 - **Aesthetic-Wallpapers** — curated wallpaper collection.
-- **Hoshiko-bot** — a separate Node.js / discord.js bot project; it is not the main STEAMer ACADEMY bot.
-
-## About
-
-Currently studying at Government Hazi Muhammad Mohsin College (GHMMC), after previously studying at Chattogram Collegiate School (CCS).
-
-The portfolio presents this as an early computer-engineering learning journey, not as an experienced or professionally qualified engineer.
+- **Hoshiko-bot** — a separate Node.js / discord.js bot project. It is not the main STEAMer ACADEMY bot.
 
 ## Website features
 
-- Flagship project case study with release details and feature areas
-- Education timeline and beginner-focused profile
-- Searchable project cards and category filters
-- Interactive local portfolio terminal with Academy, education and stack commands
-- GitHub public profile statistics and recent public activity
-- Dark/light theme, responsive navigation, reduced-motion support and keyboard shortcuts
-- PWA manifest and service worker with offline navigation fallback
+- Responsive project-first portfolio and flagship project case study
+- Project search, category filters and copy-clone controls
+- Interactive local portfolio terminal (does not execute operating-system commands)
+- GitHub public profile statistics and recent public activity, with a saved snapshot fallback
+- Dark / light themes, keyboard shortcut for project search, scroll progress, reduced-motion support
+- PWA manifest and service worker with an offline navigation fallback
 
 ## Tech
 
@@ -60,7 +57,7 @@ Open http://localhost:8000.
 
 ## Data and privacy
 
-The GitHub section reads public profile, repository and public-event data. If the API is unavailable, the page uses a snapshot previously saved in the same browser. The portfolio terminal is a local navigation demo and never executes operating-system commands. No tokens, deployment-panel links or private credentials are included.
+The GitHub section reads public profile, repository and public-event data. If the API is unavailable, the page can use a snapshot saved in that browser. The portfolio terminal is a local navigation demo and never executes system commands. This public profile intentionally avoids publishing school names, private deployment details, tokens, or credentials.
 
 ## License
 

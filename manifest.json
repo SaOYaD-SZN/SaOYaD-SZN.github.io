@@ -1,12 +1,12 @@
 {
-  "name": "SaOYaD — Developer Workbench",
+  "name": "SaOYaD — Personal Workbench",
   "short_name": "SaOYaD",
-  "description": "Computer engineering learning journey, Discord systems, Linux and developer projects.",
+  "description": "A personal workspace for computer-engineering learning, Discord systems, Linux experiments and developer projects.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0a0811",
-  "theme_color": "#0a0811",
+  "background_color": "#100b19",
+  "theme_color": "#100b19",
   "orientation": "any",
   "icons": [
     {
@@ -22,11 +22,7 @@
       "purpose": "maskable"
     }
   ],
-  "categories": [
-    "portfolio",
-    "education",
-    "technology"
-  ],
+  "categories": ["portfolio", "education", "technology"],
   "lang": "en",
   "dir": "ltr"
 }

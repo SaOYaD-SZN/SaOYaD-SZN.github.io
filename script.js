@@ -4,17 +4,20 @@
   const CONFIG = {
     user: "SaOYaD-SZN",
     api: "https://api.github.com",
-    themeKey: "saoyad-theme",
-    cacheKey: "saoyad-public-profile-v2"
+    themeKey: "saoyad-studio-theme",
+    cacheKey: "saoyad-studio-public-profile-v1"
   };
   const $ = selector => document.querySelector(selector);
   const $$ = selector => Array.from(document.querySelectorAll(selector));
-  const repoUrls = {
+  const projectUrls = {
+    academy: "https://discord.gg/2aRd2B52qZ",
     hyprland: "https://github.com/SaOYaD-SZN/Hyprland-Dots",
     neovim: "https://github.com/SaOYaD-SZN/Neovim-Dots",
     wallpapers: "https://github.com/SaOYaD-SZN/Aesthetic-Wallpapers",
     hoshiko: "https://github.com/SaOYaD-SZN/Hoshiko-bot"
   };
+
+  const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const showToast = message => {
     const toast = $("#toast");
@@ -22,18 +25,19 @@
     toast.textContent = message;
     toast.classList.add("visible");
     window.clearTimeout(showToast.timer);
-    showToast.timer = window.setTimeout(() => toast.classList.remove("visible"), 2200);
+    showToast.timer = window.setTimeout(() => toast.classList.remove("visible"), 2300);
   };
 
   const setTheme = theme => {
     const value = theme === "light" ? "light" : "dark";
     document.documentElement.dataset.theme = value;
     const meta = $('meta[name="theme-color"]');
-    if (meta) meta.content = value === "dark" ? "#0a0811" : "#f8f5fc";
+    if (meta) meta.content = value === "dark" ? "#100b19" : "#f8f5fb";
     const button = $("#theme-toggle");
     if (button) {
-      button.setAttribute("aria-label", value === "dark" ? "Switch to light theme" : "Switch to dark theme");
-      button.title = value === "dark" ? "Switch to light theme" : "Switch to dark theme";
+      const label = value === "dark" ? "Switch to light theme" : "Switch to dark theme";
+      button.setAttribute("aria-label", label);
+      button.title = label;
     }
     try { localStorage.setItem(CONFIG.themeKey, value); } catch {}
   };
@@ -41,7 +45,8 @@
   const initTheme = () => {
     let saved = null;
     try { saved = localStorage.getItem(CONFIG.themeKey); } catch {}
-    setTheme(saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+    const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+    setTheme(saved || (prefersLight ? "light" : "dark"));
     $("#theme-toggle")?.addEventListener("click", () => {
       setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
     });
@@ -56,8 +61,8 @@
       toggle?.setAttribute("aria-label", "Open menu");
     };
     toggle?.addEventListener("click", () => {
-      const open = !panel.classList.contains("open");
-      panel.classList.toggle("open", open);
+      const open = toggle.getAttribute("aria-expanded") !== "true";
+      panel?.classList.toggle("open", open);
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     });
@@ -70,8 +75,7 @@
       const observer = new IntersectionObserver(entries => entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         $$(".nav-links a").forEach(link => {
-          const active = link.getAttribute("href") === "#" + entry.target.id;
-          link.classList.toggle("active", active);
+          link.classList.toggle("active", link.getAttribute("href") === "#" + entry.target.id);
         });
       }), { rootMargin: "-25% 0px -65% 0px" });
       $$("main section[id]").forEach(section => observer.observe(section));
@@ -88,17 +92,29 @@
       header?.classList.toggle("scrolled", y > 12);
       back?.classList.toggle("visible", y > 420);
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (progress) progress.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + "%";
+      if (progress) progress.style.width = (max > 0 ? Math.min(100, y / max * 100) : 0) + "%";
       queued = false;
     };
     window.addEventListener("scroll", () => {
-      if (!queued) { window.requestAnimationFrame(update); queued = true; }
+      if (!queued) {
+        window.requestAnimationFrame(update);
+        queued = true;
+      }
     }, { passive: true });
     update();
-    back?.addEventListener("click", () => window.scrollTo({
-      top: 0,
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
-    }));
+    back?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" }));
+  };
+
+  const initReveal = () => {
+    const targets = $$(".section-heading,.academy-panel,.academy-stats,.feature-card,.project-card,.workbench-layout,.learning-card,.about-card,.terminal-window,.activity-card,.connect-panel");
+    if (!("IntersectionObserver" in window) || reducedMotion()) return;
+    targets.forEach(node => node.classList.add("reveal"));
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    }), { threshold: 0.08 });
+    targets.forEach(node => observer.observe(node));
   };
 
   const initProjectFilters = () => {
@@ -108,7 +124,6 @@
     const empty = $("#no-results");
     const status = $("#project-status");
     let selected = "all";
-
     const filter = () => {
       const query = (input?.value || "").trim().toLowerCase();
       let shown = 0;
@@ -121,11 +136,10 @@
         if (visible) shown++;
       });
       if (empty) empty.hidden = shown !== 0;
-      if (status) status.textContent = "Showing " + shown + " of " + cards.length + " featured projects.";
+      if (status) status.textContent = "Showing " + shown + " of " + cards.length + " projects.";
     };
-
     buttons.forEach(button => button.addEventListener("click", () => {
-      selected = button.dataset.filter;
+      selected = button.dataset.filter || "all";
       buttons.forEach(item => {
         const active = item === button;
         item.classList.toggle("active", active);
@@ -139,6 +153,10 @@
         event.preventDefault();
         input?.focus();
       }
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        input?.focus();
+      }
     });
     filter();
   };
@@ -147,93 +165,87 @@
     $$(".copy-command").forEach(button => button.addEventListener("click", async () => {
       const command = "git clone " + button.dataset.clone;
       try {
-        if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
+        if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
         await navigator.clipboard.writeText(command);
-        showToast("Clone command copied.");
+        showToast("Clone command copied ✿");
       } catch {
-        showToast("Clipboard unavailable in this browser.");
+        showToast("Clipboard is unavailable in this browser.");
       }
     }));
   };
 
-  const terminal = (() => {
+  const initTerminal = () => {
     const output = $("#terminal-output");
     const form = $("#terminal-form");
     const input = $("#terminal-input");
-    const commandLinks = {
-      hyprland: repoUrls.hyprland,
-      neovim: repoUrls.neovim,
-      wallpapers: repoUrls.wallpapers,
-      hoshiko: repoUrls.hoshiko,
-      academy: "https://discord.gg/2aRd2B52qZ"
-    };
-    const addLine = (text, className = "") => {
+    const addLine = (value, className) => {
       if (!output) return;
       const p = document.createElement("p");
       if (className) p.className = className;
-      p.textContent = text;
+      p.textContent = value;
       output.appendChild(p);
       output.scrollTop = output.scrollHeight;
     };
     const commands = {
       help: () => {
-        addLine("Available commands:", "terminal-good");
-        addLine("  about       Who is SaOYaD?");
-        addLine("  focus       Current learning focus");
-        addLine("  setup       Show the workstation");
-        addLine("  projects    List featured repositories");
-        addLine("  open <name> Open: academy, hyprland, neovim, wallpapers, hoshiko");
-        addLine("  education   Show the schools behind the journey");
-        addLine("  stack       Show tools used across projects");
-        addLine("  github      Open the GitHub profile");
-        addLine("  contact     Show social links");
-        addLine("  theme       Switch dark / light mode");
-        addLine("  clear       Clear this terminal");
+        addLine("A tiny map of this corner of the internet ✿", "terminal-good");
+        addLine("about       A little introduction");
+        addLine("focus       What I am learning right now");
+        addLine("projects    A list of featured builds");
+        addLine("stack       Languages and tools");
+        addLine("open <name> academy | hyprland | neovim | wallpapers | hoshiko");
+        addLine("github      Open the GitHub profile");
+        addLine("contact     Jump to the social links");
+        addLine("theme       Switch between dark and light");
+        addLine("clear       Clear this window");
       },
       about: () => {
-        addLine("SaOYaD — beginner in computer engineering and a Discord systems builder.");
-        addLine("Main project: STEAMer ACADEMY INFINITY.");
+        addLine("SaOYaD — a computer-engineering learner who learns by building.");
+        addLine("Main build: STEAMer ACADEMY INFINITY.");
       },
       focus: () => {
-        addLine("Building STEAMer ACADEMY INFINITY with Python and discord.py.");
-        addLine("Learning JavaScript / discord.js and exploring Linux and operating systems.");
-      },
-      setup: () => {
-        addLine("ARCH LINUX  /  HYPRLAND  /  NEOVIM");
-        addLine("PYTHON + DISCORD.PY  /  NODE.JS + DISCORD.JS");
-        addLine("ZSH + POWERLEVEL10K  /  VS CODE  /  GIT + GITHUB", "terminal-good");
+        addLine("Python + Discord systems, JavaScript fundamentals, and Linux / OS concepts.");
       },
       projects: () => {
         addLine("Flagship: STEAMer ACADEMY INFINITY");
-        addLine("Other projects: Hyprland-Dots · Neovim-Dots · Aesthetic-Wallpapers · Hoshiko-bot");
-        addLine("Use: open <name> to visit a project or the Academy community.", "terminal-muted");
+        addLine("Also: Hyprland-Dots · Neovim-Dots · Aesthetic-Wallpapers · Hoshiko-bot");
+        addLine("Hoshiko is a separate bot project; STEAMer ACADEMY is the main one.", "terminal-muted");
+      },
+      stack: () => {
+        addLine("Python · discord.py · SQLite · JSON · Pillow");
+        addLine("JavaScript · Node.js · discord.js · HTML · CSS");
+        addLine("Arch Linux · Hyprland · Neovim · ZSH · Git + GitHub", "terminal-good");
       },
       github: () => {
         addLine("Opening github.com/SaOYaD-SZN …", "terminal-good");
         window.open("https://github.com/SaOYaD-SZN", "_blank", "noopener,noreferrer");
       },
-      education: () => {
-        addLine("Currently studying: Government Hazi Muhammad Mohsin College (GHMMC).");
-        addLine("Previously studied: Chattogram Collegiate School (CCS).", "terminal-good");
-        document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
-      },
-      stack: () => {
-        addLine("Python · discord.py · SQLite · JSON · Pillow");
-        addLine("JavaScript · Node.js · discord.js · HTML · CSS");
-        addLine("Arch Linux · Hyprland · Neovim · Git + GitHub", "terminal-good");
-      },
       contact: () => {
         addLine("GitHub · Discord · YouTube · X · Reddit");
-        addLine("Scroll to the Connect section for the links.", "terminal-muted");
-        document.querySelector("#connect")?.scrollIntoView({ behavior: "smooth" });
+        document.querySelector("#connect")?.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth" });
       },
       theme: () => {
         setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
-        addLine("Theme switched.", "terminal-good");
+        addLine("Theme switched ✧", "terminal-good");
       },
       clear: () => { if (output) output.replaceChildren(); }
     };
-
+    const aliases = {
+      "steamer-academy": "academy",
+      "hyprland-dots": "hyprland",
+      "neovim-dots": "neovim",
+      "aesthetic-wallpapers": "wallpapers",
+      "hoshiko-bot": "hoshiko"
+    };
+    const openProject = key => {
+      const normal = aliases[key] || key;
+      if (!projectUrls[normal]) {
+        addLine("I don't know that project yet. Try: academy, hyprland, neovim, wallpapers, hoshiko.", "terminal-error");
+        return;
+      }
+      addLine("Opening " + normal + " …", "terminal-good");
+      window.open(projectUrls[normal], "_blank", "noopener,noreferrer");
+    };
     const run = raw => {
       const value = raw.trim();
       if (!value) return;
@@ -241,29 +253,24 @@
       const parts = value.toLowerCase().split(/\s+/);
       const name = parts[0];
       if (name === "open") {
-        const key = parts.slice(1).join("-");
-        const known = Object.keys(commandLinks).find(k => k === key || (k === "academy" && key === "steamer-academy") || (k === "hyprland" && key === "hyprland-dots") || (k === "neovim" && key === "neovim-dots") || (k === "wallpapers" && key === "aesthetic-wallpapers") || (k === "hoshiko" && key === "hoshiko-bot"));
-        if (!known) { addLine("Unknown project. Try: open academy | hyprland | neovim | wallpapers | hoshiko", "terminal-error"); return; }
-        addLine("Opening " + known + " repository…", "terminal-good");
-        window.open(commandLinks[known], "_blank", "noopener,noreferrer");
+        if (!parts[1]) { addLine("Try: open academy", "terminal-muted"); return; }
+        openProject(parts.slice(1).join("-"));
         return;
       }
       if (commands[name]) { commands[name](); return; }
-      addLine("Command not found: " + name + ". Type help to see available commands.", "terminal-error");
+      addLine("Command not found: " + name + ". Type help to see the little map.", "terminal-error");
     };
-
     form?.addEventListener("submit", event => {
       event.preventDefault();
       run(input?.value || "");
       if (input) input.value = "";
     });
-    $$(".command-suggestions button").forEach(button => button.addEventListener("click", () => {
+    $$(".command-chips button").forEach(button => button.addEventListener("click", () => {
       run(button.dataset.command || "");
       input?.focus();
     }));
     $("#terminal-clear")?.addEventListener("click", () => { if (output) output.replaceChildren(); });
-    return { run };
-  })();
+  };
 
   const formatRelative = dateString => {
     const time = new Date(dateString).getTime();
@@ -279,12 +286,7 @@
   const renderEvents = events => {
     const list = $("#activity-list");
     if (!list) return;
-    const relevant = events.filter(event => ["PushEvent", "CreateEvent", "WatchEvent", "ForkEvent", "IssuesEvent", "PullRequestEvent", "ReleaseEvent"].includes(event.type)).slice(0, 5);
-    if (!relevant.length) {
-      list.innerHTML = '<p class="activity-placeholder">No recent public events are available. Visit GitHub to explore the full activity history.</p>';
-      return;
-    }
-    const labels = {
+    const types = {
       PushEvent: ["P", "Pushed code"],
       CreateEvent: ["+", "Created"],
       WatchEvent: ["★", "Starred"],
@@ -293,9 +295,18 @@
       PullRequestEvent: ["↗", "Pull request"],
       ReleaseEvent: ["R", "Published a release"]
     };
+    const relevant = events.filter(event => types[event.type]).slice(0, 5);
+    if (!relevant.length) {
+      list.replaceChildren();
+      const p = document.createElement("p");
+      p.className = "activity-placeholder";
+      p.textContent = "No recent public events are available. Visit GitHub to explore the full activity history.";
+      list.appendChild(p);
+      return;
+    }
     list.replaceChildren();
     relevant.forEach(event => {
-      const config = labels[event.type];
+      const config = types[event.type];
       const row = document.createElement("div");
       row.className = "activity-item";
       const icon = document.createElement("span");
@@ -312,10 +323,8 @@
         description.textContent = commit?.message ? commit.message.split("\n")[0].slice(0, 100) : "Updated a repository";
       } else if (event.type === "CreateEvent") {
         description.textContent = "Created " + (payload.ref_type || "a resource") + (payload.ref ? " · " + payload.ref : "");
-      } else if (event.type === "IssuesEvent") {
-        description.textContent = payload.action + " an issue";
-      } else if (event.type === "PullRequestEvent") {
-        description.textContent = payload.action + " a pull request";
+      } else if (event.type === "IssuesEvent" || event.type === "PullRequestEvent") {
+        description.textContent = (payload.action || "Updated") + (event.type === "IssuesEvent" ? " an issue" : " a pull request");
       } else if (event.type === "ReleaseEvent") {
         description.textContent = "Released " + (payload.release?.name || payload.action || "a version");
       } else {
@@ -341,59 +350,77 @@
   };
 
   const renderGithub = (user, repos, events) => {
-    const set = (id, value) => { const node = $("#" + id); if (node) node.textContent = value; };
-    set("stat-repos", new Intl.NumberFormat("en").format(user.public_repos || 0));
-    set("stat-followers", new Intl.NumberFormat("en").format(user.followers || 0));
-    set("stat-following", new Intl.NumberFormat("en").format(user.following || 0));
-    const stars = repos.reduce((sum, repo) => sum + (Number(repo.stargazers_count) || 0), 0);
-    set("stat-stars", new Intl.NumberFormat("en").format(stars));
-
+    const set = (id, value) => {
+      const node = $("#" + id);
+      if (node) node.textContent = value;
+    };
+    const number = value => new Intl.NumberFormat("en").format(value || 0);
+    set("stat-repos", number(user.public_repos));
+    set("stat-followers", number(user.followers));
+    set("stat-following", number(user.following));
+    set("stat-stars", number(repos.reduce((sum, repo) => sum + (Number(repo.stargazers_count) || 0), 0)));
     repos.forEach(repo => {
       const language = $('[data-repo-language="' + repo.name + '"]');
-      const star = $('[data-repo-stars="' + repo.name + '"]');
+      const stars = $('[data-repo-stars="' + repo.name + '"]');
       if (language && repo.language) language.textContent = repo.language;
-      if (star) star.textContent = "★ " + (repo.stargazers_count || 0) + " · " + (repo.forks_count || 0) + " forks";
+      if (stars) stars.textContent = "★ " + (repo.stargazers_count || 0) + " · " + (repo.forks_count || 0) + " forks";
     });
     renderEvents(events);
     const status = $("#api-status");
-    if (status) status.innerHTML = "<i></i> LIVE PUBLIC DATA";
+    if (status) {
+      status.classList.remove("offline");
+      status.innerHTML = "<i></i> LIVE PUBLIC DATA";
+    }
   };
 
   const initGithub = async () => {
     const status = $("#api-status");
     try {
-      const result = await Promise.all([
+      const results = await Promise.all([
         fetchJSON(CONFIG.api + "/users/" + CONFIG.user),
         fetchJSON(CONFIG.api + "/users/" + CONFIG.user + "/repos?per_page=100&sort=updated")
       ]);
-      if (!Array.isArray(result[1])) throw new Error("Unexpected GitHub repository response");
+      if (!Array.isArray(results[1])) throw new Error("Unexpected repository response");
       let events = [];
       try {
         const recent = await fetchJSON(CONFIG.api + "/users/" + CONFIG.user + "/events/public?per_page=30");
         if (Array.isArray(recent)) events = recent;
-      } catch (eventError) {
-        console.info("Recent public events are temporarily unavailable:", eventError);
+      } catch (error) {
+        console.info("Public events are temporarily unavailable:", error);
       }
-      renderGithub(result[0], result[1], events);
-      try { localStorage.setItem(CONFIG.cacheKey, JSON.stringify({ user: result[0], repos: result[1], events: events, savedAt: Date.now() })); } catch {}
+      renderGithub(results[0], results[1], events);
+      try {
+        localStorage.setItem(CONFIG.cacheKey, JSON.stringify({ user: results[0], repos: results[1], events: events, savedAt: Date.now() }));
+      } catch {}
     } catch (error) {
-      console.warn("GitHub data unavailable:", error);
+      console.warn("GitHub profile data is unavailable:", error);
       let cache = null;
       try { cache = JSON.parse(localStorage.getItem(CONFIG.cacheKey) || "null"); } catch {}
       if (cache?.user && Array.isArray(cache.repos) && Array.isArray(cache.events)) {
         renderGithub(cache.user, cache.repos, cache.events);
-        if (status) status.innerHTML = "<i></i> SAVED PROFILE SNAPSHOT";
+        if (status) status.innerHTML = "<i></i> SAVED SNAPSHOT";
       } else {
-        if (status) { status.classList.add("offline"); status.textContent = "GITHUB UNAVAILABLE"; }
+        if (status) {
+          status.classList.add("offline");
+          status.textContent = "GITHUB UNAVAILABLE";
+        }
         const list = $("#activity-list");
-        if (list) list.innerHTML = '<p class="activity-placeholder">The live feed could not load right now. The repositories and profile are still available on GitHub.</p>';
+        if (list) {
+          list.replaceChildren();
+          const p = document.createElement("p");
+          p.className = "activity-placeholder";
+          p.textContent = "The live feed could not load. The project links still work normally.";
+          list.appendChild(p);
+        }
       }
     }
   };
 
   const initServiceWorker = () => {
     if ("serviceWorker" in navigator && location.protocol === "https:") {
-      window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(error => console.warn("Service worker unavailable:", error)));
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(error => console.warn("Service worker unavailable:", error));
+      });
     }
   };
 
@@ -403,8 +430,10 @@
     initTheme();
     initNavigation();
     initScroll();
+    initReveal();
     initProjectFilters();
     initCopyButtons();
+    initTerminal();
     initServiceWorker();
     initGithub();
   });
