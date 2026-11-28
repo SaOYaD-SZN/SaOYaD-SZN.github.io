@@ -666,3 +666,42 @@ main section[id] { scroll-margin-top: 88px; }
   .ticker-track { animation: none; }
   .utility-card, .project-card, .learning-card { transition: none; }
 }
+
+
+/* Original local artwork — consistent crops, no third-party image dependencies */
+.desktop-image {
+  aspect-ratio: 1.32 / 1;
+  background:
+    radial-gradient(circle at 55% 25%, rgba(201,170,255,.22), transparent 46%),
+    linear-gradient(145deg, #211832, #0d1020);
+}
+.desktop-image img {
+  object-position: center 52%;
+  background: #141020;
+}
+.project-visual {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(145deg, #211832, #0d1020);
+}
+.project-visual > img {
+  object-position: center;
+  background: #141020;
+}
+.project-visual-wallpaper img { object-position: center; }
+.workbench-shot img { object-position: center; }
+.desktop-image,
+.project-visual,
+.workbench-shot {
+  isolation: isolate;
+}
+.desktop-image.has-image-fallback,
+.project-visual.has-image-fallback,
+.workbench-shot.has-image-fallback {
+  border-color: var(--line-strong);
+}
+@media (max-width:760px) {
+  .desktop-image { aspect-ratio: 1.28 / 1; }
+}
+@media (max-width:540px) {
+  .desktop-image { aspect-ratio: 1.2 / 1; }
+}
