@@ -20,14 +20,14 @@
   <meta name="twitter:title" content="SaOYaD — Curious by Nature, Built with Intention">
   <meta name="twitter:description" content="A little corner for ambitious builds, Linux experiments, and learning in public.">
   <meta name="twitter:image" content="https://saoyad-szn.github.io/logo.avif">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://raw.githubusercontent.com https://avatars.githubusercontent.com; connect-src 'self' https://api.github.com; manifest-src 'self'; upgrade-insecure-requests;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.github.com; manifest-src 'self'; upgrade-insecure-requests;">
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" type="image/avif" href="./logo.avif">
   <link rel="apple-touch-icon" href="./logo.avif">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://raw.githubusercontent.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="./assets/saoyad-workspace.svg" fetchpriority="high">
   <link rel="stylesheet" href="./styles.css">
   <script src="./script.js" defer></script>
 </head>
@@ -93,10 +93,10 @@
             <span>MY DIGITAL WORKSPACE</span>
             <span class="frame-code">01 / 04</span>
           </div>
-          <a class="desktop-image" href="https://github.com/SaOYaD-SZN/Hyprland-Dots" target="_blank" rel="noopener noreferrer" aria-label="Open the Hyprland-Dots project">
-            <img src="https://raw.githubusercontent.com/SaOYaD-SZN/Hyprland-Dots/main/review/0.png" alt="Arch Linux and Hyprland desktop customization" fetchpriority="high">
+          <a class="desktop-image" href="#workbench" aria-label="Jump to the Linux workbench details">
+            <img src="./assets/saoyad-workspace.svg" alt="Original illustrated midnight workspace with cherry blossoms, a glowing monitor, city lights, tea and a sleeping cat" width="1200" height="850" fetchpriority="high" decoding="async">
             <span class="desktop-image-shade"></span>
-            <span class="desktop-image-caption"><span>ARCH LINUX · HYPRLAND</span><strong>A workspace shaped by curiosity <b>↗</b></strong></span>
+            <span class="desktop-image-caption"><span>SAOYAD / MIDNIGHT SAKURA</span><strong>A cozy corner for curious minds <b>↓</b></strong></span>
           </a>
           <div class="frame-bottom">
             <span><i class="mini-live"></i> SYSTEMS IN PROGRESS</span>
@@ -324,7 +324,7 @@
         <div class="project-grid" id="project-grid">
           <article class="project-card" data-categories="linux" data-name="Hyprland-Dots" data-search="hyprland arch linux wayland dotfiles desktop setup zsh powerlevel10k wallpapers">
             <a class="project-visual" href="https://github.com/SaOYaD-SZN/Hyprland-Dots" target="_blank" rel="noopener noreferrer" aria-label="View Hyprland-Dots on GitHub">
-              <img src="https://raw.githubusercontent.com/SaOYaD-SZN/Hyprland-Dots/main/review/0.png" alt="Customized Arch Linux Hyprland desktop" loading="lazy" decoding="async">
+              <img src="./assets/cover-hyprland.svg" alt="Original illustrated preview of an Arch Linux and Hyprland tiled desktop" width="1200" height="675" loading="lazy" decoding="async">
               <span class="visual-label">01 · DESKTOP ENVIRONMENT</span><span class="visual-corner">↗</span>
             </a>
             <div class="project-content">
@@ -338,7 +338,7 @@
 
           <article class="project-card" data-categories="editor" data-name="Neovim-Dots" data-search="neovim lua editor configuration plugins lazy telescope lsp treesitter">
             <a class="project-visual project-visual-editor" href="https://github.com/SaOYaD-SZN/Neovim-Dots" target="_blank" rel="noopener noreferrer" aria-label="View Neovim-Dots on GitHub">
-              <img src="https://raw.githubusercontent.com/SaOYaD-SZN/Neovim-Dots/main/images/Dashboard.png" alt="Neovim-Dots editor dashboard" loading="lazy">
+              <img src="./assets/cover-neovim.svg" alt="Original illustrated Neovim editor preview with project tree and syntax-highlighted code" width="1200" height="675" loading="lazy" decoding="async">
               <span class="visual-label">02 · EDITOR WORKFLOW</span><span class="visual-corner">↗</span>
             </a>
             <div class="project-content">
@@ -352,7 +352,7 @@
 
           <article class="project-card" data-categories="design" data-name="Aesthetic-Wallpapers" data-search="wallpapers aesthetic minimal abstract nature space retro vibrant image collection">
             <a class="project-visual project-visual-wallpaper" href="https://github.com/SaOYaD-SZN/Aesthetic-Wallpapers" target="_blank" rel="noopener noreferrer" aria-label="View Aesthetic-Wallpapers on GitHub">
-              <img src="./wallpaper.jpg" alt="Aesthetic wallpaper from the visual collection" loading="lazy">
+              <img src="./assets/cover-wallpapers.svg" alt="Original abstract wallpaper moodboard in lavender, rose, teal and midnight blue" width="1200" height="675" loading="lazy" decoding="async">
               <span class="visual-label">03 · VISUAL COLLECTION</span><span class="visual-corner">↗</span>
             </a>
             <div class="project-content">
@@ -394,7 +394,7 @@
         </div>
         <div class="workbench-layout">
           <a class="workbench-shot" href="https://github.com/SaOYaD-SZN/Hyprland-Dots" target="_blank" rel="noopener noreferrer">
-            <img src="https://raw.githubusercontent.com/SaOYaD-SZN/Hyprland-Dots/main/review/0.png" alt="A look at the customized Linux desktop" loading="lazy">
+            <img src="./assets/cover-hyprland.svg" alt="Illustrated preview of the tiled Arch Linux and Hyprland workflow" width="1200" height="675" loading="lazy" decoding="async">
             <span class="shot-caption"><span>THE DAILY ENVIRONMENT</span><b>Arch Linux + Hyprland ↗</b></span>
           </a>
           <div class="tool-list">
@@ -436,7 +436,7 @@
         </div>
         <aside class="about-card">
           <div class="about-card-top"><span>ABOUT.TXT</span><span>✳</span></div>
-          <div class="about-avatar"><img src="./logo.avif" alt="SaOYaD's logo" width="76" height="76"></div>
+          <div class="about-avatar"><img src="./logo.avif" alt="SaOYaD's logo" width="76" height="76" loading="lazy" decoding="async"></div>
           <h3>SaOYaD<span>.</span></h3>
           <p>Computer-engineering learner</p>
           <div class="about-divider"></div>
