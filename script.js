@@ -647,7 +647,7 @@
   };
 
   const initImageFallbacks = () => {
-    $("img").forEach(image => {
+    $$("img").forEach(image => {
       const markUnavailable = () => {
         const frame = image.closest(".desktop-image, .project-visual, .workbench-shot");
         if (frame) frame.classList.add("has-image-fallback");
