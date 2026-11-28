@@ -13,6 +13,8 @@ The site uses a soft-lavender / midnight-plum visual system, responsive layouts,
 
 STEAMer ACADEMY INFINITY is the main Python / discord.py bot and learning-community platform. The portfolio describes the R151 release snapshot.
 
+The STEAMer ACADEMY source code is planned for a future GitHub publication. Until it is uploaded, the portfolio intentionally shows a “Coming soon” notice rather than linking to a repository that is not yet published.
+
 R151's release documentation records **21 command groups**, **110 slash-command actions**, and compatibility with both s? and s! prefix routes.
 
 Feature areas include:
