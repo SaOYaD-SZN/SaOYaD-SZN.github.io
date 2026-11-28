@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">Aesthetic wallpaper collection cover</title><desc id="desc">A collage of original abstract wallpaper moods in lavender, rose, teal and midnight blue.</desc>
+<defs>
+<linearGradient id="bg" x2="1" y2="1"><stop stop-color="#1b1430"/><stop offset="1" stop-color="#0b0e19"/></linearGradient>
+<linearGradient id="lav" x2="1" y2="1"><stop stop-color="#d6b8f3"/><stop offset=".5" stop-color="#8f74c3"/><stop offset="1" stop-color="#39305e"/></linearGradient>
+<linearGradient id="rose" x2="1" y2="1"><stop stop-color="#f4c7dc"/><stop offset=".5" stop-color="#ad7ba9"/><stop offset="1" stop-color="#3d294e"/></linearGradient>
+<linearGradient id="sea" x2="0" y2="1"><stop stop-color="#9de5de"/><stop offset=".5" stop-color="#397d8b"/><stop offset="1" stop-color="#172a48"/></linearGradient>
+<linearGradient id="night" x2="1" y2="1"><stop stop-color="#7d6ab7"/><stop offset=".48" stop-color="#25254d"/><stop offset="1" stop-color="#11172a"/></linearGradient>
+</defs>
+<rect width="1200" height="675" fill="url(#bg)"/>
+<g stroke="#c9b0e1" stroke-opacity=".35" stroke-width="3">
+<rect x="45" y="45" width="535" height="280" rx="22" fill="url(#lav)"/>
+<rect x="598" y="45" width="557" height="280" rx="22" fill="url(#rose)"/>
+<rect x="45" y="348" width="535" height="280" rx="22" fill="url(#sea)"/>
+<rect x="598" y="348" width="557" height="280" rx="22" fill="url(#night)"/>
+</g>
+<circle cx="452" cy="115" r="106" fill="#f4dff8" opacity=".18"/><circle cx="452" cy="115" r="64" fill="#f5e7f6" opacity=".6"/>
+<path d="M45 275q140-160 250-25t285-15v90H45Z" fill="#29214f" opacity=".7"/>
+<path d="M598 291q160-145 270-40t287-35v109H598Z" fill="#50314f" opacity=".7"/>
+<path d="M45 555q120-125 236-28t299-10v111H45Z" fill="#14384a" opacity=".75"/>
+<path d="M598 583q130-150 262-34t295-40v119H598Z" fill="#171a3e" opacity=".75"/>
+<g fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="4">
+<path d="M102 83q120 55 230-13t174 9"/><path d="M653 104q120-65 247 30t193-11"/><path d="M102 409q110 72 217 6t199 25"/><path d="M667 401q100 36 205-9t222 32"/>
+</g>
+<g fill="#fff" opacity=".72"><circle cx="180" cy="157" r="4"/><circle cx="280" cy="88" r="3"/><circle cx="795" cy="91" r="4"/><circle cx="1019" cy="220" r="3"/><circle cx="160" cy="492" r="4"/><circle cx="385" cy="560" r="3"/><circle cx="789" cy="465" r="4"/><circle cx="1037" cy="532" r="3"/></g>
+<rect x="430" y="297" width="340" height="82" rx="20" fill="#120e20" fill-opacity=".83" stroke="#d9c2eb" stroke-opacity=".6"/>
+<text x="600" y="330" text-anchor="middle" fill="#d9c2eb" font-family="monospace" font-size="12" letter-spacing="4">VISUAL MOODBOARD</text>
+<text x="600" y="358" text-anchor="middle" fill="#fff3ff" font-family="sans-serif" font-size="24" font-weight="600">Find your atmosphere.</text>
+</svg>
