@@ -5,7 +5,7 @@
     user: "SaOYaD-SZN",
     api: "https://api.github.com",
     themeKey: "saoyad-studio-theme",
-    cacheKey: "saoyad-studio-public-profile-v2"
+    cacheKey: "saoyad-studio-public-profile-v1"
   };
   const $ = selector => document.querySelector(selector);
   const $$ = selector => Array.from(document.querySelectorAll(selector));
@@ -31,8 +31,12 @@
   const copyText = async value => {
     const text = String(value ?? "");
     if (navigator.clipboard?.writeText && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      return;
+      try {
+        await navigator.clipboard.writeText(text);
+        return;
+      } catch {
+        // Fall through to the legacy copy method when browser permission is denied.
+      }
     }
     const field = document.createElement("textarea");
     field.value = text;
@@ -417,7 +421,9 @@
     const status = $("#api-status");
     if (status) {
       status.classList.toggle("offline", source === "SAVED SNAPSHOT");
-      status.textContent = source;
+      const indicator = status.querySelector("i") || document.createElement("i");
+      indicator.setAttribute("aria-hidden", "true");
+      status.replaceChildren(indicator, document.createTextNode(" " + source));
     }
   };
 
@@ -450,16 +456,23 @@
         const recent = await fetchJSON(CONFIG.api + "/users/" + CONFIG.user + "/events/public?per_page=30");
         if (Array.isArray(recent)) events = recent;
       } catch (error) {
-        eventSource = "SAVED";
+        eventSource = hasSnapshot ? "SAVED" : "UNAVAILABLE";
         events = hasSnapshot ? cached.events : [];
-        console.info("Public events are temporarily unavailable; using the saved activity snapshot.", error);
+        console.info("Public events are temporarily unavailable.", error);
       }
 
-      renderGithub(user, repos, events, eventSource === "LIVE" ? "LIVE PUBLIC DATA" : "LIVE PROFILE · SAVED ACTIVITY");
+      const githubLabel = eventSource === "LIVE"
+        ? "LIVE PUBLIC DATA"
+        : eventSource === "SAVED"
+          ? "LIVE PROFILE · SAVED ACTIVITY"
+          : "LIVE PROFILE · ACTIVITY UNAVAILABLE";
+      renderGithub(user, repos, events, githubLabel);
       if (note) {
         note.textContent = eventSource === "LIVE"
           ? "Live public profile and activity from GitHub. Private activity is not shown."
-          : "Profile details are live. Recent activity is from the last saved public snapshot.";
+          : eventSource === "SAVED"
+            ? "Profile details are live. Recent activity is from the last saved public snapshot."
+            : "Profile details are live. GitHub's activity feed is temporarily unavailable.";
       }
       try {
         localStorage.setItem(CONFIG.cacheKey, JSON.stringify({
@@ -631,11 +644,13 @@
 
   const initImageFallbacks = () => {
     $("img").forEach(image => {
-      image.addEventListener("error", () => {
+      const markUnavailable = () => {
         const frame = image.closest(".desktop-image, .project-visual, .workbench-shot");
         if (frame) frame.classList.add("has-image-fallback");
         image.dataset.failed = "true";
-      }, { once: true });
+      };
+      image.addEventListener("error", markUnavailable, { once: true });
+      if (image.complete && image.naturalWidth === 0) markUnavailable();
     });
   };
 
